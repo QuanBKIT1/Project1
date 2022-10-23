@@ -3,11 +3,10 @@ import random
 from scipy.spatial import distance
 from sklearn import metrics
 
-mL = 1.1
+mL = 3.1
 mU = 9.1
-alpha = 9.9
-Epsilon = 0.0001
-
+alpha = 0.7
+Epsilon = 0.00001
 
 def ReadData(fileName):
     # Read the file, splitting by lines
@@ -16,27 +15,31 @@ def ReadData(fileName):
     f.close()
 
     items = []
-    true_label = []
     for i in range(len(lines)):
         line = lines[i].split(',')
         itemFeatures = []
 
-        for j in range(len(line)-1):
+        for j in range(len(line)):
             # Convert feature value to float
             v = float(line[j])
             # Add feature value to dict
             itemFeatures.append(v)
 
         items.append(itemFeatures)
-        dummy = line[len(line)-1]
-        if dummy == 'Iris-setosa':
-            true_label.append(0)
-        elif dummy == 'Iris-versicolor':
-            true_label.append(1)
-        else:
-            true_label.append(2)
 
-    return items,true_label
+    return items
+
+def ReadLabel(fileName):
+    # Read the file, splitting by lines
+    f = open(fileName, 'r')
+    lines = f.read().splitlines()
+    f.close()
+
+    true_label = []
+
+    for i in range(len(lines)):
+        true_label.append(lines[i])
+    return true_label
 
 def d(i,j):
     '''Calculate Euclidean'''
@@ -150,7 +153,7 @@ def end_condition(V_new,V):
             return False
     return True
 
-def MC_FCM(items, number_clusters,max_iter = 3000):
+def MC_FCM(items, number_clusters,max_iter = 300):
     '''Implement MC_FCM'''
 
     V = init_C(items,number_clusters)
@@ -177,8 +180,9 @@ def assign_label(U):
     return label
 
 
-items, true_label = ReadData('data.txt')
-U,V = MC_FCM(items,3)
+items= ReadData('../dataset/wdbc_data.txt')
+true_label = ReadLabel('../dataset/wdbc_label.txt')
+U,V = MC_FCM(items,2)
 label = assign_label(U)
 print(U,true_label,label,sep='\n')
 print(metrics.rand_score(true_label,label))
