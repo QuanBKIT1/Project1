@@ -9,8 +9,8 @@ def ReadData(str):
     return data
 
 def write_data(data):
-    f1 = open('dataset/wdbc_data.txt', 'w')
-    f2 = open('dataset/wdbc_label.txt','w')
+    f1 = open('../dataset/wdbc_data.txt', 'w')
+    f2 = open('../dataset/wdbc_label.txt', 'w')
     for i in range(len(data)):
         item = [data[i][j] for j in range(2,len(data[i]))]
         label = data[i][1]
