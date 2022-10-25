@@ -1,4 +1,6 @@
 # Project1
+Cài đặt thuật toán FCM, MC-FCM, sSMC-FCM 
+Cài đặt các độ đo hiệu năng thuật toán
 
 Team member:
 1. Lê Đức Quân
