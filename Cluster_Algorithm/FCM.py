@@ -14,17 +14,19 @@ max_iter = config.max_iter
 def update_U(distance_matrix):
     """Update membership value for each iteration"""
     global m
-    U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
-    for i in range(len(U)):
-        for j in range(len(U[0])):
+    U = []
+    for vector in distance_matrix:
+        current = []
+        for j in range(len(vector)):
             dummy = 0
-            for k in range(len(U[0])):
-                if distance_matrix[i][k] == 0:
-                    U[i][j] = 0
+            for l in range(len(vector)):
+                if vector[l] == 0:
+                    current.append(0)
                     break
-                dummy += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (m - 1))
+                dummy += (vector[j] / vector[l]) ** (2 / (m - 1))
             else:
-                U[i][j] = 1 / dummy
+                current.append(1 / dummy)
+        U.append(current)
     return U
 
 
