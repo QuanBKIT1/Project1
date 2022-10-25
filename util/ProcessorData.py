@@ -1,3 +1,5 @@
+import numpy as np
+
 
 def ReadData(fileName):
     f = open(fileName, 'r')
@@ -16,6 +18,7 @@ def ReadData(fileName):
             itemFeatures.append(v)
 
         items.append(itemFeatures)
+    items = np.array(items)
     return items
 
 
@@ -28,6 +31,8 @@ def ReadLabel(fileName):
 
     for i in range(len(lines)):
         true_label.append(lines[i])
+
+    true_label = np.array(true_label)
     return true_label
 
 
@@ -36,7 +41,7 @@ def assign_label(U):
 
     for i in range(len(U)):
         maximum = max(U[i])
-        max_index = U[i].index(maximum)
+        max_index = np.where(U[i] == maximum)[0][0]
         label.append(max_index)
-
+    label = np.array(label)
     return label

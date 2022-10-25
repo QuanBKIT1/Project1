@@ -16,7 +16,7 @@ def calcJ():
     fu_co = MC_FCM.init_fuzzification_coefficient(items)
     U, V = MC_FCM.MC_FCM(items)
     D = MC_FCM.calc_distance_item_to_cluster(items, V)
-    label = MC_FCM.assign_label(U)
+    label = util.ProcessorData.assign_label(U)
     J = calc_J.calculate(U, D, fu_co)
     print(metrics.rand_score(true_label, label))
     print(J)
@@ -30,7 +30,7 @@ def run_FCM():
     print(metrics.rand_score(true_label, label))
 
 
-def run_MCFCM():
+def run_MC_FCM():
     U, V = MC_FCM.MC_FCM(items)
     label = util.ProcessorData.assign_label(U)
     print(U, V, true_label, label, sep='\n')

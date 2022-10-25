@@ -1,4 +1,7 @@
 import copy
+
+import numpy as np
+
 import config
 from util.Calculator import calc_distance_item_to_cluster, end_condition, init_C
 
@@ -11,38 +14,32 @@ max_iter = config.max_iter
 def update_U(distance_matrix):
     """Update membership value for each iteration"""
     global m
-    U = []
-    for i in range(len(distance_matrix)):
-        current = []
-        for j in range(len(distance_matrix[0])):
+    U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
+    for i in range(len(U)):
+        for j in range(len(U[0])):
             dummy = 0
-            for k in range(len(distance_matrix[0])):
+            for k in range(len(U[0])):
                 if distance_matrix[i][k] == 0:
-                    current.append(0)
+                    U[i][j] = 0
                     break
                 dummy += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (m - 1))
             else:
-                current.append(1 / dummy)
-        U.append(current)
+                U[i][j] = 1 / dummy
     return U
 
 
 def update_V(items, U):
     """ Update V after changing U """
     global m
-    V = []
+    V = np.zeros((len(U[0]), len(items[0])))
 
-    for k in range(len(U[0])):
-        current_cluster = []
-
-        for j in range(len(items[0])):
-            dummy_sum_ux = 0.0
-            dummy_sum_u = 0.0
-            for i in range(len(items)):
-                dummy_sum_ux += (U[i][k] ** m) * items[i][j]
-                dummy_sum_u += (U[i][k] ** m)
-            current_cluster.append(dummy_sum_ux / dummy_sum_u)
-        V.append(current_cluster)
+    for k in range(len(V)):
+        dummy_array = np.zeros(V.shape[1])
+        dummy = 0
+        for i in range(len(items)):
+            dummy_array += (U[i][k] ** m) * items[i]
+            dummy += U[i][k] ** m
+        V[k] = dummy_array / dummy
     return V
 
 

@@ -1,3 +1,3 @@
 import func
 
-func.run_MCFCM()
+func.run_MC_FCM()
