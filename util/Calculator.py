@@ -14,22 +14,11 @@ def d(i, j):
 def calc_matrix_distance(items):
     """Calculate distance between two elements
     Return matrix distance of it"""
-    # dist = np.zeros((len(items), len(items)))
-    # for i in range(len(items)):
-    #     for j in range(len(items)):
-    #         dist[i][j] = d(items[i], items[j])
-    # return dist
     return [[d(items[i], items[j]) for j in range(len(items))] for i in range(len(items))]
 
 
 def calc_distance_item_to_cluster(items, V):
     """ Calculate distance matrix distance between item and cluster """
-    # distance_matrix = np.zeros((len(items), len(V)))
-    # for i in range(len(items)):
-    #     for j in range(len(V)):
-    #         distance_matrix[i][j] = d(items[i], V[j])
-    #
-    # return distance_matrix
     return [[d(items[i], V[j]) for j in range(len(V))] for i in range(len(items))]
 
 

@@ -13,17 +13,21 @@ true_label = ReadLabel(fileLabel)
 def run_FCM():
     U, V = FCM.FCM(items)
     label = util.ProcessorData.assign_label(U)
-    print(U, V, true_label, label, sep='\n')
+    print("FCM:")
+    # print(U, V, true_label, label, sep='\n')
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, label))
+    print("PBM Score: ", util.Evaluation.PBM(items, V, label))
 
 
 def run_MC_FCM():
     U, V = MC_FCM.MC_FCM(items)
     label = util.ProcessorData.assign_label(U)
-    print(U, V, true_label, label, sep='\n')
+    print("MC_FCM:")
+    # print(U, V, true_label, label, sep='\n')
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, label))
+    print("PBM Score: ", util.Evaluation.PBM(items, V, label))
 
 def write_Result():
     pass

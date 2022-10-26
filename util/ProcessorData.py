@@ -8,15 +8,7 @@ def ReadData(fileName):
 
     items = []
     for i in range(len(lines)):
-        line = lines[i].split(',')
-        itemFeatures = []
-
-        for j in range(len(line)):
-            # Convert feature value to float
-            v = float(line[j])
-            # Add feature value to dict
-            itemFeatures.append(v)
-
+        itemFeatures = list(map(float, lines[i].split(",")))
         items.append(itemFeatures)
     items = np.array(items)
     return items
@@ -24,15 +16,8 @@ def ReadData(fileName):
 
 def ReadLabel(fileName):
     f = open(fileName, 'r')
-    lines = f.read().splitlines()
+    true_label = np.array(f.read().splitlines())
     f.close()
-
-    true_label = []
-
-    for i in range(len(lines)):
-        true_label.append(lines[i])
-
-    true_label = np.array(true_label)
     return true_label
 
 

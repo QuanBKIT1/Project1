@@ -3,8 +3,8 @@
 fileData = '../dataset/iris_data.txt'
 fileLabel = '../dataset/iris_label.txt'
 number_clusters = 3
-Epsilon = 0.0001
-max_iter = 300
+Epsilon = 0.00001
+max_iter = 150
 
 m = 9
 

@@ -16,9 +16,9 @@ def update_U(distance_matrix):
     global m
     U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
     for i in range(len(U)):
-        for j in range(len(U[0])):
+        for j in range(number_clusters):
             dummy = 0
-            for k in range(len(U[0])):
+            for k in range(number_clusters):
                 if distance_matrix[i][k] == 0:
                     U[i][j] = 0
                     break
@@ -31,7 +31,7 @@ def update_U(distance_matrix):
 def update_V(items, U):
     """ Update V after changing U """
     global m
-    V = np.zeros((len(U[0]), len(items[0])))
+    V = np.zeros((number_clusters, len(items[0])))
 
     for k in range(len(V)):
         dummy_array = np.zeros(V.shape[1])
