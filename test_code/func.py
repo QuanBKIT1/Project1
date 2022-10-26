@@ -3,6 +3,7 @@ import util.ProcessorData
 from Cluster_Algorithm import MC_FCM, FCM
 from util.ProcessorData import ReadData, ReadLabel
 import util.Evaluation
+
 fileData = config.fileData
 fileLabel = config.fileLabel
 
@@ -13,10 +14,10 @@ true_label = ReadLabel(fileLabel)
 def run_FCM():
     U, V = FCM.FCM(items)
     label = util.ProcessorData.assign_label(U)
-    print("FCM:")
+    print("FCM :")
     # print(U, V, true_label, label, sep='\n')
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
-    print("DBI Score: ", util.Evaluation.DBI(items, label))
+    print("DBI Score: ", util.Evaluation.DBI(items, V, label))
     print("PBM Score: ", util.Evaluation.PBM(items, V, label))
 
 
@@ -26,8 +27,9 @@ def run_MC_FCM():
     print("MC_FCM:")
     # print(U, V, true_label, label, sep='\n')
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
-    print("DBI Score: ", util.Evaluation.DBI(items, label))
+    print("DBI Score: ", util.Evaluation.DBI(items, V, label))
     print("PBM Score: ", util.Evaluation.PBM(items, V, label))
+
 
 def write_Result():
     pass

@@ -1,15 +1,47 @@
 from sklearn import metrics
 import numpy as np
-
+import util
 import config
 from util.Calculator import d
+
 number_clusters = config.number_clusters
+
+
 def RI(labels_true, labels_pred):
     return metrics.rand_score(labels_true, labels_pred)
 
 
-def DBI(X, labels):
-    return metrics.davies_bouldin_score(X, labels)
+def DBI(X, V, labels):
+
+    global number_clusters
+
+    index_cluster = [[]]*number_clusters
+    for i in range(len(labels)):
+        index_cluster[labels[i]].append(i)
+
+    index_cluster = np.array(index_cluster)
+    intra_dispersion = np.zeros(number_clusters)
+
+    for i in range(number_clusters):
+        sum = 0
+        for j in range(len(index_cluster[i])):
+            sum += util.Calculator.d(X[j], V[i])
+        intra_dispersion[i] = 1 / len(index_cluster[i]) * sum
+
+    separation_measure = util.Calculator.calc_matrix_distance(V)
+
+    similarity = np.zeros((number_clusters, number_clusters))
+    for i in range(number_clusters):
+        for j in range(number_clusters):
+            if i != j:
+                similarity[i][j] = (intra_dispersion[i] + intra_dispersion[j]) / separation_measure[i][j]
+            else:
+                similarity[i][j] = 0
+
+    D = np.max(similarity, axis=1)
+    score = 1 / number_clusters * np.sum(D)
+    return score
+
 
 def PBM(X, V, labels):
     X_ = [np.average([X[i][j] for i in range(len(X))]) for j in range(len(X[0]))]
@@ -28,6 +60,6 @@ def PBM(X, V, labels):
         for i in range(len(X)):
             if labels[i] == k:
                 Ec += d(X[i], Xtb[k])
-    Dc = max([d(Xtb[j],Xtb[k]) for j in range(number_clusters) for k in range(number_clusters)])
-    print(X_, El, Ec, Xtb, Dc, sep="\n")
-    return ((Dc * El)/(Ec*number_clusters))**2
+    Dc = max([d(Xtb[j], Xtb[k]) for j in range(number_clusters) for k in range(number_clusters)])
+    # print(X_, El, Ec, Xtb, Dc, sep="\n")
+    return ((Dc * El) / (Ec * number_clusters)) ** 2
