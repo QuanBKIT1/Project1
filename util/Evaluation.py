@@ -55,10 +55,6 @@ def DBI(X, labels):
     return score
 
 
-def sklearn_dbi(X, labels):
-    return metrics.davies_bouldin_score(X, labels)
-
-
 def PBM(X, V, labels):
     X_ = [np.average([X[i][j] for i in range(len(X))]) for j in range(len(X[0]))]
     El = sum([d(X[i], X_) for i in range(len(X))])
