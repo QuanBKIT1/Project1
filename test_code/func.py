@@ -18,6 +18,7 @@ def run_FCM():
     # print(U, V, true_label, label, sep='\n')
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, V, label))
+    print("DBI sklearn score: ",util.Evaluation.sklearn_dbi(items,label))
     print("PBM Score: ", util.Evaluation.PBM(items, V, label))
 
 
@@ -28,6 +29,7 @@ def run_MC_FCM():
     # print(U, V, true_label, label, sep='\n')
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, V, label))
+    print("DBI sklearn score: ",util.Evaluation.sklearn_dbi(items,label))
     print("PBM Score: ", util.Evaluation.PBM(items, V, label))
 
 
