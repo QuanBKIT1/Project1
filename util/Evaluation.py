@@ -11,13 +11,21 @@ def RI(labels_true, labels_pred):
     return metrics.rand_score(labels_true, labels_pred)
 
 
-def DBI(X, V, labels):
-
+def DBI(X, labels):
     global number_clusters
 
     index_cluster = [[] for i in range(number_clusters)]
     for i in range(len(labels)):
         index_cluster[labels[i]].append(i)
+
+    # Calculate X_
+    X_ = np.zeros((number_clusters,len(X[0])))
+    for i in range(len(X_)):
+        for j in range(len(X_[0])):
+            dummy = 0
+            for k in range(len(index_cluster[i])):
+                dummy += X[index_cluster[i][k]][j]
+            X_[i][j] = dummy/len(index_cluster[i])
 
     # Calculate di
     intra_dispersion = np.zeros(number_clusters)
@@ -25,11 +33,11 @@ def DBI(X, V, labels):
     for i in range(number_clusters):
         dummy = 0
         for j in range(len(index_cluster[i])):
-            dummy += util.Calculator.d(X[index_cluster[i][j]], V[i])
+            dummy += util.Calculator.d(X[index_cluster[i][j]], X_[i])
         intra_dispersion[i] = 1 / len(index_cluster[i]) * dummy
 
     # Calculate dij
-    separation_measure = util.Calculator.calc_matrix_distance(V)
+    separation_measure = util.Calculator.calc_matrix_distance(X_)
 
     # Calculate Dij
     similarity = np.zeros((number_clusters, number_clusters))
@@ -47,8 +55,9 @@ def DBI(X, V, labels):
     return score
 
 
-def sklearn_dbi(X,labels):
-    return metrics.davies_bouldin_score(X,labels)
+def sklearn_dbi(X, labels):
+    return metrics.davies_bouldin_score(X, labels)
+
 
 def PBM(X, V, labels):
     X_ = [np.average([X[i][j] for i in range(len(X))]) for j in range(len(X[0]))]
