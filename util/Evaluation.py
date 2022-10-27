@@ -26,7 +26,6 @@ def DBI(X, labels):
             for k in range(len(index_cluster[i])):
                 dummy += X[index_cluster[i][k]][j]
             X_[i][j] = dummy/len(index_cluster[i])
-
     # Calculate di
     intra_dispersion = np.zeros(number_clusters)
 
@@ -55,10 +54,20 @@ def DBI(X, labels):
     return score
 
 
-def PBM(X, V, labels):
+def PBM(X, labels):
+    # Calculate X_
     X_ = [np.average([X[i][j] for i in range(len(X))]) for j in range(len(X[0]))]
+    # X_ = []
+    # for j in range(len(X[0])):
+    #     a = 0
+    #     for i in range(len(X)):
+    #         a+= X[i][j]
+    #     X_.append(a/len(X))
+
+    # Calculate El
     El = sum([d(X[i], X_) for i in range(len(X))])
-    Ec = 0
+
+    # Calculate list X_
     Xtb = []
     for k in range(number_clusters):
         item = []
@@ -68,10 +77,9 @@ def PBM(X, V, labels):
         Xtb.append([np.average([item[i][j] for i in range(len(item))]) for j in range(len(X[0]))])
     Xtb = np.array(Xtb)
 
-    for k in range(number_clusters):
-        for i in range(len(X)):
-            if labels[i] == k:
-                Ec += d(X[i], Xtb[k])
+    # Calculate Ec
+    Ec = sum([d(X[i], Xtb[labels[i]]) for i in range(len(X))])
+
+    # Calculate Dc
     Dc = max([d(Xtb[j], Xtb[k]) for j in range(number_clusters) for k in range(number_clusters)])
-    # print(X_, El, Ec, Xtb, Dc, sep="\n")
-    return ((Dc * El) / (Ec * number_clusters)) ** 2
+    return (1/number_clusters * El/Ec * Dc)**2
