@@ -57,12 +57,6 @@ def DBI(X, labels):
 def PBM(X, labels):
     # Calculate X_
     X_ = [np.average([X[i][j] for i in range(len(X))]) for j in range(len(X[0]))]
-    # X_ = []
-    # for j in range(len(X[0])):
-    #     a = 0
-    #     for i in range(len(X)):
-    #         a+= X[i][j]
-    #     X_.append(a/len(X))
 
     # Calculate El
     El = sum([d(X[i], X_) for i in range(len(X))])
