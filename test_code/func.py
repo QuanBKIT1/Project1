@@ -19,6 +19,7 @@ def run_FCM():
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, label))
     print("PBM Score: ", util.Evaluation.PBM(items, V, label))
+    print("ASWC Score: ", util.Evaluation.ASWC(items,label)) # khanh them
 
 
 def run_MC_FCM():
@@ -29,7 +30,7 @@ def run_MC_FCM():
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, label))
     print("PBM Score: ", util.Evaluation.PBM(items, V, label))
-
+    print("ASWC Score: ", util.Evaluation.ASWC(items,label)) # khanh them
 
 def write_Result():
     pass

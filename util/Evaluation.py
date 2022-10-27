@@ -4,6 +4,7 @@ import util
 import config
 from util.Calculator import d
 
+
 number_clusters = config.number_clusters
 
 
@@ -75,3 +76,49 @@ def PBM(X, V, labels):
     Dc = max([d(Xtb[j], Xtb[k]) for j in range(number_clusters) for k in range(number_clusters)])
     # print(X_, El, Ec, Xtb, Dc, sep="\n")
     return ((Dc * El) / (Ec * number_clusters)) ** 2
+
+
+# khanh begin:
+def ASWC(items,label):
+    cum = []
+    for j in range(number_clusters):
+        clus = []
+        for i in range(len(label)):
+            if label[i] == j:
+                clus.append(items[i])
+        cum.append(clus)
+    sum1 = 0
+    sum2 = 0
+    dem1 = 0
+    dem2 = 0
+    apj = []
+    # dqj=[]
+    bpj = []
+    sxj = []
+    ee = 0.00001
+    tong = 0
+    for j in range(len(label)):
+        dqj = []
+        for i in range(number_clusters):
+            if i != label[j]:  # nếu khác cụm
+                for ob in cum[i]:
+                    sum2 = sum2 + d(ob, items[j])
+                    dem2 = dem2 + 1
+                dqj.append(sum2 / dem2)  # dqi = trung bình khoảng cách từ item[j] đến cụm q !=
+            if i == label[j]:  # nếu cùng cụm
+                for ob in cum[i]:
+                    sum1 = sum1 + d(ob, items[j])
+                    dem1 = dem1 + 1
+        bpj.append(min(dqj))
+        apj.append(sum1 / (dem1 - 1))  # khoảng cách tb từ item[j] đến đối tượng cùng cụm
+        sxj.append(bpj[j] / (apj[j] + ee))
+        # sxj.append((-apj[j]+bpj[j])/max(bpj[j],apj[j]))           # đây là SWC
+        dem1 = 0
+        dem2 = 0
+        sum1 = 0
+        sum2 = 0
+
+    for i in sxj:
+        tong += i
+    return tong / len(sxj)
+#khanh end
