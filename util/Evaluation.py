@@ -55,7 +55,7 @@ def DBI(X, labels):
     score = np.mean(D)
     return score
 
-
+# Ngoc Huy begin:
 def PBM(X, V, labels):
     X_ = [np.average([X[i][j] for i in range(len(X))]) for j in range(len(X[0]))]
     El = sum([d(X[i], X_) for i in range(len(X))])
@@ -77,6 +77,7 @@ def PBM(X, V, labels):
     # print(X_, El, Ec, Xtb, Dc, sep="\n")
     return ((Dc * El) / (Ec * number_clusters)) ** 2
 
+# Ngoc Huy End:
 
 # khanh begin:
 def ASWC(items,label):
