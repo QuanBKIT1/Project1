@@ -16,7 +16,7 @@ def init_monitored_elements(distance_matrix):
     """initialize the monitored elements i of the cluster k"""
     dict1 = {}
     while (len(dict1) <= len(distance_matrix)*rate/100):
-        dict1[random.randrange(1, len(distance_matrix)+1)] = random.randrange(1, number_clusters+1)
+        dict1[random.randrange(len(distance_matrix))] = random.randrange(number_clusters)
     return dict1
 
 def g(x,alpha):
@@ -50,9 +50,9 @@ def calc_M1(M, distance_matrix, monitored_elements):
     return max(M1_list)
 
 
-def init_fuzzification_coefficient(distance_matrix, monitored_elements, M1):
+def init_fuzzification_coefficient(distance_matrix, monitored_elements):
     """Calculate matrix of fuzzification coefficient correspond with each element"""
-    global M, number_clusters
+    global M, M1, number_clusters
     m = np.full((len(distance_matrix), number_clusters), M)
 
     for i in monitored_elements:
@@ -85,8 +85,8 @@ def update_U(distance_matrix, monitored_elements):
             dmin = np.min(distance_matrix[i])
             d = distance_matrix[i] / dmin
             k = monitored_elements[i]
+            a = 0
             for j in range(number_clusters):
-                a = 0
                 if (j != k):
                     d[j] = (M * d[j] ** 2) ** (-1 / (M - 1))
                     a += d[j]
@@ -130,12 +130,12 @@ def sSMC_FCM(items):
     # M1 = calc_M1(M, items, monitored_elements)
     M1 = 4
     print(M1)
-    fuzzification_coefficient = init_fuzzification_coefficient(items, monitored_elements, M1)
+    m = init_fuzzification_coefficient(items, monitored_elements)
     U = np.zeros((len(items),number_clusters))
     for k in range(max_iter):
         distance_matrix = calc_distance_item_to_cluster(items, V)
         U = update_U(distance_matrix, monitored_elements)
-        V_new = update_V(items, U, fuzzification_coefficient)
+        V_new = update_V(items, U, m)
         if end_condition(V_new, V, Epsilon):
             break
         V = np.copy(V_new)
