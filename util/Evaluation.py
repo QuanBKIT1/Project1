@@ -58,7 +58,7 @@ def DBI(X, labels):
 def PBM(X, labels):
     # Calculate X_
 # Ngoc Huy begin:
-    X_ = [np.average([X[i][j] for i in range(len(X))]) for j in range(len(X[0]))]
+    X_ = np.mean(X, axis=0)
 
     # Calculate El
     El = sum([d(X[i], X_) for i in range(len(X))])
@@ -70,7 +70,7 @@ def PBM(X, labels):
         for i in range(len(X)):
             if labels[i] == k:
                 item.append(X[i])
-        Xtb.append([np.average([item[i][j] for i in range(len(item))]) for j in range(len(X[0]))])
+        Xtb.append(np.mean(item, axis=0))
     Xtb = np.array(Xtb)
 
     # Calculate Ec
@@ -79,8 +79,6 @@ def PBM(X, labels):
     # Calculate Dc
     Dc = max([d(Xtb[j], Xtb[k]) for j in range(number_clusters) for k in range(number_clusters)])
     return (1/number_clusters * El/Ec * Dc)**2
-    # print(X_, El, Ec, Xtb, Dc, sep="\n")
-    return ((Dc * El) / (Ec * number_clusters)) ** 2
 
 # Ngoc Huy End:
 

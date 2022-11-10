@@ -45,7 +45,7 @@ def init_fuzzification_coefficient(items):
 def update_U(distance_matrix, fuzzification_coefficient):
     """Update membership value for each iteration"""
 
-    U = np.zeros((len(distance_matrix),len(distance_matrix[0])))
+    U = np.zeros((len(distance_matrix),number_clusters))
     for i in range(len(U)):
         for j in range(number_clusters):
             dummy = 0
@@ -77,7 +77,7 @@ def update_V(items, U, fuzzification_coefficient):
 def MC_FCM(items):
     """Implement MC_FCM"""
     global number_clusters, Epsilon
-    V = init_C_KMeans(items, number_clusters)
+    V = init_C(items, number_clusters)
     fuzzification_coefficient = init_fuzzification_coefficient(items)
     U = np.zeros((len(items),number_clusters))
     for k in range(max_iter):
