@@ -118,7 +118,7 @@ def update_V(items, U, fuzzification_coefficient):
         dummy = 0
         for i in range(len(items)):
             dummy_array += (U[i][k]**fuzzification_coefficient[i][k])*items[i]
-            dummy += U[i][k] ** fuzzification_coefficient[i]
+            dummy += U[i][k] ** fuzzification_coefficient[i][k]
         V[k] = dummy_array / dummy
     return V
 
