@@ -14,4 +14,4 @@ alpha = 0.6
 #sSMC-FCM
 M = 2
 M1 = 4
-rate = 10
+rate = 5

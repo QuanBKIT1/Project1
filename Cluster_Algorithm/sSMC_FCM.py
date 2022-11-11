@@ -19,13 +19,13 @@ def init_monitored_elements(distance_matrix):
         dict1[random.randrange(len(distance_matrix))] = random.randrange(number_clusters)
     return dict1
 
-def g(x,alpha):
+def g(x):
     return x * (alpha ** (x-1))
 
-def max_value(M, alpha, right_val):
+def max_value(right_val):
     """Calculate the maximum value satisfying the inequality"""
-    value = math.ceil(max(M, -1/ np.log(alpha)))
-    while (g(value, alpha) <= right_val):
+    value = M
+    while (g(value) > right_val):
         value += 1
     return value
 
@@ -44,9 +44,7 @@ def calc_M1(M, distance_matrix, monitored_elements):
             else:
                 Uik = 1 / dummy
         right_val = M * ((1 - alpha)/ (1 / Uik - 1)) ** (M-1)
-        M1_list.append(max_value(M, alpha, right_val))
-        print(M1_list)
-    print(1)
+        M1_list.append(max_value(right_val))
     return max(M1_list)
 
 
@@ -127,9 +125,7 @@ def sSMC_FCM(items):
     global number_clusters, Epsilon, alpha, M, M1
     V = init_C(items, number_clusters)
     monitored_elements = init_monitored_elements(items)
-    # M1 = calc_M1(M, items, monitored_elements)
-    M1 = 4
-    print(M1)
+    M1 = calc_M1(M, items, monitored_elements)
     m = init_fuzzification_coefficient(items, monitored_elements)
     U = np.zeros((len(items),number_clusters))
     for k in range(max_iter):
