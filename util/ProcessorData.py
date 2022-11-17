@@ -1,4 +1,7 @@
 import numpy as np
+import config
+
+colLabel = config.colLabel
 
 
 def ReadData(fileName):
@@ -7,11 +10,15 @@ def ReadData(fileName):
     f.close()
 
     items = []
+    trueLabel = []
     for i in range(len(lines)):
-        itemFeatures = list(map(float, lines[i].split(",")))
+        itemFeatures = lines[i].split(",")
+        trueLabel.append(itemFeatures.pop(colLabel))
+        itemFeatures = list(map(float, itemFeatures))
         items.append(itemFeatures)
     items = np.array(items)
-    return items
+    trueLabel = np.array(trueLabel)
+    return items, trueLabel
 
 
 def ReadLabel(fileName):

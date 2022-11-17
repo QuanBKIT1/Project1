@@ -20,7 +20,7 @@ def update_U(distance_matrix):
             dummy = 0
             for k in range(number_clusters):
                 if distance_matrix[i][k] == 0:
-                    U[i][j] = 0
+                    U[i][j] = 1
                     break
                 dummy += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (m - 1))
             else:

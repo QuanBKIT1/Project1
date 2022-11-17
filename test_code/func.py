@@ -5,10 +5,8 @@ from util.ProcessorData import ReadData, ReadLabel
 import util.Evaluation
 
 fileData = config.fileData
-fileLabel = config.fileLabel
 
-items = ReadData(fileData)
-true_label = ReadLabel(fileLabel)
+items, true_label = ReadData(fileData)
 
 
 def run_FCM():
@@ -19,8 +17,8 @@ def run_FCM():
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, label))
     print("PBM Score: ", util.Evaluation.PBM(items, label))
-    print("ASWC Score: ", util.Evaluation.ASWC(items,label)) # khanh them
-    print("MA Score: ",util.Evaluation.MA(true_label,label))
+    print("ASWC Score: ", util.Evaluation.ASWC(items, label))  # khanh them
+    # print("MA Score: ", util.Evaluation.MA(true_label, label))
 
 
 def run_MC_FCM():
@@ -31,8 +29,9 @@ def run_MC_FCM():
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, label))
     print("PBM Score: ", util.Evaluation.PBM(items, label))
-    print("ASWC Score: ", util.Evaluation.ASWC(items,label)) # khanh them
-    print("MA Score: ",util.Evaluation.MA(true_label,label))
+    print("ASWC Score: ", util.Evaluation.ASWC(items, label))  # khanh them
+    # print("MA Score: ", util.Evaluation.MA(true_label, label))
+
 
 def run_sSMC_FCM():
     U, V = sSMC_FCM.sSMC_FCM(items)
@@ -42,8 +41,9 @@ def run_sSMC_FCM():
     print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
     print("DBI Score: ", util.Evaluation.DBI(items, label))
     print("PBM Score: ", util.Evaluation.PBM(items, label))
-    print("ASWC Score: ", util.Evaluation.ASWC(items,label)) # khanh them
-    print("MA Score: ",util.Evaluation.MA(true_label,label))
+    print("ASWC Score: ", util.Evaluation.ASWC(items, label))  # khanh them
+    # print("MA Score: ", util.Evaluation.MA(true_label, label))
+
 
 def write_Result():
     pass

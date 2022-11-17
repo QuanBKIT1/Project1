@@ -1,17 +1,26 @@
 # Parameter
 
-fileData = '../dataset/iris_data.txt'
-fileLabel = '../dataset/iris_label.txt'
-number_clusters = 3
+# Config data path and column of label
+fileData = '../dataset/iris.data'
+# Datapath  Column label
+# iris.data     4
+# wdbc.data     1
+# wine.data     0
+colLabel = 4
+
+number_clusters = 2
 Epsilon = 0.00001
 max_iter = 150
-#FCM
+
+# FCM
 m = 6
-#MC-FCM
+
+# MC-FCM
 mL = 3.1
 mU = 9.1
-alpha = 0.6
-#sSMC-FCM
+alpha = 0.7
+
+# sSMC-FCM
 M = 2
 M1 = 4
 rate = 5
