@@ -1,9 +1,5 @@
 import copy
-
-import numpy as np
-
-import config
-from util.Calculator import calc_distance_item_to_cluster, end_condition, init_C
+from util.Calculator import *
 
 m = config.m
 Epsilon = config.Epsilon
@@ -46,7 +42,7 @@ def update_V(items, U):
 def FCM(items):
     """Implement FCM"""
     global number_clusters, Epsilon
-    V = init_C(items, number_clusters)
+    V = init_C_KMeans(items, number_clusters)
     U = []
 
     for k in range(max_iter):
