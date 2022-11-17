@@ -1,12 +1,12 @@
 # Parameter
 
 # Config data path and column of label
-fileData = '../dataset/iris.data'
+fileData = '../dataset/wine.data'
 # Datapath  Column label
 # iris.data     4
 # wdbc.data     1
 # wine.data     0
-colLabel = 4
+colLabel = 0
 
 number_clusters = 3
 Epsilon = 0.00001
@@ -22,5 +22,5 @@ alpha = 2.5
 
 # sSMC-FCM
 M = 2
-M_ = 4
-rate = 5
+M_ = 7
+rate = 20
