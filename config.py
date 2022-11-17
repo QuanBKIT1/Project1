@@ -8,19 +8,19 @@ fileData = '../dataset/iris.data'
 # wine.data     0
 colLabel = 4
 
-number_clusters = 2
+number_clusters = 3
 Epsilon = 0.00001
 max_iter = 150
 
 # FCM
-m = 6
+m = 2
 
 # MC-FCM
-mL = 3.1
+mL = 1.1
 mU = 9.1
-alpha = 0.7
+alpha = 2.5
 
 # sSMC-FCM
 M = 2
-M1 = 4
+M_ = 4
 rate = 5

@@ -21,13 +21,6 @@ def ReadData(fileName):
     return items, trueLabel
 
 
-def ReadLabel(fileName):
-    f = open(fileName, 'r')
-    true_label = np.array(f.read().splitlines())
-    f.close()
-    return true_label
-
-
 def assign_label(U):
     label = []
 

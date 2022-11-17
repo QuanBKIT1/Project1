@@ -1,8 +1,8 @@
 import random
-
-import numpy as np
 import math
 from sklearn.cluster import kmeans_plusplus
+from sklearn import preprocessing
+from util.ProcessorData import *
 
 
 def d(i, j):
@@ -33,8 +33,10 @@ def end_condition(V_new, V, Epsilon):
 
 def init_C(items, number_clusters):
     """Initialize random clusters """
-    C = np.zeros((number_clusters,len(items[0])))
-    index = random.sample(range(len(items) - 1), number_clusters)
+    C = np.zeros((number_clusters, len(items[0])))
+
+    # Create difference clusters
+    index = random.sample(range(len(items)), number_clusters)
     for i in range(len(index)):
         C[i] = items[index[i]]
     return C
@@ -43,4 +45,22 @@ def init_C(items, number_clusters):
 def init_C_KMeans(items, number_clusters):
     data = np.array(items)
     C = kmeans_plusplus(data, number_clusters)[0]
+    return C
+
+
+def init_C_sSMC(items, true_label,number_clusters):
+    """Initialize clusters for sSMC algorithm based on labeled data"""
+    le = preprocessing.LabelEncoder()
+    le.fit(true_label)
+    label = le.transform(true_label)
+
+    # Initialize clusters
+    C = np.zeros((number_clusters,len(items[0])))
+    for i in range(number_clusters):
+        dummy = list()
+        for j in range(len(items)):
+            if label[j] == i:
+                dummy.append(items[j])
+        C[i] = np.mean(dummy,axis=0)
+
     return C

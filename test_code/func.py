@@ -1,7 +1,7 @@
 import config
 import util.ProcessorData
 from Cluster_Algorithm import sSMC_FCM, MC_FCM, FCM
-from util.ProcessorData import ReadData, ReadLabel
+from util.ProcessorData import ReadData
 import util.Evaluation
 
 fileData = config.fileData
@@ -34,7 +34,7 @@ def run_MC_FCM():
 
 
 def run_sSMC_FCM():
-    U, V = sSMC_FCM.sSMC_FCM(items)
+    U, V = sSMC_FCM.sSMC_FCM(items, true_label)
     label = util.ProcessorData.assign_label(U)
     print("sSMC_FCM:")
     # print(U, V, true_label, label, sep='\n')
