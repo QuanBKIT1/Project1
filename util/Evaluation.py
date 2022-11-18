@@ -131,29 +131,30 @@ def ASWC(items,label):
 
 def MA(true_label, label):
 
-   # label_iris = [["Iris-setosa",0],["Iris-versicolor",0],["Iris-virginica",0]]
-    label_wdbc = [['M',0],['B',0]]
-   # label_wine = [['1',0],['2',0],['3',0]]
-    coefficient = [[0, 0], [1, 0]]
+    trueL = set(true_label)
+
+    list_trueL = [[la,0] for la in trueL]
+
     ''' count the number of each label in true_label'''
+
     for i in true_label:
-        for j in label_wdbc:
+        for j in list_trueL:
             if i == j[0]:
                 j[1]+=1
-    label_wdbc.sort(key=lambda ns:ns[1])
-    #print("actual number: ",label_wdbc)
+
+    list_trueL.sort(key = lambda ns:ns[1])
 
     '''count the number of Xi in cluster after clustering'''
-    for i in label:
-        for j in coefficient:
-            if i == j[0]:
-                j[1]+=1
-    coefficient.sort(key = lambda ns:ns[1])
-    #print("afer clustering: ",coefficient)
 
-    perfor = 100000
-    for i in range(len(label_wdbc)):
-        perfor = min(perfor,coefficient[i][1]/label_wdbc[i][1])
-    return perfor
+    list_L = [[i,0] for i in range(len(trueL))]
+
+    for i in label:
+        for j in list_L:
+            if i == j[0]:
+                j[1] +=1
+
+    list_L.sort(key = lambda ns:ns[1])
+    
+    return min([list_L[i][1]/list_trueL[i][1] for i in range(len(trueL))])
 
 # the huy end
