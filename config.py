@@ -23,4 +23,4 @@ alpha = 2.5
 # sSMC-FCM
 M = 2
 M_ = 7
-rate = 20
+rate = 5

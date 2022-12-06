@@ -21,7 +21,8 @@ def init_monitored_elements(items, true_label):
     monitored_label = le.transform(monitored_label)
     for i in range(number_monitored_item):
         dict1[monitored_index[i]] = monitored_label[i]
-
+    print(len(items))
+    print(dict1)
     return dict1
 
 
@@ -116,15 +117,19 @@ def update_U(distance_matrix, monitored_elements, M1):
                 U[i][j] = mu[j] / sumd
         else:
             # Calculate U for unsupervised components
-            for j in range(number_clusters):
-                dummy = 0
+            if (0 in distance_matrix[i]):
                 for k in range(number_clusters):
-                    if distance_matrix[i][k] == 0:
-                        U[i][j] = 0
-                        break
-                    dummy += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (M - 1))
+                    if (distance_matrix[i][k] != 0):
+                        U[i][k] = 0
+                    else:
+                        U[i][k] = 1
+                continue
+            for k in range(number_clusters):
+                dummy = 0
+                for j in range(number_clusters):
+                    dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (M - 1))
                 else:
-                    U[i][j] = 1 / dummy
+                    U[i][k] = 1 / dummy
     return U
 
 

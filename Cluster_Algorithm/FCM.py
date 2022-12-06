@@ -12,15 +12,19 @@ def update_U(distance_matrix):
     global m
     U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
     for i in range(len(U)):
-        for j in range(number_clusters):
-            dummy = 0
+        if (0 in distance_matrix[i]):
             for k in range(number_clusters):
-                if distance_matrix[i][k] == 0:
-                    U[i][j] = 1
-                    break
-                dummy += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (m - 1))
+                if (distance_matrix[i][k] != 0):
+                    U[i][k] = 0
+                else:
+                    U[i][k] = 1
+            continue
+        for k in range(number_clusters):
+            dummy = 0
+            for j in range(number_clusters):
+                dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (m - 1))
             else:
-                U[i][j] = 1 / dummy
+                U[i][k] = 1 / dummy
     return U
 
 
