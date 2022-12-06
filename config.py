@@ -1,12 +1,12 @@
 # Parameter
 
 # Config data path and column of label
-fileData = '../dataset/wine.data'
+fileData = '../dataset/iris.data'
 # Datapath  Column label
 # iris.data     4
 # wdbc.data     1
 # wine.data     0
-colLabel = 0
+colLabel = 4
 
 number_clusters = 3
 Epsilon = 0.00001
