@@ -9,8 +9,8 @@ fileData = config.fileData
 items, true_label = ReadData(fileData)
 
 
-def run_FCM():
-    U, V = FCM.FCM(items)
+def run_FCM(items, number_clusters, Epsilon, m, max_iter):
+    U, V = FCM.FCM(items, number_clusters, Epsilon, m, max_iter)
     label = util.ProcessorData.assign_label(U)
     print("FCM :")
     # print(U, V, true_label, label, sep='\n')

@@ -1,15 +1,8 @@
 import copy
 from util.Calculator import *
 
-m = config.m
-Epsilon = config.Epsilon
-number_clusters = config.number_clusters
-max_iter = config.max_iter
-
-
-def update_U(distance_matrix):
+def update_U(distance_matrix, m):
     """Update membership value for each iteration"""
-    global m
     U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
     for i in range(len(U)):
         if (0 in distance_matrix[i]):
@@ -28,9 +21,8 @@ def update_U(distance_matrix):
     return U
 
 
-def update_V(items, U):
+def update_V(items, U, m):
     """ Update V after changing U """
-    global m
     V = np.zeros((number_clusters, len(items[0])))
 
     for k in range(len(V)):
@@ -43,16 +35,15 @@ def update_V(items, U):
     return V
 
 
-def FCM(items):
+def FCM(items, number_clusters, Epsilon, m, max_iter):
     """Implement FCM"""
-    global number_clusters, Epsilon
     V = init_C_KMeans(items, number_clusters)
     U = []
 
     for k in range(max_iter):
         distance_matrix = calc_distance_item_to_cluster(items, V)
-        U = update_U(distance_matrix)
-        V_new = update_V(items, U)
+        U = update_U(distance_matrix, m)
+        V_new = update_V(items, U, m)
         if end_condition(V_new, V, Epsilon):
             break
         V = copy.deepcopy(V_new)

@@ -8,9 +8,9 @@ fileData = '../dataset/wine.data'
 # wine.data     0
 colLabel = 0
 
-number_clusters = 3
+numberClusters = 3
 Epsilon = 0.00001
-max_iter = 150
+maxIter = 150
 
 # FCM
 m = 2

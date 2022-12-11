@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
-    <height>761</height>
+    <width>1064</width>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="2">
+    <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox_2">
       <property name="font">
        <font>
@@ -77,7 +77,7 @@
          <string>Cột dữ liệu :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="labelCol">
+       <widget class="QLineEdit" name="colLabelText">
         <property name="geometry">
          <rect>
           <x>160</x>
@@ -87,7 +87,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLineEdit" name="colData">
+       <widget class="QLineEdit" name="colDataText">
         <property name="geometry">
          <rect>
           <x>160</x>
@@ -115,7 +115,7 @@
        <property name="title">
         <string>Điều chỉnh tham số đầu vào</string>
        </property>
-       <widget class="QLineEdit" name="numberCluster">
+       <widget class="QLineEdit" name="numberClusterText">
         <property name="geometry">
          <rect>
           <x>130</x>
@@ -141,7 +141,7 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="epsilonEdit">
+       <widget class="QLineEdit" name="epsilonText">
         <property name="geometry">
          <rect>
           <x>380</x>
@@ -179,7 +179,7 @@
         <property name="title">
          <string>FCM</string>
         </property>
-        <widget class="QLineEdit" name="mEdit">
+        <widget class="QLineEdit" name="mText">
          <property name="geometry">
           <rect>
            <x>90</x>
@@ -218,7 +218,7 @@
         <property name="title">
          <string>MC-FCM</string>
         </property>
-        <widget class="QLineEdit" name="mLEdit">
+        <widget class="QLineEdit" name="mLText">
          <property name="geometry">
           <rect>
            <x>90</x>
@@ -260,7 +260,7 @@
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
-        <widget class="QLineEdit" name="mUEdit">
+        <widget class="QLineEdit" name="mUText">
          <property name="geometry">
           <rect>
            <x>340</x>
@@ -286,7 +286,7 @@
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
-        <widget class="QLineEdit" name="alphaEdit">
+        <widget class="QLineEdit" name="alphaText">
          <property name="geometry">
           <rect>
            <x>220</x>
@@ -351,7 +351,7 @@
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
-        <widget class="QLineEdit" name="M_Edit">
+        <widget class="QLineEdit" name="M_Text">
          <property name="geometry">
           <rect>
            <x>340</x>
@@ -377,7 +377,7 @@
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
-        <widget class="QLineEdit" name="rateEdit">
+        <widget class="QLineEdit" name="rateText">
          <property name="geometry">
           <rect>
            <x>250</x>
@@ -449,7 +449,7 @@
          </property>
         </item>
        </widget>
-       <widget class="QLineEdit" name="maxIter">
+       <widget class="QLineEdit" name="maxIterText">
         <property name="geometry">
          <rect>
           <x>200</x>
@@ -565,8 +565,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1019</width>
-     <height>26</height>
+     <width>1064</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
