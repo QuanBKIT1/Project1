@@ -5,13 +5,10 @@ from util.Calculator import *
 class FCM():
     def setFileData(self, fileData):
         self.fileData = fileData
-        
-    def setColLabel(self, colLabel):
-        self.colLabel = colLabel
 
     def processData(self, colLabel):
         self.items, self.true_label = ReadData(self.fileData, colLabel)
-        
+
     def FCM(self, number_clusters, Epsilon, m, max_iter):
         """Implement FCM"""
         self.V = init_C_KMeans(self.items, number_clusters)

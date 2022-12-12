@@ -11,7 +11,7 @@ from PyQt5 import uic
 class MyWindowClass(QMainWindow):
     def __init__(self):
         super(MyWindowClass, self).__init__()
-        uic.loadUi("designer/Project1_UI.ui", self)
+        uic.loadUi("../designer/Project1_UI.ui", self)
         self.fcm = FCM.FCM()
         self.mc_fcm = MC_FCM.MC_FCM()
         # self.ssmc_fcm = sSMC_FCM.sSMC_FCM()

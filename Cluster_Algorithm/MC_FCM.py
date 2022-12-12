@@ -1,13 +1,11 @@
+from util.Calculator import *
+from util.ProcessorData import ReadData, assign_label
+from util.Evaluation import *
 import numpy as np
 
-from util.Calculator import *
-import util
 class MC_FCM():
     def setFileData(self, fileData):
         self.fileData = fileData
-        
-    def setColLabel(self, colLabel):
-        self.colLabel = colLabel
 
     def processData(self, colLabel):
         self.items, self.true_label = ReadData(self.fileData, colLabel)
@@ -15,10 +13,9 @@ class MC_FCM():
     def MC_FCM(self, number_clusters, Epsilon, mL, mU, alpha, max_iter):
         """Implement MC_FCM"""
         self.V = init_C_KMeans(self.items, number_clusters)
-        print(1)
         fuzzification_coefficient = self.init_fuzzification_coefficient(mL, mU, alpha, number_clusters)
-        print(1)
         self.U = np.zeros((len(self.items), number_clusters))
+
         for k in range(max_iter):
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
             self.U = self.update_U(distance_matrix, fuzzification_coefficient)
@@ -28,13 +25,13 @@ class MC_FCM():
             self.V = np.copy(V_new)
         
     def printResult(self):
-        label = util.ProcessorData.assign_label(self.U)
+        label = assign_label(self.U)
         print("MC-FCM :")
-        print("Rand Index Score: ", util.Evaluation.RI(self.true_label, label))
-        print("DBI Score: ", util.Evaluation.DBI(self.items, label))
-        print("PBM Score: ", util.Evaluation.PBM(self.items, label))
-        print("ASWC Score: ", util.Evaluation.ASWC(self.items, label))
-        print("MA Score: ", util.Evaluation.MA(self.true_label, label))
+        print("Rand Index Score: ", RI(self.true_label, label))
+        print("DBI Score: ", DBI(self.items, label))
+        print("PBM Score: ", PBM(self.items, label))
+        print("ASWC Score: ", ASWC(self.items, label))
+        print("MA Score: ", MA(self.true_label, label))
 
     def init_fuzzification_coefficient(self, mL, mU, alpha, number_clusters):
         """Calculate list of fuzzification coefficient correspond with each element"""
