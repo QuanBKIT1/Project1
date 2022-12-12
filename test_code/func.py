@@ -5,22 +5,6 @@ from util.ProcessorData import ReadData
 import util.Evaluation
 
 fileData = config.fileData
-
-items, true_label = ReadData(fileData)
-
-
-def run_FCM(items, number_clusters, Epsilon, m, max_iter):
-    U, V = FCM.FCM(items, number_clusters, Epsilon, m, max_iter)
-    label = util.ProcessorData.assign_label(U)
-    print("FCM :")
-    # print(U, V, true_label, label, sep='\n')
-    print("Rand Index Score: ", util.Evaluation.RI(true_label, label))
-    print("DBI Score: ", util.Evaluation.DBI(items, label))
-    print("PBM Score: ", util.Evaluation.PBM(items, label))
-    print("ASWC Score: ", util.Evaluation.ASWC(items, label))  # khanh them
-    # print("MA Score: ", util.Evaluation.MA(true_label, label))
-
-
 def run_MC_FCM():
     U, V = MC_FCM.MC_FCM(items)
     label = util.ProcessorData.assign_label(U)

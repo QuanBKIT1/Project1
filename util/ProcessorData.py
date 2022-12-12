@@ -1,10 +1,7 @@
 import numpy as np
 import config
 
-colLabel = config.colLabel
-
-
-def ReadData(fileName):
+def ReadData(fileName, colLabel):
     f = open(fileName, 'r')
     lines = f.read().splitlines()
     f.close()

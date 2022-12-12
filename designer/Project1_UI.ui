@@ -590,5 +590,53 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>browser</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>choose_data()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>462</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>runButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>caculate_cluster()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>407</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>571</x>
+     <y>292</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataView</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>preprocess_data()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>505</x>
+     <y>102</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>578</x>
+     <y>292</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
