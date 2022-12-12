@@ -1,5 +1,7 @@
 from util.Calculator import *
-import config
+from util.ProcessorData import ReadData, assign_label
+from util.Evaluation import *
+import numpy as np
 class sSMC_FCM():
     def setFileData(self, fileData):
         self.fileData = fileData
@@ -7,23 +9,22 @@ class sSMC_FCM():
     def processData(self, colLabel):
         self.items, self.true_label = ReadData(self.fileData, colLabel)
 
-    def sSMC_FCM(self, number_clusters, Epsilon, M, M_, rate, max_iter):
+    def sSMC_FCM(self, number_clusters, Epsilon, M, M_, rate, alpha, max_iter):
         """Implement sSMC_FCM"""
         self.V = init_C_sSMC(self.items, self.true_label, number_clusters)
         monitored_elements = self.init_monitored_elements(self.items, self.true_label, rate)
         # M1 = calc_M1(items, monitored_elements)
-
         m = self.init_fuzzification_coefficient(self.items, monitored_elements, M, M_)
         self.U = np.zeros((len(self.items), number_clusters))
         for k in range(max_iter):
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
-            self.U = self.update_U(distance_matrix, monitored_elements, M_)
+            self.U = self.update_U(distance_matrix, monitored_elements, M, M_, Epsilon)
             V_new = self.update_V(self.items, self.U, m)
             if end_condition(V_new, self.V, Epsilon):
                 break
             self.V = np.copy(V_new)
 
-    def update_U(self, distance_matrix, monitored_elements, M, M1):
+    def update_U(self, distance_matrix, monitored_elements, M, M1, Epsilon):
         """Update membership value for each iteration"""
         U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
         for i in range(len(U)):
@@ -39,7 +40,7 @@ class sSMC_FCM():
                         a += mu[j]
                 b = (M1 - M) / (M1 - 1)
                 c = (M1 * mu[k] ** 2) ** (-1 / (M1 - 1))
-                mu[k] = self.solution_of_equation(a, b, c)
+                mu[k] = self.solution_of_equation(a, b, c, Epsilon)
                 sumd = np.sum(mu)
                 for j in range(len(U[0])):
                     U[i][j] = mu[j] / sumd
@@ -59,7 +60,16 @@ class sSMC_FCM():
                     else:
                         U[i][k] = 1 / dummy
         return U
-    
+
+    def printResult(self):
+        label = assign_label(self.U)
+        print("sSMC-FCM :")
+        print("Rand Index Score: ", RI(self.true_label, label))
+        print("DBI Score: ", DBI(self.items, label))
+        print("PBM Score: ", PBM(self.items, label))
+        print("ASWC Score: ", ASWC(self.items, label))
+        print("MA Score: ", MA(self.true_label, label))
+
     def update_V(self, items, U, fuzzification_coefficient):
         """Update V after changing U"""
 
@@ -85,8 +95,6 @@ class sSMC_FCM():
         monitored_label = le.transform(monitored_label)
         for i in range(number_monitored_item):
             dict1[monitored_index[i]] = monitored_label[i]
-        print(len(items))
-        print(dict1)
         return dict1
 
     def g(self, x, alpha):
@@ -96,7 +104,7 @@ class sSMC_FCM():
         """Calculate the left side of the equation"""
         return x / ((x + a) ** b)
 
-    def calc_M1(self, items, monitored_elements):
+    def calc_M1(self, items, alpha, monitored_elements):
         """Calculate value of M'"""
         global M
 
@@ -110,8 +118,8 @@ class sSMC_FCM():
         for i in monitored_elements:
             # Calculate right-hand value
             U = 0
-            for j in range(number_clusters):
-                for k in range(number_clusters):
+            for j in range(len(distance_matrix[0])):
+                for k in range(len(distance_matrix[0])):
                     if distance_matrix[i][k] == 0:
                         U = 1
                         break
@@ -121,36 +129,31 @@ class sSMC_FCM():
             right_val = M * ((1 - alpha) / (1 / U - 1)) ** (M - 1)
             # M1_list.append(max_value(right_val))
             min_right_value = min(min_right_value, right_val)
-        return max_value(min_right_value)
+        return self.max_value(min_right_value)
 
 
     def max_value(self, right_val):
         """Calculate the maximum value satisfying the inequality"""
         value = M
-        while g(value) > right_val:
+        while self.g(value) > right_val:
             value += 1
         return value
 
-
-
-
-
-    def init_fuzzification_coefficient(self, distance_matrix, monitored_elements, M1):
+    def init_fuzzification_coefficient(self, distance_matrix, monitored_elements, M, M1):
         """Calculate matrix of fuzzification coefficient correspond with each element"""
-        global M, number_clusters
-        m = np.full((len(distance_matrix), number_clusters), M)
+        m = np.full((len(distance_matrix), len(distance_matrix[0])), M)
 
         for i in monitored_elements:
             m[i][monitored_elements[i]] = M1
         return m
 
-    def solution_of_equation(self, a, b, c):
+    def solution_of_equation(self, a, b, c, Epsilon):
         """Calculate solution of Equation"""
         x = 0
         var_increase = 1
 
-        while abs(f(x, a, b) - c) > Epsilon:
-            if f(x + var_increase, a, b) <= c:
+        while abs(self.f(x, a, b) - c) > Epsilon:
+            if self.f(x + var_increase, a, b) <= c:
                 x += var_increase
             else:
                 var_increase /= 2

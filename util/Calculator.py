@@ -4,7 +4,6 @@ from sklearn.cluster import kmeans_plusplus
 from sklearn import preprocessing
 from util.ProcessorData import *
 
-
 def d(i, j):
     """Calculate Euclidean"""
     distance = math.sqrt(np.sum((i - j) ** 2))
@@ -48,7 +47,7 @@ def init_C_KMeans(items, number_clusters):
     return C
 
 
-def init_C_sSMC(items, true_label,number_clusters):
+def init_C_sSMC(items, true_label, number_clusters):
     """Initialize clusters for sSMC algorithm based on labeled data"""
     le = preprocessing.LabelEncoder()
     le.fit(true_label)
@@ -61,6 +60,6 @@ def init_C_sSMC(items, true_label,number_clusters):
         for j in range(len(items)):
             if label[j] == i:
                 dummy.append(items[j])
-        C[i] = np.mean(dummy,axis=0)
+        C[i] = np.mean(dummy, axis=0)
 
     return C

@@ -1,5 +1,4 @@
 import numpy as np
-import config
 
 def ReadData(fileName, colLabel):
     f = open(fileName, 'r')

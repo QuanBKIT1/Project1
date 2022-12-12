@@ -11,10 +11,10 @@ from PyQt5 import uic
 class MyWindowClass(QMainWindow):
     def __init__(self):
         super(MyWindowClass, self).__init__()
-        uic.loadUi("../designer/Project1_UI.ui", self)
+        uic.loadUi("designer/Project1_UI.ui", self)
         self.fcm = FCM.FCM()
         self.mc_fcm = MC_FCM.MC_FCM()
-        # self.ssmc_fcm = sSMC_FCM.sSMC_FCM()
+        self.ssmc_fcm = sSMC_FCM.sSMC_FCM()
 
     def choose_data(self):
         try:
@@ -25,7 +25,7 @@ class MyWindowClass(QMainWindow):
             self.colDataText.setText("1")
             self.fcm.setFileData(path)
             self.mc_fcm.setFileData(path)
-            # self.ssmc_fcm.setFileData(path)
+            self.ssmc_fcm.setFileData(path)
 
         except:
             self.error_dialog = QtWidgets.QErrorMessage()
@@ -40,7 +40,7 @@ class MyWindowClass(QMainWindow):
             try:
                 self.fcm.processData(colLabel-1)
                 self.mc_fcm.processData(colLabel-1)
-                # self.ssmc_fcm.processData(colLabel-1)
+                self.ssmc_fcm.processData(colLabel-1)
                 self.message = QtWidgets.QMessageBox()
                 self.message.setText("Column "+ str(colLabel)+ " is label column ?")
                 self.message.show()
@@ -70,21 +70,42 @@ class MyWindowClass(QMainWindow):
                 try:
                     mL = float(self.mLText.text())
                     mU = float(self.mUText.text())
-                    alpha = float(self.alphaText.text())
-                    self.mc_fcm.MC_FCM(numberClusters, Epsilon, mL, mU, alpha, maxIter)
+                    alpha1 = float(self.alphaText.text())
+                    self.mc_fcm.MC_FCM(numberClusters, Epsilon, mL, mU, alpha1, maxIter)
                     self.mc_fcm.printResult()
                 except:
                     self.error_dialog = QtWidgets.QErrorMessage()
                     self.error_dialog.showMessage('Please fill all input of MC-FCM!')
             elif (self.comboBox.currentText() == "sSMC-FCM"):
                 try:
-                    M = int(self.MText.text())
-                    M_ = int(self.M_Text.text())
-                    rate = int(self.rateText.text())
-                    func.run_sSMC_FCM()
+                    M = float(self.MText.text())
+                    M1 = float(self.M1Text.text())
+                    rate = float(self.rateText.text())
+                    alpha2 = float(self.alphaText2.text())
+                    self.ssmc_fcm.sSMC_FCM(numberClusters, Epsilon, M, M1, rate, alpha2, maxIter)
+                    self.ssmc_fcm.printResult()
                 except:
                     self.error_dialog = QtWidgets.QErrorMessage()
                     self.error_dialog.showMessage('Please fill all input of sSMC-FCM!')
+            else:
+                try:
+                    m = int(self.mText.text())
+                    mL = float(self.mLText.text())
+                    mU = float(self.mUText.text())
+                    alpha1 = float(self.alphaText.text())
+                    M = float(self.MText.text())
+                    M1 = float(self.M1Text.text())
+                    rate = float(self.rateText.text())
+                    alpha2 = float(self.alphaText2.text())
+                    self.fcm.FCM(numberClusters, Epsilon, m, maxIter)
+                    self.mc_fcm.MC_FCM(numberClusters, Epsilon, mL, mU, alpha1, maxIter)
+                    self.ssmc_fcm.sSMC_FCM(numberClusters, Epsilon, M, M1, rate, alpha2, maxIter)
+                    self.fcm.printResult()
+                    self.mc_fcm.printResult()
+                    self.ssmc_fcm.printResult()       
+                except:
+                    self.error_dialog = QtWidgets.QErrorMessage()
+                    self.error_dialog.showMessage('Please fill all input!')
                     
                 
 if __name__ == '__main__':
