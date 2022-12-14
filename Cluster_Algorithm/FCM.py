@@ -11,7 +11,8 @@ class FCM():
 
     def FCM(self, number_clusters, Epsilon, m, max_iter):
         """Implement FCM"""
-        self.V = init_C_KMeans(self.items, number_clusters)
+        self.numberCluster = number_clusters
+        self.V = init_C_KMeans(self.items, self.numberCluster)
         self.U = []
 
         for k in range(max_iter):
@@ -22,14 +23,14 @@ class FCM():
                 break
             self.V = copy.deepcopy(V_new)
             
-    def printResult(self, numberCluster):
+    def printResult(self):
         label = util.ProcessorData.assign_label(self.U)
         print("FCM :")
         print("Rand Index Score: ", util.Evaluation.RI(self.true_label, label))
-        print("DBI Score: ", util.Evaluation.DBI(self.items, label, numberCluster))
-        print("PBM Score: ", util.Evaluation.PBM(self.items, label, numberCluster))
-        print("ASWC Score: ", util.Evaluation.ASWC(self.items, label, numberCluster))
-        print("MA Score: ", util.Evaluation.MA(self.true_label, label, numberCluster))
+        print("DBI Score: ", util.Evaluation.DBI(self.items, label, self.numberCluster))
+        print("PBM Score: ", util.Evaluation.PBM(self.items, label, self.numberCluster))
+        print("ASWC Score: ", util.Evaluation.ASWC(self.items, label, self.numberCluster))
+        print("MA Score: ", util.Evaluation.MA(self.true_label, label, self.numberCluster))
         
     def update_U(self, distance_matrix, m):
         """Update membership value for each iteration"""

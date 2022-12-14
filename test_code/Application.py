@@ -59,7 +59,7 @@ class MyWindowClass(QMainWindow):
                 try:
                     m = int(self.mText.text())
                     self.fcm.FCM(numberClusters, Epsilon, m, maxIter)
-                    self.fcm.printResult(numberClusters)
+                    self.fcm.printResult()
                     
                 except:
                     self.error_dialog = QtWidgets.QErrorMessage()
@@ -71,7 +71,7 @@ class MyWindowClass(QMainWindow):
                     mU = float(self.mUText.text())
                     alpha1 = float(self.alphaText.text())
                     self.mc_fcm.MC_FCM(numberClusters, Epsilon, mL, mU, alpha1, maxIter)
-                    self.mc_fcm.printResult(numberClusters)
+                    self.mc_fcm.printResult()
                 except:
                     self.error_dialog = QtWidgets.QErrorMessage()
                     self.error_dialog.showMessage('Please fill all input of MC-FCM!')
@@ -82,7 +82,7 @@ class MyWindowClass(QMainWindow):
                     rate = float(self.rateText.text())
                     alpha2 = float(self.alphaText2.text())
                     self.ssmc_fcm.sSMC_FCM(numberClusters, Epsilon, M, M1, rate, alpha2, maxIter)
-                    self.ssmc_fcm.printResult(numberClusters)
+                    self.ssmc_fcm.printResult()
                 except:
                     self.error_dialog = QtWidgets.QErrorMessage()
                     self.error_dialog.showMessage('Please fill all input of sSMC-FCM!')
@@ -99,9 +99,9 @@ class MyWindowClass(QMainWindow):
                     self.fcm.FCM(numberClusters, Epsilon, m, maxIter)
                     self.mc_fcm.MC_FCM(numberClusters, Epsilon, mL, mU, alpha1, maxIter)
                     self.ssmc_fcm.sSMC_FCM(numberClusters, Epsilon, M, M1, rate, alpha2, maxIter)
-                    self.fcm.printResult(numberClusters)
-                    self.mc_fcm.printResult(numberClusters)
-                    self.ssmc_fcm.printResult(numberClusters)
+                    self.fcm.printResult()
+                    self.mc_fcm.printResult()
+                    self.ssmc_fcm.printResult()
                 except:
                     self.error_dialog = QtWidgets.QErrorMessage()
                     self.error_dialog.showMessage('Please fill all input!')

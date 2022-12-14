@@ -11,11 +11,12 @@ class sSMC_FCM():
 
     def sSMC_FCM(self, number_clusters, Epsilon, M, M_, rate, alpha, max_iter):
         """Implement sSMC_FCM"""
-        self.V = init_C_sSMC(self.items, self.true_label, number_clusters)
+        self.numberCluster = number_clusters
+        self.V = init_C_sSMC(self.items, self.true_label, self.numberCluster)
         monitored_elements = self.init_monitored_elements(self.items, self.true_label, rate)
         # M1 = calc_M1(items, monitored_elements)
         m = self.init_fuzzification_coefficient(self.items, monitored_elements, M, M_)
-        self.U = np.zeros((len(self.items), number_clusters))
+        self.U = np.zeros((len(self.items), self.numberCluster))
         for k in range(max_iter):
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
             self.U = self.update_U(distance_matrix, monitored_elements, M, M_, Epsilon)
@@ -61,14 +62,14 @@ class sSMC_FCM():
                         U[i][k] = 1 / dummy
         return U
 
-    def printResult(self, numberCluster):
+    def printResult(self):
         label = assign_label(self.U)
         print("sSMC-FCM :")
         print("Rand Index Score: ", RI(self.true_label, label))
-        print("DBI Score: ", DBI(self.items, label, numberCluster))
-        print("PBM Score: ", PBM(self.items, label, numberCluster))
-        print("ASWC Score: ", ASWC(self.items, label, numberCluster))
-        print("MA Score: ", MA(self.true_label, label, numberCluster))
+        print("DBI Score: ", DBI(self.items, label, self.numberCluster))
+        print("PBM Score: ", PBM(self.items, label, self.numberCluster))
+        print("ASWC Score: ", ASWC(self.items, label, self.numberCluster))
+        print("MA Score: ", MA(self.true_label, label, self.numberCluster))
 
     def update_V(self, items, U, fuzzification_coefficient):
         """Update V after changing U"""

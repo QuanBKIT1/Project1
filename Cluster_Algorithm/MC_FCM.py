@@ -12,9 +12,10 @@ class MC_FCM():
     
     def MC_FCM(self, number_clusters, Epsilon, mL, mU, alpha, max_iter):
         """Implement MC_FCM"""
-        self.V = init_C_KMeans(self.items, number_clusters)
-        fuzzification_coefficient = self.init_fuzzification_coefficient(mL, mU, alpha, number_clusters)
-        self.U = np.zeros((len(self.items), number_clusters))
+        self.numberCluster = number_clusters
+        self.V = init_C_KMeans(self.items, self.numberCluster)
+        fuzzification_coefficient = self.init_fuzzification_coefficient(mL, mU, alpha, self.numberCluster)
+        self.U = np.zeros((len(self.items), self.numberCluster))
 
         for k in range(max_iter):
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
@@ -24,14 +25,14 @@ class MC_FCM():
                 break
             self.V = np.copy(V_new)
         
-    def printResult(self, numberCluster):
+    def printResult(self):
         label = assign_label(self.U)
         print("MC-FCM :")
         print("Rand Index Score: ", RI(self.true_label, label))
-        print("DBI Score: ", DBI(self.items, label, numberCluster))
-        print("PBM Score: ", PBM(self.items, label, numberCluster))
-        print("ASWC Score: ", ASWC(self.items, label, numberCluster))
-        print("MA Score: ", MA(self.true_label, label, numberCluster))
+        print("DBI Score: ", DBI(self.items, label, self.numberCluster))
+        print("PBM Score: ", PBM(self.items, label, self.numberCluster))
+        print("ASWC Score: ", ASWC(self.items, label, self.numberCluster))
+        print("MA Score: ", MA(self.true_label, label, self.numberCluster))
 
     def init_fuzzification_coefficient(self, mL, mU, alpha, number_clusters):
         """Calculate list of fuzzification coefficient correspond with each element"""
