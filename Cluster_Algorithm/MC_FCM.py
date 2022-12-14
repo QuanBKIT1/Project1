@@ -24,14 +24,14 @@ class MC_FCM():
                 break
             self.V = np.copy(V_new)
         
-    def printResult(self):
+    def printResult(self, numberCluster):
         label = assign_label(self.U)
         print("MC-FCM :")
-        print("Rand Index Score: ", RI(self.true_label, label))
-        print("DBI Score: ", DBI(self.items, label))
-        print("PBM Score: ", PBM(self.items, label))
-        print("ASWC Score: ", ASWC(self.items, label))
-        print("MA Score: ", MA(self.true_label, label))
+        print("Rand Index Score: ", RI(self.true_label, label, numberCluster))
+        print("DBI Score: ", DBI(self.items, label, numberCluster))
+        print("PBM Score: ", PBM(self.items, label, numberCluster))
+        print("ASWC Score: ", ASWC(self.items, label, numberCluster))
+        print("MA Score: ", MA(self.true_label, label, numberCluster))
 
     def init_fuzzification_coefficient(self, mL, mU, alpha, number_clusters):
         """Calculate list of fuzzification coefficient correspond with each element"""

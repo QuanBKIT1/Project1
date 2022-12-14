@@ -1,26 +1,19 @@
 from sklearn import metrics
 import numpy as np
 import util
-import config
 from util.Calculator import d
-
-
-number_clusters = config.number_clusters
-
 
 def RI(labels_true, labels_pred):
     return metrics.rand_score(labels_true, labels_pred)
 
 
-def DBI(X, labels):
-    global number_clusters
-
-    index_cluster = [[] for i in range(number_clusters)]
+def DBI(X, labels, numberCluster):
+    index_cluster = [[] for i in range(numberCluster)]
     for i in range(len(labels)):
         index_cluster[labels[i]].append(i)
 
     # Calculate X_
-    X_ = np.zeros((number_clusters,len(X[0])))
+    X_ = np.zeros((numberCluster,len(X[0])))
     for i in range(len(X_)):
         for j in range(len(X_[0])):
             dummy = 0
@@ -28,9 +21,9 @@ def DBI(X, labels):
                 dummy += X[index_cluster[i][k]][j]
             X_[i][j] = dummy/len(index_cluster[i])
     # Calculate di
-    intra_dispersion = np.zeros(number_clusters)
+    intra_dispersion = np.zeros(numberCluster)
 
-    for i in range(number_clusters):
+    for i in range(numberCluster):
         dummy = 0
         for j in range(len(index_cluster[i])):
             dummy += util.Calculator.d(X[index_cluster[i][j]], X_[i])
@@ -40,9 +33,9 @@ def DBI(X, labels):
     separation_measure = util.Calculator.calc_matrix_distance(X_)
 
     # Calculate Dij
-    similarity = np.zeros((number_clusters, number_clusters))
-    for i in range(number_clusters):
-        for j in range(number_clusters):
+    similarity = np.zeros((numberCluster, numberCluster))
+    for i in range(numberCluster):
+        for j in range(numberCluster):
             if i != j:
                 similarity[i][j] = (intra_dispersion[i] + intra_dispersion[j]) / separation_measure[i][j]
             else:
@@ -55,7 +48,7 @@ def DBI(X, labels):
     return score
 
 
-def PBM(X, labels):
+def PBM(X, labels, numberCluster):
     # Calculate X_
 # Ngoc Huy begin:
     X_ = np.mean(X, axis=0)
@@ -65,7 +58,7 @@ def PBM(X, labels):
 
     # Calculate list X_
     Xtb = []
-    for k in range(number_clusters):
+    for k in range(numberCluster):
         item = []
         for i in range(len(X)):
             if labels[i] == k:
@@ -77,15 +70,15 @@ def PBM(X, labels):
     Ec = sum([d(X[i], Xtb[labels[i]]) for i in range(len(X))])
 
     # Calculate Dc
-    Dc = max([d(Xtb[j], Xtb[k]) for j in range(number_clusters) for k in range(number_clusters)])
-    return (1/number_clusters * El/Ec * Dc)**2
+    Dc = max([d(Xtb[j], Xtb[k]) for j in range(numberCluster) for k in range(numberCluster)])
+    return (1/numberCluster * El/Ec * Dc)**2
 
 # Ngoc Huy End:
 
 # khanh begin:
-def ASWC(items,label):
+def ASWC(items, label, numberCluster):
     cum = []
-    for j in range(number_clusters):
+    for j in range(numberCluster):
         clus = []
         for i in range(len(label)):
             if label[i] == j:
@@ -103,7 +96,7 @@ def ASWC(items,label):
     tong = 0
     for j in range(len(label)):
         dqj = []
-        for i in range(number_clusters):
+        for i in range(numberCluster):
             if i != label[j]:  # nếu khác cụm
                 for ob in cum[i]:
                     sum2 = sum2 + d(ob, items[j])
@@ -129,7 +122,7 @@ def ASWC(items,label):
 
 #the huy begin
 
-def MA(true_label, label):
+def MA(true_label, label, numberCluster):
 
     trueL = set(true_label)
 
