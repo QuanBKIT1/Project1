@@ -22,14 +22,14 @@ class FCM():
                 break
             self.V = copy.deepcopy(V_new)
             
-    def printResult(self):
+    def printResult(self, numberCluster):
         label = util.ProcessorData.assign_label(self.U)
         print("FCM :")
         print("Rand Index Score: ", util.Evaluation.RI(self.true_label, label))
-        print("DBI Score: ", util.Evaluation.DBI(self.items, label))
-        print("PBM Score: ", util.Evaluation.PBM(self.items, label))
-        print("ASWC Score: ", util.Evaluation.ASWC(self.items, label))
-        print("MA Score: ", util.Evaluation.MA(self.true_label, label))
+        print("DBI Score: ", util.Evaluation.DBI(self.items, label, numberCluster))
+        print("PBM Score: ", util.Evaluation.PBM(self.items, label, numberCluster))
+        print("ASWC Score: ", util.Evaluation.ASWC(self.items, label, numberCluster))
+        print("MA Score: ", util.Evaluation.MA(self.true_label, label, numberCluster))
         
     def update_U(self, distance_matrix, m):
         """Update membership value for each iteration"""

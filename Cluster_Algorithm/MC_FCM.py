@@ -27,7 +27,7 @@ class MC_FCM():
     def printResult(self, numberCluster):
         label = assign_label(self.U)
         print("MC-FCM :")
-        print("Rand Index Score: ", RI(self.true_label, label, numberCluster))
+        print("Rand Index Score: ", RI(self.true_label, label))
         print("DBI Score: ", DBI(self.items, label, numberCluster))
         print("PBM Score: ", PBM(self.items, label, numberCluster))
         print("ASWC Score: ", ASWC(self.items, label, numberCluster))
