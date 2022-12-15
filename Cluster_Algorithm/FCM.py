@@ -1,43 +1,48 @@
 import copy
-import util
+from util import Evaluation, ProcessorData
 from util.Calculator import *
 
-class FCM():
-    def setFileData(self, fileData):
-        self.fileData = fileData
 
-    def processData(self, colLabel):
-        self.items, self.true_label = ReadData(self.fileData, colLabel)
 
-    def FCM(self, number_clusters, Epsilon, m, max_iter):
-        """Implement FCM"""
-        self.V = init_C_KMeans(self.items, number_clusters)
+class FCM:
+    def __init__(self, items, true_label, number_clusters, m, Epsilon, max_iter):
+        self.items = items
+        self.true_label = true_label
+        self.number_clusters = number_clusters
+        self.Epsilon = Epsilon
+        self.m = m
+        self.max_iter = max_iter
         self.U = []
+        self.V = init_C_KMeans(self.items, self.number_clusters)
 
-        for k in range(max_iter):
+    def run(self):
+        """
+        Implement FCM
+        """
+        for k in range(self.max_iter):
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
-            self.U = self.update_U(distance_matrix, m)
-            V_new = self.update_V(self.items, self.U, m)
-            if end_condition(V_new, self.V, Epsilon):
+            self.U = self.update_U(distance_matrix)
+            V_new = self.update_V(self.items, self.U, self.m)
+            if end_condition(V_new, self.V, self.Epsilon):
                 break
             self.V = copy.deepcopy(V_new)
-            
+
     def printResult(self):
-        label = util.ProcessorData.assign_label(self.U)
+        label = ProcessorData.assign_label(self.U)
         print("FCM :")
-        print("Rand Index Score: ", util.Evaluation.RI(self.true_label, label))
-        print("DBI Score: ", util.Evaluation.DBI(self.items, label))
-        print("PBM Score: ", util.Evaluation.PBM(self.items, label))
-        print("ASWC Score: ", util.Evaluation.ASWC(self.items, label))
-        print("MA Score: ", util.Evaluation.MA(self.true_label, label))
-        
-    def update_U(self, distance_matrix, m):
+        print("Rand Index Score: ", Evaluation.RI(self.true_label, label))
+        print("DBI Score: ", Evaluation.DBI(self.items, label, self.number_clusters))
+        print("PBM Score: ", Evaluation.PBM(self.items, label, self.number_clusters))
+        print("ASWC Score: ", Evaluation.ASWC(self.items, label, self.number_clusters))
+        print("MA Score: ", Evaluation.MA(self.true_label, label, self.number_clusters))
+
+    def update_U(self, distance_matrix):
         """Update membership value for each iteration"""
         U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
         for i in range(len(U)):
-            if (0 in distance_matrix[i]):
+            if 0 in distance_matrix[i]:
                 for k in range(len(U[0])):
-                    if (distance_matrix[i][k] != 0):
+                    if distance_matrix[i][k] != 0:
                         U[i][k] = 0
                     else:
                         U[i][k] = 1
@@ -45,7 +50,7 @@ class FCM():
             for k in range(len(U[0])):
                 dummy = 0
                 for j in range(len(U[0])):
-                    dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (m - 1))
+                    dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (self.m - 1))
                 else:
                     U[i][k] = 1 / dummy
         return U
@@ -62,3 +67,9 @@ class FCM():
                 dummy += U[i][k] ** m
             V[k] = dummy_array / dummy
         return V
+
+
+# i1, i2 = preprocessData("../dataset/iris.data", 4, [])
+# fcm = FCM(i1,i2,3,2,0.00001,150)
+# fcm.run()
+# fcm.printResult()

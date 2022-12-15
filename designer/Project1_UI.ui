@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1064</width>
-    <height>737</height>
+    <width>1024</width>
+    <height>765</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,14 +67,14 @@
        <widget class="QLabel" name="label_4">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>40</x>
           <y>100</y>
-          <width>91</width>
+          <width>101</width>
           <height>41</height>
          </rect>
         </property>
         <property name="text">
-         <string>Cột dữ liệu :</string>
+         <string>Cột dư thừa :</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="colLabelText">
@@ -87,7 +87,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLineEdit" name="colDataText">
+       <widget class="QLineEdit" name="colRText">
         <property name="geometry">
          <rect>
           <x>160</x>
@@ -100,14 +100,14 @@
        <widget class="QPushButton" name="okButton">
         <property name="geometry">
          <rect>
-          <x>310</x>
-          <y>40</y>
-          <width>61</width>
+          <x>290</x>
+          <y>70</y>
+          <width>81</width>
           <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>OK</string>
+         <string>Kiểm tra</string>
         </property>
        </widget>
       </widget>
@@ -604,8 +604,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1064</width>
-     <height>21</height>
+     <width>1024</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -620,8 +620,8 @@
    <slot>choose_data()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>60</x>
-     <y>41</y>
+     <x>621</x>
+     <y>107</y>
     </hint>
     <hint type="destinationlabel">
      <x>462</x>
@@ -633,11 +633,11 @@
    <sender>okButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>preprocess_data()</slot>
+   <slot>viewData2()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>505</x>
-     <y>102</y>
+     <x>401</x>
+     <y>237</y>
     </hint>
     <hint type="destinationlabel">
      <x>578</x>
@@ -652,8 +652,8 @@
    <slot>update()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>609</x>
-     <y>228</y>
+     <x>191</x>
+     <y>447</y>
     </hint>
     <hint type="destinationlabel">
      <x>590</x>
@@ -665,11 +665,11 @@
    <sender>runButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>caculate_cluster()</slot>
+   <slot>run()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>407</x>
-     <y>322</y>
+     <x>418</x>
+     <y>677</y>
     </hint>
     <hint type="destinationlabel">
      <x>571</x>
@@ -677,5 +677,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataView</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>viewData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>796</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>531</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>run()</slot>
+  <slot>viewData()</slot>
+  <slot>viewData2()</slot>
+ </slots>
 </ui>

@@ -1,7 +1,6 @@
 from sklearn import metrics
 import numpy as np
-import util
-from util.Calculator import d
+from util.Calculator import *
 
 def RI(labels_true, labels_pred):
     return metrics.rand_score(labels_true, labels_pred)
@@ -26,11 +25,11 @@ def DBI(X, labels, numberCluster):
     for i in range(numberCluster):
         dummy = 0
         for j in range(len(index_cluster[i])):
-            dummy += util.Calculator.d(X[index_cluster[i][j]], X_[i])
+            dummy += d(X[index_cluster[i][j]], X_[i])
         intra_dispersion[i] = 1 / len(index_cluster[i]) * dummy
 
     # Calculate dij
-    separation_measure = util.Calculator.calc_matrix_distance(X_)
+    separation_measure = calc_matrix_distance(X_)
 
     # Calculate Dij
     similarity = np.zeros((numberCluster, numberCluster))

@@ -1,5 +1,5 @@
 from util.Calculator import *
-from util.ProcessorData import ReadData, assign_label
+from util.ProcessorData import preprocessData, assign_label
 from util.Evaluation import *
 import numpy as np
 class sSMC_FCM():
@@ -7,7 +7,7 @@ class sSMC_FCM():
         self.fileData = fileData
 
     def processData(self, colLabel):
-        self.items, self.true_label = ReadData(self.fileData, colLabel)
+        self.items, self.true_label = preprocessData(self.fileData, colLabel)
 
     def sSMC_FCM(self, number_clusters, Epsilon, M, M_, rate, alpha, max_iter):
         """Implement sSMC_FCM"""
