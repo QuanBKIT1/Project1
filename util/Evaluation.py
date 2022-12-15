@@ -2,6 +2,7 @@ from sklearn import metrics
 import numpy as np
 from util.Calculator import *
 
+
 def RI(labels_true, labels_pred):
     return metrics.rand_score(labels_true, labels_pred)
 
@@ -12,13 +13,13 @@ def DBI(X, labels, numberCluster):
         index_cluster[labels[i]].append(i)
 
     # Calculate X_
-    X_ = np.zeros((numberCluster,len(X[0])))
+    X_ = np.zeros((numberCluster, len(X[0])))
     for i in range(len(X_)):
         for j in range(len(X_[0])):
             dummy = 0
             for k in range(len(index_cluster[i])):
                 dummy += X[index_cluster[i][k]][j]
-            X_[i][j] = dummy/len(index_cluster[i])
+            X_[i][j] = dummy / len(index_cluster[i])
     # Calculate di
     intra_dispersion = np.zeros(numberCluster)
 
@@ -49,7 +50,7 @@ def DBI(X, labels, numberCluster):
 
 def PBM(X, labels, numberCluster):
     # Calculate X_
-# Ngoc Huy begin:
+    # Ngoc Huy begin:
     X_ = np.mean(X, axis=0)
 
     # Calculate El
@@ -70,7 +71,8 @@ def PBM(X, labels, numberCluster):
 
     # Calculate Dc
     Dc = max([d(Xtb[j], Xtb[k]) for j in range(numberCluster) for k in range(numberCluster)])
-    return (1/numberCluster * El/Ec * Dc)**2
+    return (1 / numberCluster * El / Ec * Dc) ** 2
+
 
 # Ngoc Huy End:
 
@@ -117,36 +119,34 @@ def ASWC(items, label, numberCluster):
     for i in sxj:
         tong += i
     return tong / len(sxj)
-#khanh end
 
-#the huy begin
 
-def MA(true_label, label, numberCluster):
+# khanh end
 
-    trueL = set(true_label)
+def MA(true_label, label, number_clusters):
+    trueL = list(set(true_label))
+    indexL = [i for i in range(number_clusters)]
+    dict0 = {}
 
-    list_trueL = [[la,0] for la in trueL]
+    for i in trueL:
+        dummy = 0
+        for j in range(len(true_label)):
+            if true_label[j] == i:
+                dummy = dummy + 1
+        dict0[i] = dummy
 
-    ''' count the number of each label in true_label'''
+    dict1 = {}
+    while indexL:
+        i = indexL.pop()
+        l = [0, 0, 0]
+        for j in trueL:
+            dummy = 0
+            for k in range(len(label)):
+                if label[k] == i and true_label[k] == j:
+                    dummy = dummy + 1
+            if dummy > l[2]:
+                l = [i, j, dummy]
+        dict1[l[0]] = [l[1], l[2], dict0[l[1]]]
+        trueL.remove(l[1])
 
-    for i in true_label:
-        for j in list_trueL:
-            if i == j[0]:
-                j[1]+=1
-
-    list_trueL.sort(key = lambda ns:ns[1])
-
-    '''count the number of Xi in cluster after clustering'''
-
-    list_L = [[i,0] for i in range(len(trueL))]
-
-    for i in label:
-        for j in list_L:
-            if i == j[0]:
-                j[1] +=1
-
-    list_L.sort(key = lambda ns:ns[1])
-    
-    return min([list_L[i][1]/list_trueL[i][1] for i in range(len(trueL))])
-
-# the huy end
+    return np.min([dict1[i][1] / dict1[i][2] for i in dict1])

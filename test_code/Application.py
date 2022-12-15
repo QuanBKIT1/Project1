@@ -1,15 +1,16 @@
 import sys
 
-import numpy as np
-
 import util.ProcessorData
 from Cluster_Algorithm import FCM, MC_FCM, sSMC_FCM
 from util.Calculator import *
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-from TableUI1 import TableUI1
-from TableUI2 import TableUI2
+from Screen1 import Screen1
+from Screen2 import Screen2
+from Screen3 import Screen3
+from TestScreen3 import TestScreen3
+
 
 class MyWindowClass(QMainWindow):
 
@@ -18,21 +19,26 @@ class MyWindowClass(QMainWindow):
         uic.loadUi("../designer/Project1_UI.ui", self)
         #     test code
         self.dataPath.setText("C:/Users/Quan/iris.data")
-        self.colLabelText.setText("4")
+        self.colLabelText.setText("5")
         self.colRText.setText("")
         self.numberClusterText.setText('3')
         self.epsilonText.setText('0.00001')
         self.maxIterText.setText('150')
         self.mText.setText('2')
+        self.mLText.setText('1.1')
+        self.mUText.setText('9.1')
+        self.alphaText.setText('0.7')
+        self.MText.setText('2')
+        self.M1Text.setText('4')
+        self.alphaText2.setText('0.6')
+        self.rateText.setText('20')
 
     def viewData(self):
         try:
             data_table = readData(self.dataPath.text())
-            self.Form = QtWidgets.QWidget()
-            ui = TableUI1()
-            ui.setupUi(self.Form)
-            ui.loadData(data_table)
-            self.Form.showMaximized()
+            self.screen1 = Screen1()
+            self.screen1.loadData(data_table)
+            self.screen1.showMaximized()
         except:
             self.error_dialog = QtWidgets.QErrorMessage()
             self.error_dialog.showMessage('Đường dẫn không hợp lệ!')
@@ -66,11 +72,10 @@ class MyWindowClass(QMainWindow):
 
     def viewData2(self):
         self.checkColumn()
-        print(1)
         try:
             data_table = util.ProcessorData.readData(self.dataPath.text())
             data_table1 = np.array([data_table[i][self.colLabel] for i in range(len(data_table))])
-            data_table1 = data_table1.reshape(len(data_table1),1)
+            data_table1 = data_table1.reshape(len(data_table1), 1)
 
             if self.colRedundant is None:
                 data_table2 = None
@@ -82,17 +87,13 @@ class MyWindowClass(QMainWindow):
 
             self.items, self.true_label = util.ProcessorData.preprocessData(data_table, self.colLabel,
                                                                             self.colRedundant)
-            print(1)
-            self.mainWindow = QtWidgets.QMainWindow()
-            self.tableUI2 = TableUI2()
-            self.tableUI2.setupUi(self.mainWindow)
-            self.tableUI2.loadData(data_table1,data_table2,self.items)
-            self.mainWindow.showMaximized()
+            self.screen2 = Screen2()
+            self.screen2.loadData(data_table1, data_table2, self.items)
+            self.screen2.showMaximized()
 
         except:
             self.error_dialog = QtWidgets.QErrorMessage()
             self.error_dialog.showMessage('Chọn đường dẫn và điều chỉnh dữ liệu chưa hợp lệ! ')
-
 
     def preprocess_data(self):
         """
@@ -108,71 +109,79 @@ class MyWindowClass(QMainWindow):
             self.error_dialog = QtWidgets.QErrorMessage()
             self.error_dialog.showMessage('Chọn đường dẫn và điều chỉnh dữ liệu chưa hợp lệ! ')
 
-        print(self.colRedundant)
-        print(self.colLabel)
-
     def run(self):
-        self.preprocess_data()
+        """Action when press run"""
+        self.runnable = 0
         if (self.numberClusterText.text() != ''
                 and self.epsilonText.text() != ''
                 and self.maxIterText.text() != ''):
             self.numberClusters = int(self.numberClusterText.text())
-            self.Epsilon = float(self.epsilonText.text())
-            self.maxIter = int(self.maxIterText.text())
+            try:
+                self.Epsilon = float(self.epsilonText.text())
+                self.maxIter = int(self.maxIterText.text())
+                self.preprocess_data()
+                self.runnable = 1
+            except:
+                self.error_dialog = QtWidgets.QErrorMessage()
+                self.error_dialog.showMessage('Đầu vào không hợp lệ')
+        else:
+            self.error_dialog = QtWidgets.QErrorMessage()
+            self.error_dialog.showMessage('Chưa nhập đủ giá trị các trường')
+        try:
+            if self.runnable == 1:
+                algo = self.comboBox.currentText()
+                self.screen3 = Screen3()
+                if algo == "FCM":
+                    self.runFCM()
+                elif algo == "MC-FCM":
+                    self.runMC_FCM()
+                elif algo == "sSMC-FCM":
+                    self.runsSMC_FCM()
+                else:
+                    self.runAll()
+                self.screen3.showMaximized()
+        except:
+            self.error_dialog = QtWidgets.QErrorMessage()
+            self.error_dialog.showMessage('Dữ liệu không hợp lệ (thiếu, sai số,...)')
 
-            if self.comboBox.currentText() == "FCM":
-                try:
-                    self.m = int(self.mText.text())
-                    self.fcm = FCM.FCM(self.items, self.true_label, self.numberClusters, self.m, self.Epsilon,
-                                       self.maxIter)
-                    # print(self.items, self.true_label, self.numberClusters, self.m, self.Epsilon, self.maxIter)
-                    self.fcm.run()
-                    self.fcm.printResult()
+    def runFCM(self):
+        self.m = (float)(self.mText.text())
+        fcm = FCM.FCM(self.items, self.true_label, self.numberClusters, self.m, self.Epsilon, self.maxIter)
+        fcm.run()
+        print(fcm.U, fcm.V, fcm.evalList)
+        self.screen3.loadDataFCM(fcm.U, fcm.V, fcm.evalList)
+        self.screen3.pushFCM()
+        print("sSMC running")
 
-                except:
-                    self.error_dialog = QtWidgets.QErrorMessage()
-                    self.error_dialog.showMessage('Please fill all input of FCM!')
+    def runMC_FCM(self):
+        self.mL = (float)(self.mLText.text())
+        self.mU = (float)(self.mUText.text())
+        self.alpha = (float)(self.alphaText.text())
+        print(self.mL, self.mU, self.alpha)
+        mc_fcm = MC_FCM.MC_FCM(self.items, self.true_label, self.numberClusters, self.mL, self.mU, self.alpha,
+                               self.Epsilon, self.maxIter)
+        mc_fcm.run()
+        self.screen3.loadDataMCFCM(mc_fcm.U, mc_fcm.V, mc_fcm.evalList)
+        self.screen3.pushMCFCM()
+        print("MC-FCM running")
 
-            # elif (self.comboBox.currentText() == "MC-FCM"):
-            #     try:
-            #         mL = float(self.mLText.text())
-            #         mU = float(self.mUText.text())
-            #         alpha1 = float(self.alphaText.text())
-            #         self.mc_fcm.MC_FCM(numberClusters, Epsilon, mL, mU, alpha1, maxIter)
-            #         self.mc_fcm.printResult()
-            #     except:
-            #         self.error_dialog = QtWidgets.QErrorMessage()
-            #         self.error_dialog.showMessage('Please fill all input of MC-FCM!')
-            # elif (self.comboBox.currentText() == "sSMC-FCM"):
-            #     try:
-            #         M = float(self.MText.text())
-            #         M1 = float(self.M1Text.text())
-            #         rate = float(self.rateText.text())
-            #         alpha2 = float(self.alphaText2.text())
-            #         self.ssmc_fcm.sSMC_FCM(numberClusters, Epsilon, M, M1, rate, alpha2, maxIter)
-            #         self.ssmc_fcm.printResult()
-            #     except:
-            #         self.error_dialog = QtWidgets.QErrorMessage()
-            #         self.error_dialog.showMessage('Please fill all input of sSMC-FCM!')
-            # else:
-            #     try:
-            #         m = int(self.mText.text())
-            #         mL = float(self.mLText.text())
-            #         mU = float(self.mUText.text())
-            #         alpha1 = float(self.alphaText.text())
-            #         M = float(self.MText.text())
-            #         M1 = float(self.M1Text.text())
-            #         rate = float(self.rateText.text())
-            #         alpha2 = float(self.alphaText2.text())
-            #         self.fcm.FCM(numberClusters, Epsilon, m, maxIter)
-            #         self.mc_fcm.MC_FCM(numberClusters, Epsilon, mL, mU, alpha1, maxIter)
-            #         self.ssmc_fcm.sSMC_FCM(numberClusters, Epsilon, M, M1, rate, alpha2, maxIter)
-            #         self.fcm.printResult()
-            #         self.mc_fcm.printResult()
-            #         self.ssmc_fcm.printResult()
-            #     except:
-            #         self.error_dialog = QtWidgets.QErrorMessage()
-            #         self.error_dialog.showMessage('Please fill all input!')
+    def runsSMC_FCM(self):
+        self.M = float(self.MText.text())
+        self.M1 = float(self.M1Text.text())
+        self.alpha2 = float(self.alphaText2.text())
+        self.rate = float(self.rateText.text())
+        print(self.M, self.M1, self.alpha2, self.rate)
+        ssmc_fcm = sSMC_FCM.sSMC_FCM(self.items, self.true_label, self.numberClusters, self.M, self.M1,
+                                     self.alpha2, self.rate, self.Epsilon, self.maxIter)
+        ssmc_fcm.run()
+        self.screen3.loadDatasSMC(ssmc_fcm.U, ssmc_fcm.V, ssmc_fcm.evalList)
+        self.screen3.pushsSMC()
+        print("sSMC running")
+
+    def runAll(self):
+        self.runFCM()
+        self.runMC_FCM()
+        self.runsSMC_FCM()
 
 
 if __name__ == '__main__':

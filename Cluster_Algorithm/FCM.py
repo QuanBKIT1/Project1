@@ -3,7 +3,6 @@ from util import Evaluation, ProcessorData
 from util.Calculator import *
 
 
-
 class FCM:
     def __init__(self, items, true_label, number_clusters, m, Epsilon, max_iter):
         self.items = items
@@ -27,14 +26,17 @@ class FCM:
                 break
             self.V = copy.deepcopy(V_new)
 
-    def printResult(self):
+        self.eval()
+
+    def eval(self):
+
         label = ProcessorData.assign_label(self.U)
-        print("FCM :")
-        print("Rand Index Score: ", Evaluation.RI(self.true_label, label))
-        print("DBI Score: ", Evaluation.DBI(self.items, label, self.number_clusters))
-        print("PBM Score: ", Evaluation.PBM(self.items, label, self.number_clusters))
-        print("ASWC Score: ", Evaluation.ASWC(self.items, label, self.number_clusters))
-        print("MA Score: ", Evaluation.MA(self.true_label, label, self.number_clusters))
+        self.evalList = [Evaluation.RI(self.true_label, label), Evaluation.DBI(self.items, label, self.number_clusters),
+                    Evaluation.PBM(self.items, label, self.number_clusters),
+                    Evaluation.ASWC(self.items, label, self.number_clusters),
+                    Evaluation.MA(self.true_label, label, self.number_clusters)]
+        self.evalList = np.array(self.evalList)
+        self.evalList = self.evalList.reshape(len(self.evalList),1)
 
     def update_U(self, distance_matrix):
         """Update membership value for each iteration"""
@@ -67,7 +69,6 @@ class FCM:
                 dummy += U[i][k] ** m
             V[k] = dummy_array / dummy
         return V
-
 
 # i1, i2 = preprocessData("../dataset/iris.data", 4, [])
 # fcm = FCM(i1,i2,3,2,0.00001,150)

@@ -6,3 +6,4 @@ if __name__ == '__main__':
     a = np.array(a)
     a =  a.reshape(len(a),1)
     print(len(a[0]))
+    round()

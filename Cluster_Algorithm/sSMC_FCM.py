@@ -1,160 +1,170 @@
-from util.Calculator import *
-from util.ProcessorData import preprocessData, assign_label
+from util import ProcessorData, Evaluation
 from util.Evaluation import *
 import numpy as np
-class sSMC_FCM():
-    def setFileData(self, fileData):
-        self.fileData = fileData
 
-    def processData(self, colLabel):
-        self.items, self.true_label = preprocessData(self.fileData, colLabel)
 
-    def sSMC_FCM(self, number_clusters, Epsilon, M, M_, rate, alpha, max_iter):
+def f(x, a, b):
+    """Calculate the left side of the equation"""
+    return x / ((x + a) ** b)
+
+
+class sSMC_FCM:
+
+    def __init__(self, items, true_label, number_clusters, M, M1, alpha, rate, Epsilon, max_iter):
+        self.items = items
+        self.true_label = true_label
+        self.number_clusters = number_clusters
+        self.Epsilon = Epsilon
+        self.M = M
+        self.M1 = M1
+        self.alpha = alpha
+        self.rate = rate
+        self.max_iter = max_iter
+        self.V = init_C_sSMC(self.items, self.true_label, self.number_clusters)
+        self.U = np.zeros((len(self.items), self.number_clusters))
+        self.monitored_elements = self.init_monitored_elements()
+
+    def run(self):
         """Implement sSMC_FCM"""
-        self.V = init_C_sSMC(self.items, self.true_label, number_clusters)
-        monitored_elements = self.init_monitored_elements(self.items, self.true_label, rate)
-        # M1 = calc_M1(items, monitored_elements)
-        m = self.init_fuzzification_coefficient(self.items, monitored_elements, M, M_)
-        self.U = np.zeros((len(self.items), number_clusters))
-        for k in range(max_iter):
+        for k in range(self.max_iter):
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
-            self.U = self.update_U(distance_matrix, monitored_elements, M, M_, Epsilon)
-            V_new = self.update_V(self.items, self.U, m)
-            if end_condition(V_new, self.V, Epsilon):
+            self.U = self.update_U(distance_matrix)
+            V_new = self.update_V(self.items)
+            if end_condition(V_new, self.V, self.Epsilon):
                 break
             self.V = np.copy(V_new)
+        self.eval()
 
-    def update_U(self, distance_matrix, monitored_elements, M, M1, Epsilon):
-        """Update membership value for each iteration"""
-        U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
-        for i in range(len(U)):
-            if i in monitored_elements:
-                # Calculate U for monitored components
-                dmin = np.min(distance_matrix[i])
-                mu = distance_matrix[i] / dmin
-                k = monitored_elements[i]
-                a = 0
-                for j in range(len(U[0])):
-                    if j != k:
-                        mu[j] = (M * mu[j] ** 2) ** (-1 / (M - 1))
-                        a += mu[j]
-                b = (M1 - M) / (M1 - 1)
-                c = (M1 * mu[k] ** 2) ** (-1 / (M1 - 1))
-                mu[k] = self.solution_of_equation(a, b, c, Epsilon)
-                sumd = np.sum(mu)
-                for j in range(len(U[0])):
-                    U[i][j] = mu[j] / sumd
-            else:
-                # Calculate U for unsupervised components
-                if (0 in distance_matrix[i]):
-                    for k in range(len(U[0])):
-                        if (distance_matrix[i][k] != 0):
-                            U[i][k] = 0
-                        else:
-                            U[i][k] = 1
-                    continue
-                for k in range(len(U[0])):
-                    dummy = 0
-                    for j in range(len(U[0])):
-                        dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (M - 1))
-                    else:
-                        U[i][k] = 1 / dummy
-        return U
+    def eval(self):
 
-    def printResult(self):
-        label = assign_label(self.U)
-        print("sSMC-FCM :")
-        print("Rand Index Score: ", RI(self.true_label, label))
-        print("DBI Score: ", DBI(self.items, label))
-        print("PBM Score: ", PBM(self.items, label))
-        print("ASWC Score: ", ASWC(self.items, label))
-        print("MA Score: ", MA(self.true_label, label))
+        label = ProcessorData.assign_label(self.U)
+        self.evalList = [Evaluation.RI(self.true_label, label), Evaluation.DBI(self.items, label, self.number_clusters),
+                         Evaluation.PBM(self.items, label, self.number_clusters),
+                         Evaluation.ASWC(self.items, label, self.number_clusters),
+                         Evaluation.MA(self.true_label, label, self.number_clusters)]
+        self.evalList = np.array(self.evalList)
+        self.evalList = self.evalList.reshape(len(self.evalList), 1)
 
-    def update_V(self, items, U, fuzzification_coefficient):
-        """Update V after changing U"""
-
-        V = np.zeros((len(U[0]), len(items[0])))
-
-        for k in range(len(V)):
-            dummy_array = np.zeros(V.shape[1])
-            dummy = 0
-            for i in range(len(items)):
-                dummy_array += (U[i][k] ** fuzzification_coefficient[i][k]) * items[i]
-                dummy += U[i][k] ** fuzzification_coefficient[i][k]
-            V[k] = dummy_array / dummy
-        return V
-
-    def init_monitored_elements(self, items, true_label, rate):
+    def init_monitored_elements(self):
         """initialize the monitored elements i of the cluster k"""
         dict1 = {}
         le = preprocessing.LabelEncoder()
-        le.fit(true_label)
-        number_monitored_item = math.floor(len(items) * rate / 100)
-        monitored_index = random.sample(range(len(items)), number_monitored_item)
-        monitored_label = [true_label[i] for i in monitored_index]
+        le.fit(self.true_label)
+        number_monitored_item = math.floor(len(self.items) * self.rate / 100)
+        monitored_index = random.sample(range(len(self.items)), number_monitored_item)
+        monitored_label = [self.true_label[i] for i in monitored_index]
         monitored_label = le.transform(monitored_label)
         for i in range(number_monitored_item):
             dict1[monitored_index[i]] = monitored_label[i]
+
         return dict1
 
-    def g(self, x, alpha):
-        return x * (alpha ** (x - 1))
-    
-    def f(self, x, a, b):
-        """Calculate the left side of the equation"""
-        return x / ((x + a) ** b)
+    def g(self, x):
+        return x * (self.alpha ** (x - 1))
 
-    def calc_M1(self, items, alpha, monitored_elements):
+    def max_value(self, right_val):
+        """Calculate the maximum value satisfying the inequality"""
+        value = self.M
+        while self.g(value) > right_val:
+            value += 1
+        return value
+
+    def calc_M1(self):
         """Calculate value of M'"""
-        global M
-
-        distance_matrix = calc_matrix_distance(items)
+        distance_matrix = calc_matrix_distance(self.items)
         # Do vế trái là 1 hàm nghịch biến nên ta cần tìm giá trị nhỏ nhất
         # của vế phải ứng với U'(ik). Vì nếu M' thỏa mãn với giá trị nhỏ
         # nhất đó thì nó cũng thỏa mãn với các trường hợp khác
 
         min_right_value = 0
 
-        for i in monitored_elements:
+        for i in self.monitored_elements:
             # Calculate right-hand value
             U = 0
-            for j in range(len(distance_matrix[0])):
-                for k in range(len(distance_matrix[0])):
+            for j in range(self.number_clusters):
+                for k in range(self.number_clusters):
                     if distance_matrix[i][k] == 0:
                         U = 1
                         break
-                    U += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (M - 1))
+                    U += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (self.M - 1))
                 else:
                     U = 1 / U
-            right_val = M * ((1 - alpha) / (1 / U - 1)) ** (M - 1)
+            right_val = self.M * ((1 - self.alpha) / (1 / U - 1)) ** (self.M - 1)
             # M1_list.append(max_value(right_val))
             min_right_value = min(min_right_value, right_val)
         return self.max_value(min_right_value)
 
-
-    def max_value(self, right_val):
-        """Calculate the maximum value satisfying the inequality"""
-        value = M
-        while self.g(value) > right_val:
-            value += 1
-        return value
-
-    def init_fuzzification_coefficient(self, distance_matrix, monitored_elements, M, M1):
-        """Calculate matrix of fuzzification coefficient correspond with each element"""
-        m = np.full((len(distance_matrix), len(distance_matrix[0])), M)
-
-        for i in monitored_elements:
-            m[i][monitored_elements[i]] = M1
-        return m
-
-    def solution_of_equation(self, a, b, c, Epsilon):
+    def solution_of_equation(self, a, b, c):
         """Calculate solution of Equation"""
         x = 0
         var_increase = 1
 
-        while abs(self.f(x, a, b) - c) > Epsilon:
-            if self.f(x + var_increase, a, b) <= c:
+        while abs(f(x, a, b) - c) > self.Epsilon:
+            if f(x + var_increase, a, b) <= c:
                 x += var_increase
             else:
                 var_increase /= 2
         return x
+
+    def update_U(self, distance_matrix):
+        """Update membership value for each iteration"""
+        U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
+        for i in range(len(U)):
+            if i in self.monitored_elements:
+                # Calculate U for monitored components
+                dmin = np.min(distance_matrix[i])
+                mu = distance_matrix[i] / dmin
+                k = self.monitored_elements[i]
+                a = 0
+                for j in range(self.number_clusters):
+                    if j != k:
+                        mu[j] = (self.M * mu[j] ** 2) ** (-1 / (self.M - 1))
+                        a += mu[j]
+                b = (self.M1 - self.M) / (self.M1 - 1)
+                c = (self.M1 * mu[k] ** 2) ** (-1 / (self.M1 - 1))
+                mu[k] = self.solution_of_equation(a, b, c)
+                sumd = np.sum(mu)
+                for j in range(self.number_clusters):
+                    U[i][j] = mu[j] / sumd
+            else:
+                # Calculate U for unsupervised components
+                for j in range(self.number_clusters):
+                    dummy = 0
+                    for k in range(self.number_clusters):
+                        if distance_matrix[i][k] == 0:
+                            U[i][j] = 0
+                            break
+                        dummy += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (self.M - 1))
+                    else:
+                        U[i][j] = 1 / dummy
+        return U
+
+    def update_V(self, fuzzification_coefficient):
+        """Update V after changing U"""
+
+        V = np.zeros((self.number_clusters, len(self.items[0])))
+
+        for k in range(len(V)):
+            dummy_array = np.zeros(V.shape[1])
+            dummy = 0
+            for i in range(len(self.items)):
+                dummy_array += (self.U[i][k] ** fuzzification_coefficient[i][k]) * self.items[i]
+                dummy += self.U[i][k] ** fuzzification_coefficient[i][k]
+            V[k] = dummy_array / dummy
+        return V
+
+    # def printResult(self):
+    #     label = assign_label(self.U)
+    #     print("sSMC-FCM :")
+    #     print("Rand Index Score: ", RI(self.true_label, label))
+    #     print("DBI Score: ", DBI(self.items, label, self.number_clusters))
+    #     print("PBM Score: ", PBM(self.items, label, self.number_clusters))
+    #     print("ASWC Score: ", ASWC(self.items, label, self.number_clusters))
+    #     print("MA Score: ", MA(self.true_label, label, self.number_clusters))
+
+
+# data_table = readData("../dataset/iris.data")
+# i1, i2 = preprocessData(data_table, 4, [])
+# ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 20, 0.000001, 150)
+# ssmc.run()
+# ssmc.printResult()

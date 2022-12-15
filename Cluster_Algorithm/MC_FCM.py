@@ -1,37 +1,44 @@
-from util.Calculator import *
-from util.ProcessorData import preprocessData, assign_label
+from util import ProcessorData, Evaluation
 from util.Evaluation import *
 import numpy as np
 
+
 class MC_FCM():
-    def setFileData(self, fileData):
-        self.fileData = fileData
+    def __init__(self, items, true_label, number_clusters, mL, mU, alpha, Epsilon, max_iter):
+        self.items = items
+        self.true_label = true_label
+        self.number_clusters = number_clusters
+        self.Epsilon = Epsilon
+        self.mL = mL
+        self.mU = mU
+        self.alpha = alpha
+        self.max_iter = max_iter
+        self.U = np.zeros((len(self.items), self.number_clusters))
+        self.V = init_C_KMeans(self.items, self.number_clusters)
 
-    def processData(self, colLabel):
-        self.items, self.true_label = preprocessData(self.fileData, colLabel)
-    
-    def MC_FCM(self, number_clusters, Epsilon, mL, mU, alpha, max_iter):
+    def run(self):
         """Implement MC_FCM"""
-        self.V = init_C_KMeans(self.items, number_clusters)
-        fuzzification_coefficient = self.init_fuzzification_coefficient(mL, mU, alpha, number_clusters)
-        self.U = np.zeros((len(self.items), number_clusters))
 
-        for k in range(max_iter):
+        fuzzification_coefficient = self.init_fuzzification_coefficient(self.mL, self.mU,
+                                                                        self.alpha, self.number_clusters)
+        for k in range(self.max_iter):
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
             self.U = self.update_U(distance_matrix, fuzzification_coefficient)
             V_new = self.update_V(self.items, self.U, fuzzification_coefficient)
-            if end_condition(V_new, self.V, Epsilon):
+            if end_condition(V_new, self.V, self.Epsilon):
                 break
             self.V = np.copy(V_new)
-        
-    def printResult(self, numberCluster):
-        label = assign_label(self.U)
-        print("MC-FCM :")
-        print("Rand Index Score: ", RI(self.true_label, label, numberCluster))
-        print("DBI Score: ", DBI(self.items, label, numberCluster))
-        print("PBM Score: ", PBM(self.items, label, numberCluster))
-        print("ASWC Score: ", ASWC(self.items, label, numberCluster))
-        print("MA Score: ", MA(self.true_label, label, numberCluster))
+        self.eval()
+
+    def eval(self):
+
+        label = ProcessorData.assign_label(self.U)
+        self.evalList = [Evaluation.RI(self.true_label, label), Evaluation.DBI(self.items, label, self.number_clusters),
+                         Evaluation.PBM(self.items, label, self.number_clusters),
+                         Evaluation.ASWC(self.items, label, self.number_clusters),
+                         Evaluation.MA(self.true_label, label, self.number_clusters)]
+        self.evalList = np.array(self.evalList)
+        self.evalList = self.evalList.reshape(len(self.evalList), 1)
 
     def init_fuzzification_coefficient(self, mL, mU, alpha, number_clusters):
         """Calculate list of fuzzification coefficient correspond with each element"""
@@ -61,7 +68,6 @@ class MC_FCM():
             fuzzification_coefficient[i] = mi
         return fuzzification_coefficient
 
-
     def update_U(self, distance_matrix, fuzzification_coefficient):
         """Update membership value for each iteration"""
 
@@ -82,21 +88,16 @@ class MC_FCM():
                     U[i][k] = 1 / dummy
         return U
 
-
     def update_V(self, items, U, fuzzification_coefficient):
         """ Update V after changing U """
 
-        V = np.zeros((len(U[0]),len(items[0])))
+        V = np.zeros((len(U[0]), len(items[0])))
 
         for k in range(len(V)):
             dummy_array = np.zeros(V.shape[1])
             dummy = 0
             for i in range(len(items)):
-                dummy_array += (U[i][k]**fuzzification_coefficient[i])*items[i]
-                dummy += U[i][k]**fuzzification_coefficient[i]
-            V[k] = dummy_array/dummy
+                dummy_array += (U[i][k] ** fuzzification_coefficient[i]) * items[i]
+                dummy += U[i][k] ** fuzzification_coefficient[i]
+            V[k] = dummy_array / dummy
         return V
-
-
-
-
