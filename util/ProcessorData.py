@@ -15,7 +15,7 @@ def readData(fileName):
 
 def preprocessData(data_table, colLabel, colRedundant):
     """
-    :param fileName: location of dataset in computer (.data, .csv, ...)
+    :param data_table: location of dataset in computer (.data, .csv, ...)
     :param colLabel: column containing label of dataset
     :param colRedundant: column containing redundant data
     :return: 2 numpy array: standard data and true label
@@ -60,9 +60,3 @@ def assign_label(U):
         label.append(max_index)
     label = np.array(label)
     return label
-
-
-if __name__ == "__main__":
-    i1, i2 = preprocessData("../dataset/iris.data", 4, [4])
-    print(i1)
-    print(i2)

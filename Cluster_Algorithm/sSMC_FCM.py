@@ -27,8 +27,8 @@ class sSMC_FCM:
     def run(self):
         """Implement sSMC_FCM"""
         for k in range(self.max_iter):
-            distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
-            self.U = self.update_U(distance_matrix)
+            item_to_cluster = calc_distance_item_to_cluster(self.items, self.V)
+            self.update_U(item_to_cluster)
             V_new = self.update_V(self.items)
             if end_condition(V_new, self.V, self.Epsilon):
                 break
@@ -106,52 +106,50 @@ class sSMC_FCM:
                 var_increase /= 2
         return x
 
-    def update_U(self, distance_matrix):
+    def update_U(self, item_to_cluster):
         """Update membership value for each iteration"""
-        U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
-        for i in range(len(U)):
+        for i in range(len(self.U)):
             if i in self.monitored_elements:
                 # Calculate U for monitored components
-                dmin = np.min(distance_matrix[i])
-                mu = distance_matrix[i] / dmin
+                dmin = np.min(item_to_cluster[i])
+                dij = item_to_cluster[i] / dmin
                 k = self.monitored_elements[i]
                 a = 0
                 for j in range(self.number_clusters):
                     if j != k:
-                        mu[j] = (self.M * mu[j] ** 2) ** (-1 / (self.M - 1))
-                        a += mu[j]
+                        dij[j] = (self.M * dij[j] ** 2) ** (-1 / (self.M - 1))
+                        a += dij[j]
                 b = (self.M1 - self.M) / (self.M1 - 1)
-                c = (self.M1 * mu[k] ** 2) ** (-1 / (self.M1 - 1))
-                mu[k] = self.solution_of_equation(a, b, c)
-                sumd = np.sum(mu)
+                c = (self.M1 * dij[k] ** 2) ** (-1 / (self.M1 - 1))
+                dij[k] = self.solution_of_equation(a, b, c)
+                sumd = np.sum(dij)
                 for j in range(self.number_clusters):
-                    U[i][j] = mu[j] / sumd
+                    self.U[i][j] = dij[j] / sumd
             else:
                 # Calculate U for unsupervised components
                 for j in range(self.number_clusters):
                     dummy = 0
                     for k in range(self.number_clusters):
-                        if distance_matrix[i][k] == 0:
-                            U[i][j] = 0
+                        if item_to_cluster[i][k] == 0:
+                            self.U[i][j] = 0
                             break
-                        dummy += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (self.M - 1))
+                        dummy += (item_to_cluster[i][j] / item_to_cluster[i][k]) ** (2 / (self.M - 1))
                     else:
-                        U[i][j] = 1 / dummy
-        return U
+                        self.U[i][j] = 1 / dummy
 
     def update_V(self, fuzzification_coefficient):
         """Update V after changing U"""
 
-        V = np.zeros((self.number_clusters, len(self.items[0])))
+        V_new = np.zeros((self.number_clusters, len(self.items[0])))
 
-        for k in range(len(V)):
-            dummy_array = np.zeros(V.shape[1])
+        for k in range(len(V_new)):
+            dummy_array = np.zeros(V_new.shape[1])
             dummy = 0
             for i in range(len(self.items)):
                 dummy_array += (self.U[i][k] ** fuzzification_coefficient[i][k]) * self.items[i]
                 dummy += self.U[i][k] ** fuzzification_coefficient[i][k]
-            V[k] = dummy_array / dummy
-        return V
+            V_new[k] = dummy_array / dummy
+        return V_new
 
     # def printResult(self):
     #     label = assign_label(self.U)
@@ -162,9 +160,9 @@ class sSMC_FCM:
     #     print("ASWC Score: ", ASWC(self.items, label, self.number_clusters))
     #     print("MA Score: ", MA(self.true_label, label, self.number_clusters))
 
-
-# data_table = readData("../dataset/iris.data")
-# i1, i2 = preprocessData(data_table, 4, [])
-# ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 20, 0.000001, 150)
-# ssmc.run()
-# ssmc.printResult()
+# if __name__ == "__main__":
+#     data_table = readData("../dataset/wine.data")
+#     i1, i2 = preprocessData(data_table, 0, [])
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 6, 0.6, 20, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.printResult()

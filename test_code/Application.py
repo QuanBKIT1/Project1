@@ -1,6 +1,7 @@
 import sys
 import util.ProcessorData
 from Cluster_Algorithm import FCM, MC_FCM, sSMC_FCM
+from test_code.fillData import fillData
 from util.Calculator import *
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
@@ -16,20 +17,8 @@ class MyWindowClass(QMainWindow):
         super(MyWindowClass, self).__init__()
         uic.loadUi("../designer/Project1_UI.ui", self)
         #     test code
-        self.dataPath.setText("C:/Users/Quan/iris.data")
-        self.colLabelText.setText("5")
-        self.colRText.setText("")
-        self.numberClusterText.setText('3')
-        self.epsilonText.setText('0.00001')
-        self.maxIterText.setText('150')
-        self.mText.setText('2')
-        self.mLText.setText('1.1')
-        self.mUText.setText('9.1')
-        self.alphaText.setText('0.7')
-        self.MText.setText('2')
-        self.M1Text.setText('4')
-        self.alphaText2.setText('0.6')
-        self.rateText.setText('20')
+        self.fillData = fillData(self)
+        self.fillData.fill_wine()
 
     def viewData(self):
         try:
@@ -146,16 +135,14 @@ class MyWindowClass(QMainWindow):
         self.m = (float)(self.mText.text())
         fcm = FCM.FCM(self.items, self.true_label, self.numberClusters, self.m, self.Epsilon, self.maxIter)
         fcm.run()
-        print(fcm.U, fcm.V, fcm.evalList)
         self.screen3.loadDataFCM(fcm.U, fcm.V, fcm.evalList)
         self.screen3.pushFCM()
-        print("sSMC running")
+        print("FCM running")
 
     def runMC_FCM(self):
         self.mL = (float)(self.mLText.text())
         self.mU = (float)(self.mUText.text())
         self.alpha = (float)(self.alphaText.text())
-        print(self.mL, self.mU, self.alpha)
         mc_fcm = MC_FCM.MC_FCM(self.items, self.true_label, self.numberClusters, self.mL, self.mU, self.alpha,
                                self.Epsilon, self.maxIter)
         mc_fcm.run()
@@ -168,7 +155,6 @@ class MyWindowClass(QMainWindow):
         self.M1 = float(self.M1Text.text())
         self.alpha2 = float(self.alphaText2.text())
         self.rate = float(self.rateText.text())
-        print(self.M, self.M1, self.alpha2, self.rate)
         ssmc_fcm = sSMC_FCM.sSMC_FCM(self.items, self.true_label, self.numberClusters, self.M, self.M1,
                                      self.alpha2, self.rate, self.Epsilon, self.maxIter)
         ssmc_fcm.run()
