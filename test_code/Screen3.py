@@ -13,6 +13,9 @@ class Screen3(QtWidgets.QMainWindow):
         self.pushButton_4.clicked.connect(self.pushEval)
         self.pushButton_5.clicked.connect(self.pushU)
         self.pushButton_6.clicked.connect(self.pushV)
+        self.dict = {0:'Đầu ra : Độ đo hiệu năng',
+                     1:"Đầu ra : U",
+                     2:"Đầu ra : V"}
 
     def loadData(self, data_table, tableWidget):
         max_row = len(data_table)
@@ -56,28 +59,35 @@ class Screen3(QtWidgets.QMainWindow):
     def pushFCM(self):
         self.label.setText("Thuật toán: FCM")
         self.stackedWidget.setCurrentIndex(0)
+        index = self.stackWidget_fcm.currentIndex()
+        self.label_2.setText(self.dict[index])
+
 
     def pushMCFCM(self):
         self.label.setText("Thuật toán: MC-FCM")
         self.stackedWidget.setCurrentIndex(1)
+        index = self.stackWidget_mc.currentIndex()
+        self.label_2.setText(self.dict[index])
 
     def pushsSMC(self):
         self.label.setText("Thuật toán: sSMC-FCM")
         self.stackedWidget.setCurrentIndex(2)
+        index = self.stackWidget_ssmc.currentIndex()
+        self.label_2.setText(self.dict[index])
 
     def pushEval(self):
-        self.label_2.setText("Đầu ra : Độ đo hiệu năng")
+        self.label_2.setText(self.dict[0])
         widget = self.stackedWidget.currentIndex()
         if widget == 0:
             self.stackWidget_fcm.setCurrentWidget(self.page_fcm_eval)
             print('E')
         if widget == 1:
-            self.stackWidget_fcm.setCurrentWidget(self.page_mc_eval)
+            self.stackWidget_mc.setCurrentWidget(self.page_mc_eval)
         if widget == 2:
-            self.stackWidget_fcm.setCurrentWidget(self.page_ssmc_eval)
+            self.stackWidget_ssmc.setCurrentWidget(self.page_ssmc_eval)
 
     def pushU(self):
-        self.label_2.setText("Đầu ra : U")
+        self.label_2.setText(self.dict[1])
         widget = self.stackedWidget.currentIndex()
         if widget == 0:
             self.stackWidget_fcm.setCurrentWidget(self.page_fcm_U)
@@ -86,10 +96,9 @@ class Screen3(QtWidgets.QMainWindow):
             self.stackWidget_mc.setCurrentWidget(self.page_mc_U)
         elif widget == 2:
             self.stackWidget_ssmc.setCurrentWidget(self.page_ssmc_U)
-            print("Fill ssmc U")
 
     def pushV(self):
-        self.label_2.setText("Đầu ra : V")
+        self.label_2.setText(self.dict[2])
         widget = self.stackedWidget.currentIndex()
         if widget == 0:
             self.stackWidget_fcm.setCurrentWidget(self.page_fcm_V)
@@ -98,5 +107,4 @@ class Screen3(QtWidgets.QMainWindow):
             self.stackWidget_mc.setCurrentWidget(self.page_mc_V)
         elif widget == 2:
             self.stackWidget_ssmc.setCurrentWidget(self.page_ssmc_V)
-            print("Fill ssmc U")
 

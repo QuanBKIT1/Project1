@@ -1,5 +1,4 @@
 import sys
-
 import util.ProcessorData
 from Cluster_Algorithm import FCM, MC_FCM, sSMC_FCM
 from util.Calculator import *
@@ -9,7 +8,6 @@ from PyQt5 import uic
 from Screen1 import Screen1
 from Screen2 import Screen2
 from Screen3 import Screen3
-from TestScreen3 import TestScreen3
 
 
 class MyWindowClass(QMainWindow):
