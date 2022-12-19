@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>729</width>
-    <height>647</height>
+    <width>1050</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_5">
@@ -213,8 +216,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>729</width>
-     <height>26</height>
+     <width>1050</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

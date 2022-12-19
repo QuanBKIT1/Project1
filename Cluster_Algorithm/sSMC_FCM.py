@@ -9,7 +9,6 @@ def f(x, a, b):
 
 
 class sSMC_FCM:
-
     def __init__(self, items, true_label, number_clusters, M, M1, alpha, rate, Epsilon, max_iter):
         self.items = items
         self.true_label = true_label
@@ -36,7 +35,6 @@ class sSMC_FCM:
         self.eval()
 
     def eval(self):
-
         label = ProcessorData.assign_label(self.U)
         self.evalList = [Evaluation.RI(self.true_label, label), Evaluation.DBI(self.items, label, self.number_clusters),
                          Evaluation.PBM(self.items, label, self.number_clusters),
@@ -139,30 +137,14 @@ class sSMC_FCM:
 
     def update_V(self, fuzzification_coefficient):
         """Update V after changing U"""
-
         V_new = np.zeros((self.number_clusters, len(self.items[0])))
 
         for k in range(len(V_new)):
             dummy_array = np.zeros(V_new.shape[1])
             dummy = 0
             for i in range(len(self.items)):
-                dummy_array += (self.U[i][k] ** fuzzification_coefficient[i][k]) * self.items[i]
-                dummy += self.U[i][k] ** fuzzification_coefficient[i][k]
+                tmp = self.U[i][k] ** fuzzification_coefficient[i][k]
+                dummy_array += tmp * self.items[i]
+                dummy += tmp
             V_new[k] = dummy_array / dummy
         return V_new
-
-    # def printResult(self):
-    #     label = assign_label(self.U)
-    #     print("sSMC-FCM :")
-    #     print("Rand Index Score: ", RI(self.true_label, label))
-    #     print("DBI Score: ", DBI(self.items, label, self.number_clusters))
-    #     print("PBM Score: ", PBM(self.items, label, self.number_clusters))
-    #     print("ASWC Score: ", ASWC(self.items, label, self.number_clusters))
-    #     print("MA Score: ", MA(self.true_label, label, self.number_clusters))
-
-# if __name__ == "__main__":
-#     data_table = readData("../dataset/wine.data")
-#     i1, i2 = preprocessData(data_table, 0, [])
-#     ssmc = sSMC_FCM(i1, i2, 3, 2, 6, 0.6, 20, 0.000001, 300)
-#     ssmc.run()
-#     ssmc.printResult()
