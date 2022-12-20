@@ -3,7 +3,6 @@ class fillData:
         self.app = app
 
     def fill_iris(self):
-        self.app.dataPath.setText("C:/Users/Quan/iris.data")
         self.app.colLabelText.setText("5")
         self.app.colRText.setText("")
         self.app.numberClusterText.setText('3')
@@ -19,7 +18,6 @@ class fillData:
         self.app.rateText.setText('20')
 
     def fill_ecoli(self):
-        self.app.dataPath.setText("C:/Users/Quan/ecoli.data")
         self.app.colLabelText.setText("9")
         self.app.colRText.setText("1")
         self.app.numberClusterText.setText('8')
@@ -35,7 +33,6 @@ class fillData:
         self.app.rateText.setText('')
 
     def fill_wdbc(self):
-        self.app.dataPath.setText("C:/Users/Quan/wdbc.data")
         self.app.colLabelText.setText("2")
         self.app.colRText.setText("1")
         self.app.numberClusterText.setText('2')
@@ -51,7 +48,6 @@ class fillData:
         self.app.rateText.setText('')
 
     def fill_wine(self):
-        self.app.dataPath.setText("C:/Users/Quan/wine.data")
         self.app.colLabelText.setText("1")
         self.app.colRText.setText("")
         self.app.numberClusterText.setText('3')
