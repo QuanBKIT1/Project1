@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 
 def readData(fileName):
@@ -42,6 +43,18 @@ def preprocessData(data_table, colLabel, colRedundant):
         items.append(item)
 
     items = np.array(items)
+
+    # # Standard
+    # scaler = StandardScaler()
+    # scaler.fit(items)
+    # items = scaler.transform(items)
+
+    # Minimax Scaler
+    scaler = MinMaxScaler()
+    scaler.fit(items)
+    items = scaler.transform(items)
+
+
     trueLabel = np.array(trueLabel)
 
     return items, trueLabel

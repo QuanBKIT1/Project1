@@ -70,7 +70,8 @@ class FCM:
             V[k] = dummy_array / dummy
         return V
 
-# i1, i2 = preprocessData("../dataset/iris.data", 4, [])
-# fcm = FCM(i1,i2,3,2,0.00001,150)
+# data_table = readData("../dataset/wdbc.data")
+# i1, i2 = preprocessData(data_table, 1, [0])
+# fcm = FCM(i1, i2, 2, 2, 0.000001, 300)
 # fcm.run()
-# fcm.printResult()
+# print(fcm.U)

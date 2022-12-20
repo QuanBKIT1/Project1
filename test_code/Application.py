@@ -18,14 +18,14 @@ class MyWindowClass(QMainWindow):
         uic.loadUi("../designer/Project1_UI.ui", self)
         #     test code
         self.fillData = fillData(self)
-        self.fillData.fill_wine()
+        self.fillData.fill_wdbc()
 
     def viewData(self):
         try:
             data_table = readData(self.dataPath.text())
             self.screen1 = Screen1()
             self.screen1.loadData(data_table)
-            self.screen1.showMaximized()
+            self.screen1.show()
         except:
             self.error_dialog = QtWidgets.QErrorMessage()
             self.error_dialog.showMessage('Đường dẫn không hợp lệ!')
@@ -76,7 +76,7 @@ class MyWindowClass(QMainWindow):
                                                                             self.colRedundant)
             self.screen2 = Screen2()
             self.screen2.loadData(data_table1, data_table2, self.items)
-            self.screen2.showMaximized()
+            self.screen2.show()
 
         except:
             self.error_dialog = QtWidgets.QErrorMessage()
@@ -126,7 +126,7 @@ class MyWindowClass(QMainWindow):
                     self.runsSMC_FCM()
                 else:
                     self.runAll()
-                self.screen3.showMaximized()
+                self.screen3.show()
         except:
             self.error_dialog = QtWidgets.QErrorMessage()
             self.error_dialog.showMessage('Dữ liệu không hợp lệ (thiếu, sai số,...)')

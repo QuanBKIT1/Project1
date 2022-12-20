@@ -1,4 +1,3 @@
-
 class fillData:
     def __init__(self, app):
         self.app = app
@@ -51,7 +50,6 @@ class fillData:
         self.app.alphaText2.setText('')
         self.app.rateText.setText('')
 
-
     def fill_wine(self):
         self.app.dataPath.setText("C:/Users/Quan/wine.data")
         self.app.colLabelText.setText("1")
@@ -67,4 +65,3 @@ class fillData:
         self.app.M1Text.setText('6')
         self.app.alphaText2.setText('0.6')
         self.app.rateText.setText('20')
-
