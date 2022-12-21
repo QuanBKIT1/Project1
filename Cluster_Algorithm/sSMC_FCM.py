@@ -2,7 +2,6 @@ from util import ProcessorData, Evaluation
 from util.Evaluation import *
 import numpy as np
 
-
 def f(x, a, b):
     """Calculate the left side of the equation"""
     return x / ((x + a) ** b)
@@ -148,3 +147,53 @@ class sSMC_FCM:
                 dummy += tmp
             V_new[k] = dummy_array / dummy
         return V_new
+
+# if __name__ == "__main__":
+#     data_table = readData("../dataset/iris.data")
+#     i1, i2 = preprocessData(data_table, 4, [])
+#     print("0%:")
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 0, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.eval()
+#     print("DBI:"); print(ssmc.evalList[1]);
+#     print("ASWC:"); print(ssmc.evalList[3]);
+#     print("PBM:"); print(ssmc.evalList[2]);
+#     print("RI:"); print(ssmc.evalList[0]);
+#     print("MA:"); print(ssmc.evalList[4]);
+#     print("5%:")
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.eval()
+#     print("DBI:"); print(ssmc.evalList[1]);
+#     print("ASWC:"); print(ssmc.evalList[3]);
+#     print("PBM:"); print(ssmc.evalList[2]);
+#     print("RI:"); print(ssmc.evalList[0]);
+#     print("MA:"); print(ssmc.evalList[4]);
+#     print("10%:")
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 10, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.eval()
+#     print("DBI:"); print(ssmc.evalList[1]);
+#     print("ASWC:"); print(ssmc.evalList[3]);
+#     print("PBM:"); print(ssmc.evalList[2]);
+#     print("RI:"); print(ssmc.evalList[0]);
+#     print("MA:"); print(ssmc.evalList[4]);
+#     print("15%:")
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 15, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.eval()
+#     print("DBI:"); print(ssmc.evalList[1]);
+#     print("ASWC:"); print(ssmc.evalList[3]);
+#     print("PBM:"); print(ssmc.evalList[2]);
+#     print("RI:"); print(ssmc.evalList[0]);
+#     print("MA:"); print(ssmc.evalList[4]);
+#     print("20%:")
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 20, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.eval()
+#     print("DBI:"); print(ssmc.evalList[1]);
+#     print("ASWC:"); print(ssmc.evalList[3]);
+#     print("PBM:"); print(ssmc.evalList[2]);
+#     print("RI:"); print(ssmc.evalList[0]);
+#     print("MA:"); print(ssmc.evalList[4]);
+
