@@ -159,23 +159,23 @@ class sSMC_FCM:
         return m
 
 
-if __name__ == "__main__":
-    data_table = readData("../dataset/iris.data")
-    i1, i2 = preprocessData(data_table, 4, [])
-    print("0%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 0, 0.000001, 300)
-    ssmc.run()
-    ssmc.eval()
-    print("DBI:");
-    print(ssmc.evalList[1]);
-    print("ASWC:");
-    print(ssmc.evalList[3]);
-    print("PBM:");
-    print(ssmc.evalList[2]);
-    print("RI:");
-    print(ssmc.evalList[0]);
-    print("MA:");
-    print(ssmc.evalList[4]);
+# if __name__ == "__main__":
+#     data_table = readData("../dataset/iris.data")
+#     i1, i2 = preprocessData(data_table, 4, [])
+#     print("0%:")
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 0, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.eval()
+#     print("DBI:");
+#     print(ssmc.evalList[1]);
+#     print("ASWC:");
+#     print(ssmc.evalList[3]);
+#     print("PBM:");
+#     print(ssmc.evalList[2]);
+#     print("RI:");
+#     print(ssmc.evalList[0]);
+#     print("MA:");
+#     print(ssmc.evalList[4]);
 #     print("5%:")
 #     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
 #     ssmc.run()
