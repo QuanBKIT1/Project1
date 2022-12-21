@@ -79,13 +79,13 @@ class MC_FCM():
                         U[i][k] = 0
                     else:
                         U[i][k] = 1
-                continue
-            for k in range(len(U[0])):
-                dummy = 0
-                for j in range(len(U[0])):
-                    dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (fuzzification_coefficient[i] - 1))
-                else:
-                    U[i][k] = 1 / dummy
+            else:
+                for k in range(len(U[0])):
+                    dummy = 0
+                    for j in range(len(U[0])):
+                        dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (fuzzification_coefficient[i] - 1))
+                    else:
+                        U[i][k] = 1 / dummy
         return U
 
     def update_V(self, items, U, fuzzification_coefficient):

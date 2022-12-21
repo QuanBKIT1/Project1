@@ -70,7 +70,7 @@ class sSMC_FCM:
 
     def calc_M1(self):
         """Calculate value of M'"""
-        distance_matrix = calc_matrix_distance(self.items)
+        item_to_cluster = calc_distance_item_to_cluster(self.items, self.V)
         # Do vế trái là 1 hàm nghịch biến nên ta cần tìm giá trị nhỏ nhất
         # của vế phải ứng với U'(ik). Vì nếu M' thỏa mãn với giá trị nhỏ
         # nhất đó thì nó cũng thỏa mãn với các trường hợp khác
@@ -82,12 +82,22 @@ class sSMC_FCM:
             U = 0
             for j in range(self.number_clusters):
                 for k in range(self.number_clusters):
-                    if distance_matrix[i][k] == 0:
+                    if item_to_cluster[i][k] == 0:
                         U = 1
                         break
-                    U += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (self.M - 1))
+                    U += (item_to_cluster[i][j] / item_to_cluster[i][k]) ** (2 / (self.M - 1))
                 else:
                     U = 1 / U
+
+            for j in range(self.number_clusters):
+                for k in range(self.number_clusters):
+                    if item_to_cluster[i][k] == 0:
+                        U = 0
+                        break
+                    U += (item_to_cluster[i][j] / item_to_cluster[i][k]) ** (2 / (self.M - 1))
+                else:
+                    U= 1 / U
+
             right_val = self.M * ((1 - self.alpha) / (1 / U - 1)) ** (self.M - 1)
             # M1_list.append(max_value(right_val))
             min_right_value = min(min_right_value, right_val)
@@ -107,6 +117,8 @@ class sSMC_FCM:
 
     def update_U(self, item_to_cluster):
         """Update membership value for each iteration"""
+        
+        U = np.zeros((len(item_to_cluster), len(item_to_cluster[0])))
         for i in range(len(self.U)):
             if i in self.monitored_elements:
                 # Calculate U for monitored components
@@ -123,18 +135,23 @@ class sSMC_FCM:
                 dij[k] = self.solution_of_equation(a, b, c)
                 sumd = np.sum(dij)
                 for j in range(self.number_clusters):
-                    self.U[i][j] = dij[j] / sumd
+                    U[i][j] = dij[j] / sumd
             else:
                 # Calculate U for unsupervised components
-                for j in range(self.number_clusters):
-                    dummy = 0
-                    for k in range(self.number_clusters):
-                        if item_to_cluster[i][k] == 0:
-                            self.U[i][j] = 0
-                            break
-                        dummy += (item_to_cluster[i][j] / item_to_cluster[i][k]) ** (2 / (self.M - 1))
-                    else:
-                        self.U[i][j] = 1 / dummy
+                if (0 in item_to_cluster[i]):
+                    for k in range(len(U[0])):
+                        if (item_to_cluster[i][k] != 0):
+                            U[i][k] = 0
+                        else:
+                            U[i][k] = 1
+                else:
+                    for k in range(len(U[0])):
+                        dummy = 0
+                        for j in range(len(U[0])):
+                            dummy += (item_to_cluster[i][k] / item_to_cluster[i][j]) ** (2 / (self.M - 1))
+                        else:
+                            U[i][k] = 1 / dummy
+        return U
 
     def update_V(self):
         """Update V after changing U"""
@@ -160,55 +177,39 @@ class sSMC_FCM:
 
 
 if __name__ == "__main__":
-    data_table = readData("../dataset/iris.data")
-    i1, i2 = preprocessData(data_table, 4, [])
-    print("0%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 0, 0.000001, 300)
+    data_table = readData("../dataset/wdbc.data")
+    i1, i2 = preprocessData(data_table, 1, [])
+    # print("0%:")
+    # ssmc = sSMC_FCM(i1, i2, 2, 2, 7, 0.6, 0, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    print("5%:")
+    ssmc = sSMC_FCM(i1, i2, 2, 2, 7, 0.6, 5, 0.000001, 300)
     ssmc.run()
     ssmc.eval()
-    print("DBI:");
-    print(ssmc.evalList[1]);
-    print("ASWC:");
-    print(ssmc.evalList[3]);
-    print("PBM:");
-    print(ssmc.evalList[2]);
-    print("RI:");
-    print(ssmc.evalList[0]);
-    print("MA:");
-    print(ssmc.evalList[4]);
-#     print("5%:")
-#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
-#     ssmc.run()
-#     ssmc.eval()
-#     print("DBI:"); print(ssmc.evalList[1]);
-#     print("ASWC:"); print(ssmc.evalList[3]);
-#     print("PBM:"); print(ssmc.evalList[2]);
-#     print("RI:"); print(ssmc.evalList[0]);
-#     print("MA:"); print(ssmc.evalList[4]);
-#     print("10%:")
-#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 10, 0.000001, 300)
-#     ssmc.run()
-#     ssmc.eval()
-#     print("DBI:"); print(ssmc.evalList[1]);
-#     print("ASWC:"); print(ssmc.evalList[3]);
-#     print("PBM:"); print(ssmc.evalList[2]);
-#     print("RI:"); print(ssmc.evalList[0]);
-#     print("MA:"); print(ssmc.evalList[4]);
-#     print("15%:")
-#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 15, 0.000001, 300)
-#     ssmc.run()
-#     ssmc.eval()
-#     print("DBI:"); print(ssmc.evalList[1]);
-#     print("ASWC:"); print(ssmc.evalList[3]);
-#     print("PBM:"); print(ssmc.evalList[2]);
-#     print("RI:"); print(ssmc.evalList[0]);
-#     print("MA:"); print(ssmc.evalList[4]);
-#     print("20%:")
-#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 20, 0.000001, 300)
-#     ssmc.run()
-#     ssmc.eval()
-#     print("DBI:"); print(ssmc.evalList[1]);
-#     print("ASWC:"); print(ssmc.evalList[3]);
-#     print("PBM:"); print(ssmc.evalList[2]);
-#     print("RI:"); print(ssmc.evalList[0]);
-#     print("MA:"); print(ssmc.evalList[4]);
+    print(ssmc.calc_M1())
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    # print("10%:")
+    # ssmc = sSMC_FCM(i1, i2, 2, 2, 7, 0.6, 10, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    #
+    # print("15%:")
+    # ssmc = sSMC_FCM(i1, i2, 2, 2, 7, 0.6, 15, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    #
+    # print("20%:")
+    # ssmc = sSMC_FCM(i1, i2, 2, 2, 7, 0.6, 20, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    #
