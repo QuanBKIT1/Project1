@@ -2,7 +2,6 @@ from util import ProcessorData, Evaluation
 from util.Evaluation import *
 import numpy as np
 
-
 def f(x, a, b):
     """Calculate the left side of the equation"""
     return x / ((x + a) ** b)
@@ -25,11 +24,10 @@ class sSMC_FCM:
 
     def run(self):
         """Implement sSMC_FCM"""
-        self.fuzzification_coefficient = self.init_fuzzification_coefficient()
         for k in range(self.max_iter):
             item_to_cluster = calc_distance_item_to_cluster(self.items, self.V)
             self.update_U(item_to_cluster)
-            V_new = self.update_V()
+            V_new = self.update_V(self.items)
             if end_condition(V_new, self.V, self.Epsilon):
                 break
             self.V = np.copy(V_new)
@@ -136,7 +134,7 @@ class sSMC_FCM:
                     else:
                         self.U[i][j] = 1 / dummy
 
-    def update_V(self):
+    def update_V(self, fuzzification_coefficient):
         """Update V after changing U"""
         V_new = np.zeros((self.number_clusters, len(self.items[0])))
 
@@ -144,38 +142,24 @@ class sSMC_FCM:
             dummy_array = np.zeros(V_new.shape[1])
             dummy = 0
             for i in range(len(self.items)):
-                tmp = self.U[i][k] ** self.fuzzification_coefficient[i][k]
+                tmp = self.U[i][k] ** fuzzification_coefficient[i][k]
                 dummy_array += tmp * self.items[i]
                 dummy += tmp
             V_new[k] = dummy_array / dummy
         return V_new
 
-    def init_fuzzification_coefficient(self):
-        """Calculate matrix of fuzzification coefficient correspond with each element"""
-        m = np.full((len(self.items), self.number_clusters), self.M)
-
-        for i in self.monitored_elements:
-            m[i][self.monitored_elements[i]] = self.M1
-        return m
-
-
-if __name__ == "__main__":
-    data_table = readData("../dataset/iris.data")
-    i1, i2 = preprocessData(data_table, 4, [])
-    print("0%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 0, 0.000001, 300)
-    ssmc.run()
-    ssmc.eval()
-    print("DBI:");
-    print(ssmc.evalList[1]);
-    print("ASWC:");
-    print(ssmc.evalList[3]);
-    print("PBM:");
-    print(ssmc.evalList[2]);
-    print("RI:");
-    print(ssmc.evalList[0]);
-    print("MA:");
-    print(ssmc.evalList[4]);
+# if __name__ == "__main__":
+#     data_table = readData("../dataset/iris.data")
+#     i1, i2 = preprocessData(data_table, 4, [])
+#     print("0%:")
+#     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 0, 0.000001, 300)
+#     ssmc.run()
+#     ssmc.eval()
+#     print("DBI:"); print(ssmc.evalList[1]);
+#     print("ASWC:"); print(ssmc.evalList[3]);
+#     print("PBM:"); print(ssmc.evalList[2]);
+#     print("RI:"); print(ssmc.evalList[0]);
+#     print("MA:"); print(ssmc.evalList[4]);
 #     print("5%:")
 #     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
 #     ssmc.run()
@@ -212,3 +196,4 @@ if __name__ == "__main__":
 #     print("PBM:"); print(ssmc.evalList[2]);
 #     print("RI:"); print(ssmc.evalList[0]);
 #     print("MA:"); print(ssmc.evalList[4]);
+
