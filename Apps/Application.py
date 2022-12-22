@@ -18,7 +18,7 @@ class MyWindowClass(QMainWindow):
         uic.loadUi("../designer/Project1_UI.ui", self)
         #     test code
         self.fillData = fillData(self)
-        self.fillData.fill_wdbc()
+        self.fillData.fill_wine()
 
     def viewData(self):
         try:

@@ -89,9 +89,7 @@ class MC_FCM():
 
     def update_V(self, items, U, fuzzification_coefficient):
         """ Update V after changing U """
-
         V = np.zeros((self.number_clusters, len(items[0])))
-
         for k in range(len(V)):
             dummy_array = np.zeros(V.shape[1])
             dummy = 0

@@ -70,27 +70,26 @@ class sSMC_FCM:
 
     def calc_M1(self):
         """Calculate value of M'"""
-        distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
+        item_to_cluster = calc_distance_item_to_cluster(self.items, self.V)
         # Do vế trái là 1 hàm nghịch biến nên ta cần tìm giá trị nhỏ nhất
         # của vế phải ứng với U'(ik). Vì nếu M' thỏa mãn với giá trị nhỏ
         # nhất đó thì nó cũng thỏa mãn với các trường hợp khác
 
-        min_right_value = 999999
-
-        for i in self.monitored_elements:
-            # Calculate right-hand value
-            U = 0
-            for j in range(self.number_clusters):
-                for k in range(self.number_clusters):
-                    if distance_matrix[i][k] == 0:
-                        U = 1
-                        break
-                    U += (distance_matrix[i][j] / distance_matrix[i][k]) ** (2 / (self.M - 1))
-                else:
-                    U = 1 / U
-            right_val = self.M * ((1 - self.alpha) / (1 / U - 1)) ** (self.M - 1)
-            # M1_list.append(max_value(right_val))
-            min_right_value = min(min_right_value, right_val)
+        right_val_list = []
+        U = 0
+        for i in range(len(self.U)):
+            if i in self.monitored_elements:
+                # Calculate U for unsupervised components
+                k = self.monitored_elements[i]      
+                if (item_to_cluster[i][k] != 0):
+                    dummy = 0
+                    for j in range(self.number_clusters):
+                        dummy += (item_to_cluster[i][k] / item_to_cluster[i][j]) ** (2 / (self.M - 1))
+                    else:
+                        U = 1 / dummy
+                        right_val = self.M * ((1 - self.alpha) / (1 / U - 1)) ** (self.M - 1)
+                        right_val_list.append(right_val)
+        min_right_value = min(right_val_list)
         return self.max_value(min_right_value)
 
     def solution_of_equation(self, a, b, c):
@@ -103,9 +102,6 @@ class sSMC_FCM:
                 x += var_increase
             else:
                 var_increase /= 2
-                if (var_increase < self.Epsilon):
-                    x += var_increase
-                    break;
         return x
 
     def update_U(self, item_to_cluster):
@@ -170,32 +166,33 @@ if __name__ == "__main__":
     data_table = readData("../dataset/iris.data")
     i1, i2 = preprocessData(data_table, 4, [])
     print("0%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 0, 0.000001, 300)
-    ssmc.run()
-    ssmc.eval()
-    print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-          "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    print("5%:")
     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
     ssmc.run()
     ssmc.eval()
-    print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-          "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    print("10%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 10, 0.000001, 300)
-    ssmc.run()
-    ssmc.eval()
-    print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-          "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    print("15%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 15, 0.000001, 300)
-    ssmc.run()
-    ssmc.eval()
-    print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-          "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    print("20%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 20, 0.000001, 300)
-    ssmc.run()
-    ssmc.eval()
-    print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-          "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    print(ssmc.calc_M1())
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    # print("5%:")
+    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    # print("10%:")
+    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 10, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    # print("15%:")
+    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 15, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
+    # print("20%:")
+    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 20, 0.000001, 300)
+    # ssmc.run()
+    # ssmc.eval()
+    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
+    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))

@@ -118,6 +118,7 @@ def ASWC(items, label, numberCluster):
 
     for i in sxj:
         tong += i
+
     return tong / len(sxj)
 
 
@@ -134,7 +135,6 @@ def MA(true_label, label, number_clusters):
             if true_label[j] == i:
                 dummy = dummy + 1
         dict0[i] = dummy
-
     dict1 = {}
     while indexL:
         i = indexL.pop()
@@ -144,9 +144,8 @@ def MA(true_label, label, number_clusters):
             for k in range(len(label)):
                 if label[k] == i and true_label[k] == j:
                     dummy = dummy + 1
-            if dummy > l[2]:
+            if dummy >= l[2]:
                 l = [i, j, dummy]
         dict1[l[0]] = [l[1], l[2], dict0[l[1]]]
         trueL.remove(l[1])
-
     return np.min([dict1[i][1] / dict1[i][2] for i in dict1])
