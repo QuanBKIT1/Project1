@@ -2,10 +2,8 @@ from sklearn import metrics
 import numpy as np
 from util.Calculator import *
 
-
 def RI(labels_true, labels_pred):
     return metrics.rand_score(labels_true, labels_pred)
-
 
 def DBI(X, labels, numberCluster):
     index_cluster = [[] for i in range(numberCluster)]
@@ -13,25 +11,26 @@ def DBI(X, labels, numberCluster):
         index_cluster[labels[i]].append(i)
 
     # Calculate X_
-    X_ = np.zeros((numberCluster, len(X[0])))
-    for i in range(len(X_)):
-        for j in range(len(X_[0])):
-            dummy = 0
-            for k in range(len(index_cluster[i])):
-                dummy += X[index_cluster[i][k]][j]
-            X_[i][j] = dummy / len(index_cluster[i])
-    # Calculate di
-    intra_dispersion = np.zeros(numberCluster)
-
+    X_ = []
     for i in range(numberCluster):
-        dummy = 0
-        for j in range(len(index_cluster[i])):
-            dummy += d(X[index_cluster[i][j]], X_[i])
-        intra_dispersion[i] = 1 / len(index_cluster[i]) * dummy
+        if (len(index_cluster[i]) == 0):
+            X_.append(np.zeros((len(X[0]))))
+        else:
+            X_.append(np.mean([X[index_cluster[i][k]]
+                        for k in range(len(index_cluster[i]))], axis=0))
+    X_ = np.array(X_)
+    # Calculate di
+    intra_dispersion = []
+    for i in range(numberCluster):
+        if (len(index_cluster[i]) == 0):
+            X_.append(np.zeros((len(X[0]))))
+        else:
+            intra_dispersion.append(np.mean([d(X[index_cluster[i][j]], X_[i])
+                                    for j in range(len(index_cluster[i]))], axis=0))
+    intra_dispersion = np.array(intra_dispersion)
 
     # Calculate dij
     separation_measure = calc_matrix_distance(X_)
-
     # Calculate Dij
     similarity = np.zeros((numberCluster, numberCluster))
     for i in range(numberCluster):
@@ -49,13 +48,12 @@ def DBI(X, labels, numberCluster):
 
 
 def PBM(X, labels, numberCluster):
-    # Calculate X_
     # Ngoc Huy begin:
+    # Calculate X_
     X_ = np.mean(X, axis=0)
 
     # Calculate El
     El = sum([d(X[i], X_) for i in range(len(X))])
-
     # Calculate list X_
     Xtb = []
     for k in range(numberCluster):
@@ -63,7 +61,10 @@ def PBM(X, labels, numberCluster):
         for i in range(len(X)):
             if labels[i] == k:
                 item.append(X[i])
-        Xtb.append(np.mean(item, axis=0))
+        if (item != []):
+            Xtb.append(np.mean(item, axis=0))
+        else:
+            Xtb.append(np.zeros((len(X[0]))))
     Xtb = np.array(Xtb)
 
     # Calculate Ec

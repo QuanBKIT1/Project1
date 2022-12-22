@@ -168,8 +168,6 @@ if __name__ == "__main__":
     print("0%:")
     ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
     ssmc.run()
-    ssmc.eval()
-    print(ssmc.calc_M1())
     # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
     #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
     # print("5%:")
