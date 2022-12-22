@@ -31,7 +31,6 @@ class MC_FCM():
         self.eval()
 
     def eval(self):
-
         label = ProcessorData.assign_label(self.U)
         self.evalList = [Evaluation.RI(self.true_label, label), Evaluation.DBI(self.items, label, self.number_clusters),
                          Evaluation.PBM(self.items, label, self.number_clusters),
@@ -74,15 +73,15 @@ class MC_FCM():
         U = np.zeros((len(distance_matrix), len(distance_matrix[0])))
         for i in range(len(U)):
             if (0 in distance_matrix[i]):
-                for k in range(len(U[0])):
+                for k in range(self.number_clusters):
                     if (distance_matrix[i][k] != 0):
                         U[i][k] = 0
                     else:
                         U[i][k] = 1
                 continue
-            for k in range(len(U[0])):
+            for k in range(self.number_clusters):
                 dummy = 0
-                for j in range(len(U[0])):
+                for j in range(self.number_clusters):
                     dummy += (distance_matrix[i][k] / distance_matrix[i][j]) ** (2 / (fuzzification_coefficient[i] - 1))
                 else:
                     U[i][k] = 1 / dummy
@@ -91,7 +90,7 @@ class MC_FCM():
     def update_V(self, items, U, fuzzification_coefficient):
         """ Update V after changing U """
 
-        V = np.zeros((len(U[0]), len(items[0])))
+        V = np.zeros((self.number_clusters, len(items[0])))
 
         for k in range(len(V)):
             dummy_array = np.zeros(V.shape[1])
