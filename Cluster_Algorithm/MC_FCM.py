@@ -15,6 +15,7 @@ class MC_FCM():
         self.max_iter = max_iter
         self.U = np.zeros((len(self.items), self.number_clusters))
         self.V = init_C_KMeans(self.items, self.number_clusters)
+        self.iterator = 0
 
     def run(self):
         """Implement MC_FCM"""
@@ -25,11 +26,13 @@ class MC_FCM():
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
             self.U = self.update_U(distance_matrix, fuzzification_coefficient)
             V_new = self.update_V(self.items, self.U, fuzzification_coefficient)
+            self.iterator += 1
             if end_condition(V_new, self.V, self.Epsilon):
                 break
             self.V = np.copy(V_new)
         self.label = ProcessorData.assign_label(self.U)
         self.label_map = ProcessorData.label_mapping(self.true_label, self.label, self.number_clusters)
+        print(self.label_map)
         self.table_map = util.ProcessorData.convert_to_table_map(self.label_map, self.label)
         self.eval()
 

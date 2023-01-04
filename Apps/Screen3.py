@@ -14,10 +14,22 @@ class Screen3(QtWidgets.QMainWindow):
         self.pushButton_5.clicked.connect(self.pushU)
         self.pushButton_6.clicked.connect(self.pushV)
         self.pushButton_7.clicked.connect(self.pushLabel)
+
+        # Store value for display label
         self.dict = {0: 'Đầu ra : Độ đo hiệu năng',
                      1: "Đầu ra : U",
                      2: "Đầu ra : V",
                      3: "Đầu ra : Nhãn"}
+        # Store value of iterator
+        self.dict1 = [0, 0, 0]
+        # Store VerticalHeaderLabels eval
+        self.list1 =  ['Rand Index',
+                       'Davies-Bouldin Index',
+                       'PBM index',
+                       'Alternative Silhouette Width Criterion',
+                       'Mean accuracy']
+        # Store VerticalHeaderLabels eval
+
 
     def loadData(self, data_table, tableWidget):
         max_row = len(data_table)
@@ -37,54 +49,60 @@ class Screen3(QtWidgets.QMainWindow):
             for col in range(max_col):
                 tableWidget.setItem(row, col, QTableWidgetItem(str(data_table[row][col])))
 
+    def loadDataFCM(self, fcm):
+        self.loadData(fcm.evalList, self.table_fcm_eval)
+        self.loadData(fcm.V, self.table_fcm_V)
+        self.loadData(fcm.U, self.table_fcm_U)
+        self.loadData1(fcm.table_map, self.table_fcm_label)
 
-    def loadDataFCM(self, U, V, evalList, table_map):
-        self.loadData(U, self.table_fcm_U)
-        self.loadData(V, self.table_fcm_V)
-        self.loadData(evalList, self.table_fcm_eval)
-        self.table_fcm_eval.setVerticalHeaderLabels(['Rand Index',
-                                                     'Davies-Bouldin Index',
-                                                     'PBM index',
-                                                     'Alternative Silhouette Width Criterion',
-                                                     'Mean accuracy'])
-        self.loadData1(table_map, self.table_fcm_label)
+        self.table_fcm_eval.setVerticalHeaderLabels(self.list1)
+        self.table_fcm_eval.setHorizontalHeaderLabels(["Kết quả"])
+        self.table_fcm_label.setHorizontalHeaderLabels(["Nhãn số", "Nhãn tương ứng"])
 
-    def loadDataMCFCM(self, U, V, evalList, table_map):
-        self.loadData(U, self.table_mc_U)
-        self.loadData(V, self.table_mc_V)
-        self.loadData(evalList, self.table_mc_eval)
-        self.table_mc_eval.setVerticalHeaderLabels(['Rand Index',
-                                                    'Davies-Bouldin Index',
-                                                    'PBM index',
-                                                    'Alternative Silhouette Width Criterion',
-                                                    'Mean accuracy'])
-        self.loadData1(table_map, self.table_mc_label)
+        self.dict1[0] = fcm.iterator
 
-    def loadDatasSMC(self, U, V, evalList, table_map):
-        self.loadData(U, self.table_ssmc_U)
-        self.loadData(V, self.table_ssmc_V)
-        self.loadData(evalList, self.table_ssmc_eval)
-        self.table_ssmc_eval.setVerticalHeaderLabels(['Rand Index',
-                                                      'Davies-Bouldin Index',
-                                                      'PBM index',
-                                                      'Alternative Silhouette Width Criterion',
-                                                      'Mean accuracy'])
-        self.loadData1(table_map, self.table_ssmc_label)
+    def loadDataMCFCM(self, mc_fcm):
+        self.loadData(mc_fcm.evalList, self.table_mc_eval)
+        self.loadData(mc_fcm.V, self.table_mc_V)
+        self.loadData(mc_fcm.U, self.table_mc_U)
+        self.loadData1(mc_fcm.table_map, self.table_mc_label)
+
+        self.table_mc_eval.setVerticalHeaderLabels(self.list1)
+        self.table_mc_eval.setHorizontalHeaderLabels(["Kết quả"])
+        self.table_mc_label.setHorizontalHeaderLabels(["Nhãn số", "Nhãn tương ứng"])
+
+        self.dict1[1] = mc_fcm.iterator
+
+    def loadDatasSMC(self, ssmc_fcm):
+        self.loadData(ssmc_fcm.evalList, self.table_ssmc_eval)
+        self.loadData(ssmc_fcm.V, self.table_ssmc_V)
+        self.loadData(ssmc_fcm.U, self.table_ssmc_U)
+        self.loadData1(ssmc_fcm.table_map, self.table_ssmc_label)
+
+        self.table_ssmc_eval.setVerticalHeaderLabels(self.list1)
+        self.table_ssmc_eval.setHorizontalHeaderLabels(["Kết quả"])
+        self.table_ssmc_label.setHorizontalHeaderLabels(["Nhãn số", "Nhãn tương ứng"])
+
+
+        self.dict1[2] = ssmc_fcm.iterator
 
     def pushFCM(self):
         self.label.setText("Thuật toán: FCM")
+        self.label_3.setText("Số lần lặp: " + str(self.dict1[0]))
         self.stackedWidget.setCurrentIndex(0)
         index = self.stackWidget_fcm.currentIndex()
         self.label_2.setText(self.dict[index])
 
     def pushMCFCM(self):
         self.label.setText("Thuật toán: MC-FCM")
+        self.label_3.setText("Số lần lặp: " + str(self.dict1[1]))
         self.stackedWidget.setCurrentIndex(1)
         index = self.stackWidget_mc.currentIndex()
         self.label_2.setText(self.dict[index])
 
     def pushsSMC(self):
         self.label.setText("Thuật toán: sSMC-FCM")
+        self.label_3.setText("Số lần lặp: " + str(self.dict1[2]))
         self.stackedWidget.setCurrentIndex(2)
         index = self.stackWidget_ssmc.currentIndex()
         self.label_2.setText(self.dict[index])
@@ -94,6 +112,7 @@ class Screen3(QtWidgets.QMainWindow):
         widget = self.stackedWidget.currentIndex()
         if widget == 0:
             self.stackWidget_fcm.setCurrentWidget(self.page_fcm_eval)
+            print(self.stackWidget_fcm.currentIndex())
         if widget == 1:
             self.stackWidget_mc.setCurrentWidget(self.page_mc_eval)
         if widget == 2:
@@ -124,7 +143,6 @@ class Screen3(QtWidgets.QMainWindow):
         widget = self.stackedWidget.currentIndex()
         if widget == 0:
             self.stackWidget_fcm.setCurrentWidget(self.page_fcm_label)
-            print('V')
         elif widget == 1:
             self.stackWidget_mc.setCurrentWidget(self.page_mc_label)
         elif widget == 2:

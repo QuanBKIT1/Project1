@@ -48,7 +48,7 @@ class fillData:
         self.app.rateText.setText('')
 
     def fill_wine(self):
-        self.app.dataPath.setText("E:/workspace/Project1/dataset/wine.data")
+        self.app.dataPath.setText("")
         self.app.colLabelText.setText("1")
         self.app.colRText.setText("")
         self.app.numberClusterText.setText('3')
@@ -56,8 +56,8 @@ class fillData:
         self.app.maxIterText.setText('300')
         self.app.mText.setText('2')
         self.app.mLText.setText('1.1')
-        self.app.mUText.setText('9.1')
-        self.app.alphaText.setText('0.6')
+        self.app.mUText.setText('6.1')
+        self.app.alphaText.setText('0.7')
         self.app.MText.setText('2')
         self.app.M1Text.setText('6')
         self.app.alphaText2.setText('0.6')

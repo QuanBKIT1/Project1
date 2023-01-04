@@ -15,6 +15,7 @@ class FCM:
         self.max_iter = max_iter
         self.U = []
         self.V = init_C_KMeans(self.items, self.number_clusters)
+        self.iterator = 0
 
     def run(self):
         """
@@ -24,23 +25,24 @@ class FCM:
             distance_matrix = calc_distance_item_to_cluster(self.items, self.V)
             self.U = self.update_U(distance_matrix)
             V_new = self.update_V(self.items, self.U, self.m)
+            self.iterator += 1
             if end_condition(V_new, self.V, self.Epsilon):
                 break
             self.V = copy.deepcopy(V_new)
 
         self.label = ProcessorData.assign_label(self.U)
-        self.label_map = ProcessorData.label_mapping(self.true_label,self.label,self.number_clusters)
-        self.table_map = util.ProcessorData.convert_to_table_map(self.label_map,self.label)
-        print(self.table_map)
+        self.label_map = ProcessorData.label_mapping(self.true_label, self.label, self.number_clusters)
+        self.table_map = util.ProcessorData.convert_to_table_map(self.label_map, self.label)
         self.eval()
 
     def eval(self):
-        self.evalList = [Evaluation.RI(self.true_label, self.label), Evaluation.DBI(self.items, self.label, self.number_clusters),
-                    Evaluation.PBM(self.items, self.label, self.number_clusters),
-                    Evaluation.ASWC(self.items, self.label, self.number_clusters),
-                    Evaluation.MA(self.true_label, self.label, self.number_clusters)]
+        self.evalList = [Evaluation.RI(self.true_label, self.label),
+                         Evaluation.DBI(self.items, self.label, self.number_clusters),
+                         Evaluation.PBM(self.items, self.label, self.number_clusters),
+                         Evaluation.ASWC(self.items, self.label, self.number_clusters),
+                         Evaluation.MA(self.true_label, self.label, self.number_clusters)]
         self.evalList = np.array(self.evalList)
-        self.evalList = self.evalList.reshape(len(self.evalList),1)
+        self.evalList = self.evalList.reshape(len(self.evalList), 1)
 
     def update_U(self, distance_matrix):
         """Update membership value for each iteration"""
@@ -73,9 +75,3 @@ class FCM:
                 dummy += U[i][k] ** m
             V[k] = dummy_array / dummy
         return V
-
-# data_table = readData("../dataset/wdbc.data")
-# i1, i2 = preprocessData(data_table, 1, [0])
-# fcm = FCM(i1, i2, 2, 2, 0.000001, 300)
-# fcm.run()
-# print(fcm.U)

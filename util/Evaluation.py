@@ -125,5 +125,4 @@ def ASWC(items, label, numberCluster):
 
 def MA(true_label, label, number_clusters):
     dict1 = label_mapping(true_label, label, number_clusters)
-    print(dict1)
     return np.min([dict1[i][1] / dict1[i][2] for i in dict1])

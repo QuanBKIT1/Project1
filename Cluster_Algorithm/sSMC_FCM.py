@@ -22,6 +22,7 @@ class sSMC_FCM:
         self.V = init_C_sSMC(self.items, self.true_label, self.number_clusters)
         self.U = np.zeros((len(self.items), self.number_clusters))
         self.monitored_elements = self.init_monitored_elements()
+        self.iterator = 0
 
     def run(self):
         """Implement sSMC_FCM"""
@@ -30,6 +31,7 @@ class sSMC_FCM:
             item_to_cluster = calc_distance_item_to_cluster(self.items, self.V)
             self.update_U(item_to_cluster)
             V_new = self.update_V()
+            self.iterator += 1
             if end_condition(V_new, self.V, self.Epsilon):
                 break
             self.V = np.copy(V_new)
@@ -164,37 +166,3 @@ class sSMC_FCM:
         for i in self.monitored_elements:
             m[i][self.monitored_elements[i]] = self.M1
         return m
-
-
-if __name__ == "__main__":
-    data_table = readData("../dataset/iris.data")
-    i1, i2 = preprocessData(data_table, 4, [])
-    print("0%:")
-    ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
-    ssmc.run()
-    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    # print("5%:")
-    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 5, 0.000001, 300)
-    # ssmc.run()
-    # ssmc.eval()
-    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    # print("10%:")
-    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 10, 0.000001, 300)
-    # ssmc.run()
-    # ssmc.eval()
-    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    # print("15%:")
-    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 15, 0.000001, 300)
-    # ssmc.run()
-    # ssmc.eval()
-    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
-    # print("20%:")
-    # ssmc = sSMC_FCM(i1, i2, 3, 2, 4, 0.6, 20, 0.000001, 300)
-    # ssmc.run()
-    # ssmc.eval()
-    # print("{:.6f}".format(ssmc.evalList[1][0]), "{:.6f}".format(ssmc.evalList[3][0]), "{:.6f}".format(ssmc.evalList[2][0]),
-    #       "{:.6f}".format(ssmc.evalList[0][0]), "{:.6f}".format(ssmc.evalList[4][0]))
