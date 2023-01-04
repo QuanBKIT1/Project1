@@ -16,9 +16,6 @@ class MyWindowClass(QMainWindow):
     def __init__(self):
         super(MyWindowClass, self).__init__()
         uic.loadUi("../designer/Project1_UI.ui", self)
-        #     test code
-        self.fillData = fillData(self)
-        self.fillData.fill_iris()
 
     def viewData(self):
         try:

@@ -52,7 +52,6 @@ class Screen3(QtWidgets.QMainWindow):
     def loadDataFCM(self, fcm,scaler):
         self.loadData(fcm.evalList, self.table_fcm_eval)
         V = scaler.inverse_transform(fcm.V)
-        print(V)
         self.loadData(V, self.table_fcm_V)
         self.loadData(fcm.U, self.table_fcm_U)
         self.loadData1(fcm.table_map, self.table_fcm_label)
@@ -116,7 +115,6 @@ class Screen3(QtWidgets.QMainWindow):
         widget = self.stackedWidget.currentIndex()
         if widget == 0:
             self.stackWidget_fcm.setCurrentWidget(self.page_fcm_eval)
-            print(self.stackWidget_fcm.currentIndex())
         if widget == 1:
             self.stackWidget_mc.setCurrentWidget(self.page_mc_eval)
         if widget == 2:
