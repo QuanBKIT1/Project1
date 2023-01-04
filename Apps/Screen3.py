@@ -49,9 +49,11 @@ class Screen3(QtWidgets.QMainWindow):
             for col in range(max_col):
                 tableWidget.setItem(row, col, QTableWidgetItem(str(data_table[row][col])))
 
-    def loadDataFCM(self, fcm):
+    def loadDataFCM(self, fcm,scaler):
         self.loadData(fcm.evalList, self.table_fcm_eval)
-        self.loadData(fcm.V, self.table_fcm_V)
+        V = scaler.inverse_transform(fcm.V)
+        print(V)
+        self.loadData(V, self.table_fcm_V)
         self.loadData(fcm.U, self.table_fcm_U)
         self.loadData1(fcm.table_map, self.table_fcm_label)
 
@@ -61,9 +63,10 @@ class Screen3(QtWidgets.QMainWindow):
 
         self.dict1[0] = fcm.iterator
 
-    def loadDataMCFCM(self, mc_fcm):
+    def loadDataMCFCM(self, mc_fcm,scaler):
         self.loadData(mc_fcm.evalList, self.table_mc_eval)
-        self.loadData(mc_fcm.V, self.table_mc_V)
+        V = scaler.inverse_transform(mc_fcm.V)
+        self.loadData(V, self.table_mc_V)
         self.loadData(mc_fcm.U, self.table_mc_U)
         self.loadData1(mc_fcm.table_map, self.table_mc_label)
 
@@ -73,9 +76,10 @@ class Screen3(QtWidgets.QMainWindow):
 
         self.dict1[1] = mc_fcm.iterator
 
-    def loadDatasSMC(self, ssmc_fcm):
+    def loadDatasSMC(self, ssmc_fcm,scaler):
         self.loadData(ssmc_fcm.evalList, self.table_ssmc_eval)
-        self.loadData(ssmc_fcm.V, self.table_ssmc_V)
+        V = scaler.inverse_transform(ssmc_fcm.V)
+        self.loadData(V, self.table_ssmc_V)
         self.loadData(ssmc_fcm.U, self.table_ssmc_U)
         self.loadData1(ssmc_fcm.table_map, self.table_ssmc_label)
 

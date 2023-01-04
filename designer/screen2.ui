@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>1050</width>
-    <height>750</height>
+    <height>1174</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Kiểm tra dữ liệu</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
@@ -69,7 +69,7 @@
      <x>0</x>
      <y>0</y>
      <width>1050</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

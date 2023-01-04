@@ -18,7 +18,7 @@ class MyWindowClass(QMainWindow):
         uic.loadUi("../designer/Project1_UI.ui", self)
         #     test code
         self.fillData = fillData(self)
-        self.fillData.fill_wine()
+        self.fillData.fill_iris()
 
     def viewData(self):
         try:
@@ -92,6 +92,11 @@ class MyWindowClass(QMainWindow):
             data_table = util.ProcessorData.readData(self.dataPath.text())
             self.items, self.true_label = util.ProcessorData.preprocessData(data_table, self.colLabel,
                                                                             self.colRedundant)
+            # Minimax Scaler
+            self.scaler = MinMaxScaler()
+            self.scaler.fit(self.items)
+            self.items0 = self.scaler.transform(self.items)
+
         except:
             self.error_dialog = QtWidgets.QErrorMessage()
             self.error_dialog.showMessage('Chọn đường dẫn và điều chỉnh dữ liệu chưa hợp lệ! ')
@@ -135,10 +140,10 @@ class MyWindowClass(QMainWindow):
         print("FCM running")
 
         self.m = float(self.mText.text())
-        fcm = FCM.FCM(self.items, self.true_label, self.numberClusters, self.m, self.Epsilon, self.maxIter)
+        fcm = FCM.FCM(self.items0, self.true_label, self.numberClusters, self.m, self.Epsilon, self.maxIter)
 
         fcm.run()
-        self.screen3.loadDataFCM(fcm)
+        self.screen3.loadDataFCM(fcm, self.scaler)
         self.screen3.pushFCM()
         self.screen3.pushEval()
 
@@ -146,10 +151,10 @@ class MyWindowClass(QMainWindow):
         self.mL = (float)(self.mLText.text())
         self.mU = (float)(self.mUText.text())
         self.alpha = (float)(self.alphaText.text())
-        mc_fcm = MC_FCM.MC_FCM(self.items, self.true_label, self.numberClusters, self.mL, self.mU, self.alpha,
+        mc_fcm = MC_FCM.MC_FCM(self.items0, self.true_label, self.numberClusters, self.mL, self.mU, self.alpha,
                                self.Epsilon, self.maxIter)
         mc_fcm.run()
-        self.screen3.loadDataMCFCM(mc_fcm)
+        self.screen3.loadDataMCFCM(mc_fcm, self.scaler)
         self.screen3.pushMCFCM()
         print("MC-FCM running")
 
@@ -158,10 +163,10 @@ class MyWindowClass(QMainWindow):
         self.M1 = float(self.M1Text.text())
         self.alpha2 = float(self.alphaText2.text())
         self.rate = float(self.rateText.text())
-        ssmc_fcm = sSMC_FCM.sSMC_FCM(self.items, self.true_label, self.numberClusters, self.M, self.M1,
+        ssmc_fcm = sSMC_FCM.sSMC_FCM(self.items0, self.true_label, self.numberClusters, self.M, self.M1,
                                      self.alpha2, self.rate, self.Epsilon, self.maxIter)
         ssmc_fcm.run()
-        self.screen3.loadDatasSMC(ssmc_fcm)
+        self.screen3.loadDatasSMC(ssmc_fcm, self.scaler)
         self.screen3.pushsSMC()
         print("sSMC running")
 

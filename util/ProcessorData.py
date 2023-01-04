@@ -43,18 +43,12 @@ def preprocessData(data_table, colLabel, colRedundant):
         items.append(item)
 
     items = np.array(items)
-
-    # # Standard
-    # scaler = StandardScaler()
-    # scaler.fit(items)
-    # items = scaler.transform(items)
+    trueLabel = np.array(trueLabel)
 
     # Minimax Scaler
-    scaler = MinMaxScaler()
-    scaler.fit(items)
-    items = scaler.transform(items)
-
-    trueLabel = np.array(trueLabel)
+    # scaler = MinMaxScaler()
+    # scaler.fit(items)
+    # items = scaler.transform(items)
 
     return items, trueLabel
 
