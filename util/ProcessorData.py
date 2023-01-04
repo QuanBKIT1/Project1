@@ -54,7 +54,6 @@ def preprocessData(data_table, colLabel, colRedundant):
     scaler.fit(items)
     items = scaler.transform(items)
 
-
     trueLabel = np.array(trueLabel)
 
     return items, trueLabel
@@ -73,3 +72,41 @@ def assign_label(U):
         label.append(max_index)
     label = np.array(label)
     return label
+
+
+def label_mapping(true_label, label, number_clusters):
+    trueL = list(set(true_label))
+    indexL = [i for i in range(number_clusters)]
+    dict0 = {}
+
+    for i in trueL:
+        dummy = 0
+        for j in range(len(true_label)):
+            if true_label[j] == i:
+                dummy = dummy + 1
+        dict0[i] = dummy
+
+    # print(dict0)
+    dict1 = {}
+    while indexL:
+        i = indexL.pop()
+        l = [0, 0, 0]
+        for j in trueL:
+            dummy = 0
+            for k in range(len(label)):
+                if label[k] == i and true_label[k] == j:
+                    dummy = dummy + 1
+            if dummy >= l[2]:
+                l = [i, j, dummy]
+        # print(l)
+        dict1[l[0]] = [l[1], l[2], dict0[l[1]]]
+
+        trueL.remove(l[1])
+    return dict1
+
+
+def convert_to_table_map(dict1, label):
+    table_map = []
+    for i in label:
+        table_map.append([i, dict1[i][0]])
+    return table_map

@@ -69,6 +69,13 @@
        <string>Đầu ra</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>U</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QPushButton" name="pushButton_4">
          <property name="text">
@@ -83,10 +90,10 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="pushButton_5">
+       <item row="3" column="0">
+        <widget class="QPushButton" name="pushButton_7">
          <property name="text">
-          <string>U</string>
+          <string>Nhãn</string>
          </property>
         </widget>
        </item>
@@ -111,14 +118,14 @@
     <item row="2" column="0" colspan="3">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_fcm">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0" colspan="2">
          <widget class="QStackedWidget" name="stackWidget_fcm">
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="page_fcm_eval">
            <layout class="QGridLayout" name="gridLayout_3">
@@ -142,6 +149,17 @@
            <layout class="QGridLayout" name="gridLayout_7">
             <item row="0" column="0">
              <widget class="QTableWidget" name="table_fcm_V"/>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_fcm_label">
+           <layout class="QGridLayout" name="gridLayout_18">
+            <item row="0" column="0">
+             <widget class="QTableWidget" name="table_fcm_label">
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustToContents</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -174,6 +192,13 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="page_mc_label">
+           <layout class="QGridLayout" name="gridLayout_17">
+            <item row="0" column="0">
+             <widget class="QTableWidget" name="table_mc_label"/>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -182,6 +207,9 @@
        <layout class="QGridLayout" name="gridLayout_12">
         <item row="0" column="0">
          <widget class="QStackedWidget" name="stackWidget_ssmc">
+          <property name="currentIndex">
+           <number>3</number>
+          </property>
           <widget class="QWidget" name="page_ssmc_eval">
            <layout class="QGridLayout" name="gridLayout_13">
             <item row="0" column="0">
@@ -203,6 +231,13 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="page_ssmc_label">
+           <layout class="QGridLayout" name="gridLayout_16">
+            <item row="0" column="0">
+             <widget class="QTableWidget" name="table_ssmc_label"/>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -217,7 +252,7 @@
      <x>0</x>
      <y>0</y>
      <width>1050</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

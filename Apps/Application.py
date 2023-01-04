@@ -18,7 +18,7 @@ class MyWindowClass(QMainWindow):
         uic.loadUi("../designer/Project1_UI.ui", self)
         #     test code
         self.fillData = fillData(self)
-        self.fillData.fill_wine()
+        self.fillData.fill_iris()
 
     def viewData(self):
         try:
@@ -132,12 +132,14 @@ class MyWindowClass(QMainWindow):
             self.error_dialog.showMessage('Dữ liệu không hợp lệ (thiếu, sai số,...)')
 
     def runFCM(self):
+        print("FCM running")
+
         self.m = (float)(self.mText.text())
         fcm = FCM.FCM(self.items, self.true_label, self.numberClusters, self.m, self.Epsilon, self.maxIter)
+
         fcm.run()
-        self.screen3.loadDataFCM(fcm.U, fcm.V, fcm.evalList)
+        self.screen3.loadDataFCM(fcm.U, fcm.V, fcm.evalList, fcm.table_map)
         self.screen3.pushFCM()
-        print("FCM running")
 
     def runMC_FCM(self):
         self.mL = (float)(self.mLText.text())
@@ -146,7 +148,7 @@ class MyWindowClass(QMainWindow):
         mc_fcm = MC_FCM.MC_FCM(self.items, self.true_label, self.numberClusters, self.mL, self.mU, self.alpha,
                                self.Epsilon, self.maxIter)
         mc_fcm.run()
-        self.screen3.loadDataMCFCM(mc_fcm.U, mc_fcm.V, mc_fcm.evalList)
+        self.screen3.loadDataMCFCM(mc_fcm.U, mc_fcm.V, mc_fcm.evalList, mc_fcm.table_map)
         self.screen3.pushMCFCM()
         print("MC-FCM running")
 
@@ -158,7 +160,7 @@ class MyWindowClass(QMainWindow):
         ssmc_fcm = sSMC_FCM.sSMC_FCM(self.items, self.true_label, self.numberClusters, self.M, self.M1,
                                      self.alpha2, self.rate, self.Epsilon, self.maxIter)
         ssmc_fcm.run()
-        self.screen3.loadDatasSMC(ssmc_fcm.U, ssmc_fcm.V, ssmc_fcm.evalList)
+        self.screen3.loadDatasSMC(ssmc_fcm.U, ssmc_fcm.V, ssmc_fcm.evalList,ssmc_fcm.table_map)
         self.screen3.pushsSMC()
         print("sSMC running")
 
