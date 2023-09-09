@@ -1,8 +1,10 @@
 import copy
 
-import util.ProcessorData
-from util import Evaluation, ProcessorData
-from util.Calculator import *
+
+from src.utils import ProcessorData, Evaluation
+from src.utils.Calculator import *
+
+
 
 
 class FCM:
@@ -32,7 +34,7 @@ class FCM:
 
         self.label = ProcessorData.assign_label(self.U)
         self.label_map = ProcessorData.label_mapping(self.true_label, self.label, self.number_clusters)
-        self.table_map = util.ProcessorData.convert_to_table_map(self.label_map, self.label)
+        self.table_map = src.utils.ProcessorData.convert_to_table_map(self.label_map, self.label)
         self.eval()
 
     def eval(self):

@@ -1,6 +1,5 @@
-import util.ProcessorData
-from util import Evaluation, ProcessorData
-from util.Calculator import *
+from src.utils import ProcessorData, Evaluation
+from src.utils.Calculator import *
 
 
 def f(x, a, b):
@@ -37,13 +36,14 @@ class sSMC_FCM:
             self.V = np.copy(V_new)
 
         self.label = ProcessorData.assign_label(self.U)
-        self.label_map = ProcessorData.label_mapping(self.true_label,self.label,self.number_clusters)
-        self.table_map = util.ProcessorData.convert_to_table_map(self.label_map,self.label)
+        self.label_map = ProcessorData.label_mapping(self.true_label, self.label, self.number_clusters)
+        self.table_map = src.utils.ProcessorData.convert_to_table_map(self.label_map, self.label)
         self.eval()
 
     def eval(self):
         self.label = ProcessorData.assign_label(self.U)
-        self.evalList = [Evaluation.RI(self.true_label, self.label), Evaluation.DBI(self.items, self.label, self.number_clusters),
+        self.evalList = [Evaluation.RI(self.true_label, self.label),
+                         Evaluation.DBI(self.items, self.label, self.number_clusters),
                          Evaluation.PBM(self.items, self.label, self.number_clusters),
                          Evaluation.ASWC(self.items, self.label, self.number_clusters),
                          Evaluation.MA(self.true_label, self.label, self.number_clusters)]
@@ -86,7 +86,7 @@ class sSMC_FCM:
         for i in range(len(self.U)):
             if i in self.monitored_elements:
                 # Calculate U for unsupervised components
-                k = self.monitored_elements[i]      
+                k = self.monitored_elements[i]
                 if (item_to_cluster[i][k] != 0):
                     dummy = 0
                     for j in range(self.number_clusters):

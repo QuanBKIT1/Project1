@@ -1,6 +1,8 @@
 from sklearn import metrics
-from util.Calculator import *
-from util.ProcessorData import label_mapping
+
+from src.utils.Calculator import *
+from src.utils.ProcessorData import label_mapping
+
 
 def RI(labels_true, labels_pred):
     return metrics.rand_score(labels_true, labels_pred)

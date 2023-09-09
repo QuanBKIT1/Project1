@@ -1,8 +1,10 @@
-import random
 import math
-from sklearn.cluster import kmeans_plusplus
+import random
+
 from sklearn import preprocessing
-from util.ProcessorData import *
+from sklearn.cluster import kmeans_plusplus
+from src.utils.ProcessorData import *
+
 
 def d(i, j):
     """Calculate Euclidean"""
@@ -54,7 +56,7 @@ def init_C_sSMC(items, true_label, number_clusters):
     label = le.transform(true_label)
 
     # Initialize clusters
-    C = np.zeros((number_clusters,len(items[0])))
+    C = np.zeros((number_clusters, len(items[0])))
     for i in range(number_clusters):
         dummy = list()
         for j in range(len(items)):

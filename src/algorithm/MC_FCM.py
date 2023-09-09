@@ -1,6 +1,5 @@
-import util.ProcessorData
-from util import Evaluation, ProcessorData
-from util.Calculator import *
+from src.utils import ProcessorData, Evaluation
+from src.utils.Calculator import *
 
 
 class MC_FCM():
@@ -33,11 +32,12 @@ class MC_FCM():
         self.label = ProcessorData.assign_label(self.U)
         self.label_map = ProcessorData.label_mapping(self.true_label, self.label, self.number_clusters)
         print(self.label_map)
-        self.table_map = util.ProcessorData.convert_to_table_map(self.label_map, self.label)
+        self.table_map = src.utils.ProcessorData.convert_to_table_map(self.label_map, self.label)
         self.eval()
 
     def eval(self):
-        self.evalList = [Evaluation.RI(self.true_label, self.label), Evaluation.DBI(self.items, self.label, self.number_clusters),
+        self.evalList = [Evaluation.RI(self.true_label, self.label),
+                         Evaluation.DBI(self.items, self.label, self.number_clusters),
                          Evaluation.PBM(self.items, self.label, self.number_clusters),
                          Evaluation.ASWC(self.items, self.label, self.number_clusters),
                          Evaluation.MA(self.true_label, self.label, self.number_clusters)]

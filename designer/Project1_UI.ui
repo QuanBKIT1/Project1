@@ -1,702 +1,702 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1050</width>
-    <height>750</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Chương trình</string>
-  </property>
-  <property name="animated">
-   <bool>true</bool>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="title">
-       <string>Chương trình</string>
-      </property>
-      <widget class="QGroupBox" name="groupBox">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>160</y>
-         <width>391</width>
-         <height>181</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="title">
-        <string>Điều chỉnh dữ liệu</string>
-       </property>
-       <property name="flat">
-        <bool>false</bool>
-       </property>
-       <widget class="QLabel" name="label_3">
+    <class>MainWindow</class>
+    <widget class="QMainWindow" name="MainWindow">
         <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>40</y>
-          <width>91</width>
-          <height>41</height>
-         </rect>
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1050</width>
+                <height>750</height>
+            </rect>
         </property>
-        <property name="text">
-         <string>Cột nhãn :</string>
+        <property name="windowTitle">
+            <string>Chương trình</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+        <property name="animated">
+            <bool>true</bool>
         </property>
-       </widget>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>100</y>
-          <width>101</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Cột dư thừa :</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="colLabelText">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>40</y>
-          <width>101</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="colRText">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>100</y>
-          <width>101</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="okButton">
-        <property name="geometry">
-         <rect>
-          <x>290</x>
-          <y>70</y>
-          <width>81</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Kiểm tra</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QGroupBox" name="groupBox_3">
-       <property name="geometry">
-        <rect>
-         <x>450</x>
-         <y>140</y>
-         <width>521</width>
-         <height>491</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="title">
-        <string>Điều chỉnh tham số đầu vào</string>
-       </property>
-       <widget class="QLineEdit" name="numberClusterText">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>50</y>
-          <width>101</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>50</y>
-          <width>91</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Số cụm :</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="epsilonText">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>50</y>
-          <width>101</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_6">
-        <property name="geometry">
-         <rect>
-          <x>280</x>
-          <y>50</y>
-          <width>91</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Epsilon :</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_5">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>110</y>
-          <width>481</width>
-          <height>81</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>FCM</string>
-        </property>
-        <widget class="QLineEdit" name="mText">
-         <property name="geometry">
-          <rect>
-           <x>90</x>
-           <y>30</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
+        <widget class="QWidget" name="centralwidget">
+            <layout class="QGridLayout" name="gridLayout">
+                <item row="0" column="0">
+                    <widget class="QGroupBox" name="groupBox_2">
+                        <property name="font">
+                            <font>
+                                <pointsize>10</pointsize>
+                            </font>
+                        </property>
+                        <property name="title">
+                            <string>Chương trình</string>
+                        </property>
+                        <widget class="QGroupBox" name="groupBox">
+                            <property name="geometry">
+                                <rect>
+                                    <x>20</x>
+                                    <y>160</y>
+                                    <width>391</width>
+                                    <height>181</height>
+                                </rect>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <pointsize>10</pointsize>
+                                </font>
+                            </property>
+                            <property name="title">
+                                <string>Điều chỉnh dữ liệu</string>
+                            </property>
+                            <property name="flat">
+                                <bool>false</bool>
+                            </property>
+                            <widget class="QLabel" name="label_3">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>40</x>
+                                        <y>40</y>
+                                        <width>91</width>
+                                        <height>41</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Cột nhãn :</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>Qt::AlignCenter</set>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" name="label_4">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>40</x>
+                                        <y>100</y>
+                                        <width>101</width>
+                                        <height>41</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Cột dư thừa :</string>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" name="colLabelText">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>160</x>
+                                        <y>40</y>
+                                        <width>101</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" name="colRText">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>160</x>
+                                        <y>100</y>
+                                        <width>101</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton" name="okButton">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>290</x>
+                                        <y>70</y>
+                                        <width>81</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Kiểm tra</string>
+                                </property>
+                            </widget>
+                        </widget>
+                        <widget class="QGroupBox" name="groupBox_3">
+                            <property name="geometry">
+                                <rect>
+                                    <x>450</x>
+                                    <y>140</y>
+                                    <width>521</width>
+                                    <height>491</height>
+                                </rect>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <pointsize>10</pointsize>
+                                </font>
+                            </property>
+                            <property name="title">
+                                <string>Điều chỉnh tham số đầu vào</string>
+                            </property>
+                            <widget class="QLineEdit" name="numberClusterText">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>130</x>
+                                        <y>50</y>
+                                        <width>101</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" name="label_5">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>30</x>
+                                        <y>50</y>
+                                        <width>91</width>
+                                        <height>41</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Số cụm :</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>Qt::AlignCenter</set>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" name="epsilonText">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>380</x>
+                                        <y>50</y>
+                                        <width>101</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" name="label_6">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>280</x>
+                                        <y>50</y>
+                                        <width>91</width>
+                                        <height>41</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Epsilon :</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>Qt::AlignCenter</set>
+                                </property>
+                            </widget>
+                            <widget class="QGroupBox" name="groupBox_5">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>10</x>
+                                        <y>110</y>
+                                        <width>481</width>
+                                        <height>81</height>
+                                    </rect>
+                                </property>
+                                <property name="title">
+                                    <string>FCM</string>
+                                </property>
+                                <widget class="QLineEdit" name="mText">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>90</x>
+                                            <y>30</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_8">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>30</y>
+                                            <width>91</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>m :</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                            </widget>
+                            <widget class="QGroupBox" name="groupBox_6">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>10</x>
+                                        <y>200</y>
+                                        <width>481</width>
+                                        <height>131</height>
+                                    </rect>
+                                </property>
+                                <property name="title">
+                                    <string>MC-FCM</string>
+                                </property>
+                                <widget class="QLineEdit" name="mLText">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>90</x>
+                                            <y>30</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_10">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>30</y>
+                                            <width>91</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>mL :</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_11">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>260</x>
+                                            <y>30</y>
+                                            <width>91</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>mU :</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit" name="mUText">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>340</x>
+                                            <y>30</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_12">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>140</x>
+                                            <y>80</y>
+                                            <width>91</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>alpha :</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit" name="alphaText">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>220</x>
+                                            <y>80</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                            </widget>
+                            <widget class="QGroupBox" name="groupBox_7">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>10</x>
+                                        <y>340</y>
+                                        <width>481</width>
+                                        <height>131</height>
+                                    </rect>
+                                </property>
+                                <property name="title">
+                                    <string>sSMC-FCM</string>
+                                </property>
+                                <widget class="QLineEdit" name="MText">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>90</x>
+                                            <y>30</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_13">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>30</y>
+                                            <width>91</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>M :</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_14">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>260</x>
+                                            <y>30</y>
+                                            <width>91</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>M' :</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit" name="M1Text">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>340</x>
+                                            <y>30</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_15">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>200</x>
+                                            <y>80</y>
+                                            <width>151</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>Độ giám sát:</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit" name="rateText">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>340</x>
+                                            <y>80</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" name="label_16">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>10</x>
+                                            <y>80</y>
+                                            <width>91</width>
+                                            <height>41</height>
+                                        </rect>
+                                    </property>
+                                    <property name="text">
+                                        <string>alpha :</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>Qt::AlignCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit" name="alphaText2">
+                                    <property name="geometry">
+                                        <rect>
+                                            <x>90</x>
+                                            <y>80</y>
+                                            <width>101</width>
+                                            <height>31</height>
+                                        </rect>
+                                    </property>
+                                </widget>
+                            </widget>
+                        </widget>
+                        <widget class="QPushButton" name="runButton">
+                            <property name="geometry">
+                                <rect>
+                                    <x>340</x>
+                                    <y>640</y>
+                                    <width>207</width>
+                                    <height>30</height>
+                                </rect>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <pointsize>10</pointsize>
+                                </font>
+                            </property>
+                            <property name="text">
+                                <string>Chạy</string>
+                            </property>
+                        </widget>
+                        <widget class="QGroupBox" name="groupBox_4">
+                            <property name="geometry">
+                                <rect>
+                                    <x>20</x>
+                                    <y>370</y>
+                                    <width>391</width>
+                                    <height>211</height>
+                                </rect>
+                            </property>
+                            <property name="title">
+                                <string>Chọn thuật toán</string>
+                            </property>
+                            <widget class="QComboBox" name="comboBox">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>10</x>
+                                        <y>40</y>
+                                        <width>211</width>
+                                        <height>41</height>
+                                    </rect>
+                                </property>
+                                <item>
+                                    <property name="text">
+                                        <string>FCM</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>MC-FCM</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>sSMC-FCM</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>Chạy cả 3 thuật toán</string>
+                                    </property>
+                                </item>
+                            </widget>
+                            <widget class="QLineEdit" name="maxIterText">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>200</x>
+                                        <y>120</y>
+                                        <width>101</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" name="label_7">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>10</x>
+                                        <y>120</y>
+                                        <width>161</width>
+                                        <height>41</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Số lần duyệt tối đa :</string>
+                                </property>
+                                <property name="alignment">
+                                    <set>Qt::AlignCenter</set>
+                                </property>
+                            </widget>
+                        </widget>
+                        <widget class="QGroupBox" name="groupBox_8">
+                            <property name="geometry">
+                                <rect>
+                                    <x>20</x>
+                                    <y>30</y>
+                                    <width>951</width>
+                                    <height>91</height>
+                                </rect>
+                            </property>
+                            <property name="title">
+                                <string>Chọn bộ dữ liệu</string>
+                            </property>
+                            <widget class="QPushButton" name="dataView">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>710</x>
+                                        <y>40</y>
+                                        <width>111</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Xem dữ liệu</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" name="label">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>10</x>
+                                        <y>40</y>
+                                        <width>141</width>
+                                        <height>28</height>
+                                    </rect>
+                                </property>
+                                <property name="font">
+                                    <font>
+                                        <family>Times New Roman</family>
+                                        <pointsize>12</pointsize>
+                                    </font>
+                                </property>
+                                <property name="layoutDirection">
+                                    <enum>Qt::LeftToRight</enum>
+                                </property>
+                                <property name="autoFillBackground">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="text">
+                                    <string>Đường dẫn :</string>
+                                </property>
+                                <property name="scaledContents">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="alignment">
+                                    <set>Qt::AlignCenter</set>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit" name="dataPath">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>150</x>
+                                        <y>40</y>
+                                        <width>408</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton" name="browser">
+                                <property name="geometry">
+                                    <rect>
+                                        <x>590</x>
+                                        <y>40</y>
+                                        <width>91</width>
+                                        <height>31</height>
+                                    </rect>
+                                </property>
+                                <property name="text">
+                                    <string>Duyệt</string>
+                                </property>
+                            </widget>
+                        </widget>
+                    </widget>
+                </item>
+            </layout>
         </widget>
-        <widget class="QLabel" name="label_8">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>91</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>m :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
+        <widget class="QMenuBar" name="menubar">
+            <property name="geometry">
+                <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>1050</width>
+                    <height>26</height>
+                </rect>
+            </property>
         </widget>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_6">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>200</y>
-          <width>481</width>
-          <height>131</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>MC-FCM</string>
-        </property>
-        <widget class="QLineEdit" name="mLText">
-         <property name="geometry">
-          <rect>
-           <x>90</x>
-           <y>30</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_10">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>91</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>mL :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_11">
-         <property name="geometry">
-          <rect>
-           <x>260</x>
-           <y>30</y>
-           <width>91</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>mU :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="mUText">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>30</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_12">
-         <property name="geometry">
-          <rect>
-           <x>140</x>
-           <y>80</y>
-           <width>91</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>alpha :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="alphaText">
-         <property name="geometry">
-          <rect>
-           <x>220</x>
-           <y>80</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_7">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>340</y>
-          <width>481</width>
-          <height>131</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>sSMC-FCM</string>
-        </property>
-        <widget class="QLineEdit" name="MText">
-         <property name="geometry">
-          <rect>
-           <x>90</x>
-           <y>30</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_13">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>91</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>M :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_14">
-         <property name="geometry">
-          <rect>
-           <x>260</x>
-           <y>30</y>
-           <width>91</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>M' :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="M1Text">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>30</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_15">
-         <property name="geometry">
-          <rect>
-           <x>200</x>
-           <y>80</y>
-           <width>151</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Độ giám sát:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="rateText">
-         <property name="geometry">
-          <rect>
-           <x>340</x>
-           <y>80</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_16">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>80</y>
-           <width>91</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>alpha :</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="alphaText2">
-         <property name="geometry">
-          <rect>
-           <x>90</x>
-           <y>80</y>
-           <width>101</width>
-           <height>31</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-      </widget>
-      <widget class="QPushButton" name="runButton">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>640</y>
-         <width>207</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Chạy</string>
-       </property>
-      </widget>
-      <widget class="QGroupBox" name="groupBox_4">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>370</y>
-         <width>391</width>
-         <height>211</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Chọn thuật toán</string>
-       </property>
-       <widget class="QComboBox" name="comboBox">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>211</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <item>
-         <property name="text">
-          <string>FCM</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>MC-FCM</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>sSMC-FCM</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Chạy cả 3 thuật toán</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QLineEdit" name="maxIterText">
-        <property name="geometry">
-         <rect>
-          <x>200</x>
-          <y>120</y>
-          <width>101</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_7">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>120</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Số lần duyệt tối đa :</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QGroupBox" name="groupBox_8">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>30</y>
-         <width>951</width>
-         <height>91</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Chọn bộ dữ liệu</string>
-       </property>
-       <widget class="QPushButton" name="dataView">
-        <property name="geometry">
-         <rect>
-          <x>710</x>
-          <y>40</y>
-          <width>111</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Xem dữ liệu</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>141</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Times New Roman</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="autoFillBackground">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Đường dẫn :</string>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="dataPath">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>40</y>
-          <width>408</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="browser">
-        <property name="geometry">
-         <rect>
-          <x>590</x>
-          <y>40</y>
-          <width>91</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Duyệt</string>
-        </property>
-       </widget>
-      </widget>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1050</width>
-     <height>26</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
- </widget>
- <resources/>
- <connections>
-  <connection>
-   <sender>browser</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>choose_data()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>621</x>
-     <y>107</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>462</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>okButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>viewData2()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>401</x>
-     <y>237</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>578</x>
-     <y>292</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBox</sender>
-   <signal>activated(QString)</signal>
-   <receiver>groupBox_3</receiver>
-   <slot>update()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>191</x>
-     <y>447</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>590</x>
-     <y>452</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>runButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>run()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>418</x>
-     <y>677</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>571</x>
-     <y>292</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataView</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>viewData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>796</x>
-     <y>122</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>531</x>
-     <y>368</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>run()</slot>
-  <slot>viewData()</slot>
-  <slot>viewData2()</slot>
- </slots>
+        <widget class="QStatusBar" name="statusbar"/>
+    </widget>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>browser</sender>
+            <signal>clicked()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>choose_data()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>621</x>
+                    <y>107</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>462</x>
+                    <y>299</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>okButton</sender>
+            <signal>clicked()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>viewData2()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>401</x>
+                    <y>237</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>578</x>
+                    <y>292</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>comboBox</sender>
+            <signal>activated(QString)</signal>
+            <receiver>groupBox_3</receiver>
+            <slot>update()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>191</x>
+                    <y>447</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>590</x>
+                    <y>452</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>runButton</sender>
+            <signal>clicked()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>run()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>418</x>
+                    <y>677</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>571</x>
+                    <y>292</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>dataView</sender>
+            <signal>clicked()</signal>
+            <receiver>MainWindow</receiver>
+            <slot>viewData()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>796</x>
+                    <y>122</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>531</x>
+                    <y>368</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
+    <slots>
+        <slot>run()</slot>
+        <slot>viewData()</slot>
+        <slot>viewData2()</slot>
+    </slots>
 </ui>

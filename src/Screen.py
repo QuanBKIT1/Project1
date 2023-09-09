@@ -1,6 +1,57 @@
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5 import QtWidgets
 from PyQt5 import uic
+from PyQt5.QtWidgets import QTableWidgetItem, QMainWindow
+
+
+class Screen1(QtWidgets.QWidget):
+
+    def __init__(self):
+        super(Screen1, self).__init__()
+        uic.loadUi("../designer/screen1.ui", self)
+
+    def loadData(self, data_table):
+        max_row = len(data_table)
+        max_col = len(data_table[0])
+        self.table.setRowCount(max_row)
+        self.table.setColumnCount(max_col)
+        for row in range(max_row):
+            for col in range(max_col):
+                self.table.setItem(row, col, QTableWidgetItem(str(data_table[row][col])))
+
+
+class Screen2(QMainWindow):
+    def __init__(self):
+        super(Screen2, self).__init__()
+        uic.loadUi('../designer/screen2.ui', self)
+        self.stackedWidget.setCurrentWidget(self.page)
+        self.pushButton.clicked.connect(self.showTable1)
+        self.pushButton_2.clicked.connect(self.showTable2)
+        self.pushButton_3.clicked.connect(self.showTable3)
+
+    def util_loadData(self, data_table, tableWidget):
+        if data_table is None:
+            return
+        max_row = len(data_table)
+        max_col = len(data_table[0])
+        tableWidget.setRowCount(max_row)
+        tableWidget.setColumnCount(max_col)
+        for row in range(max_row):
+            for col in range(max_col):
+                tableWidget.setItem(row, col, QTableWidgetItem(str(data_table[row][col])))
+
+    def loadData(self, data_table1, data_table2, data_table3):
+        self.util_loadData(data_table1, self.tableWidget)
+        self.util_loadData(data_table2, self.tableWidget_2)
+        self.util_loadData(data_table3, self.tableWidget_3)
+
+    def showTable1(self):
+        self.stackedWidget.setCurrentWidget(self.page)
+
+    def showTable2(self):
+        self.stackedWidget.setCurrentWidget(self.page_2)
+
+    def showTable3(self):
+        self.stackedWidget.setCurrentWidget(self.page_5)
 
 
 class Screen3(QtWidgets.QMainWindow):
@@ -23,13 +74,12 @@ class Screen3(QtWidgets.QMainWindow):
         # Store value of iterator
         self.dict1 = [0, 0, 0]
         # Store VerticalHeaderLabels eval
-        self.list1 =  ['Rand Index',
-                       'Davies-Bouldin Index',
-                       'PBM index',
-                       'Alternative Silhouette Width Criterion',
-                       'Mean accuracy']
+        self.list1 = ['Rand Index',
+                      'Davies-Bouldin Index',
+                      'PBM index',
+                      'Alternative Silhouette Width Criterion',
+                      'Mean accuracy']
         # Store VerticalHeaderLabels eval
-
 
     def loadData(self, data_table, tableWidget):
         max_row = len(data_table)
@@ -49,7 +99,7 @@ class Screen3(QtWidgets.QMainWindow):
             for col in range(max_col):
                 tableWidget.setItem(row, col, QTableWidgetItem(str(data_table[row][col])))
 
-    def loadDataFCM(self, fcm,scaler):
+    def loadDataFCM(self, fcm, scaler):
         self.loadData(fcm.evalList, self.table_fcm_eval)
         V = scaler.inverse_transform(fcm.V)
         self.loadData(V, self.table_fcm_V)
@@ -62,7 +112,7 @@ class Screen3(QtWidgets.QMainWindow):
 
         self.dict1[0] = fcm.iterator
 
-    def loadDataMCFCM(self, mc_fcm,scaler):
+    def loadDataMCFCM(self, mc_fcm, scaler):
         self.loadData(mc_fcm.evalList, self.table_mc_eval)
         V = scaler.inverse_transform(mc_fcm.V)
         self.loadData(V, self.table_mc_V)
@@ -75,7 +125,7 @@ class Screen3(QtWidgets.QMainWindow):
 
         self.dict1[1] = mc_fcm.iterator
 
-    def loadDatasSMC(self, ssmc_fcm,scaler):
+    def loadDatasSMC(self, ssmc_fcm, scaler):
         self.loadData(ssmc_fcm.evalList, self.table_ssmc_eval)
         V = scaler.inverse_transform(ssmc_fcm.V)
         self.loadData(V, self.table_ssmc_V)
@@ -85,7 +135,6 @@ class Screen3(QtWidgets.QMainWindow):
         self.table_ssmc_eval.setVerticalHeaderLabels(self.list1)
         self.table_ssmc_eval.setHorizontalHeaderLabels(["Kết quả"])
         self.table_ssmc_label.setHorizontalHeaderLabels(["Nhãn số", "Nhãn tương ứng"])
-
 
         self.dict1[2] = ssmc_fcm.iterator
 

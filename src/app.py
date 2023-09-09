@@ -1,21 +1,21 @@
-import sys
-import util.ProcessorData
-from Cluster_Algorithm import FCM, MC_FCM, sSMC_FCM
-from Apps.fillData import fillData
-from util.Calculator import *
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import *
-from PyQt5 import uic
-from Screen1 import Screen1
-from Screen2 import Screen2
-from Screen3 import Screen3
+import os
 
+from PyQt5 import QtWidgets
+from PyQt5 import uic
+from PyQt5.QtWidgets import *
+
+import src.utils.ProcessorData
+from Screen import Screen1, Screen2, Screen3
+from algorithm import FCM, MC_FCM, sSMC_FCM
+
+import src.algorithm.FCM
+import sys
 
 class MyWindowClass(QMainWindow):
 
     def __init__(self):
         super(MyWindowClass, self).__init__()
-        uic.loadUi("../designer/Project1_UI.ui", self)
+        uic.loadUi("./designer/Project1_UI.ui", self)
 
     def viewData(self):
         try:
@@ -57,7 +57,7 @@ class MyWindowClass(QMainWindow):
     def viewData2(self):
         self.checkColumn()
         try:
-            data_table = util.ProcessorData.readData(self.dataPath.text())
+            data_table = src.utils.ProcessorData.readData(self.dataPath.text())
             data_table1 = np.array([data_table[i][self.colLabel] for i in range(len(data_table))])
             data_table1 = data_table1.reshape(len(data_table1), 1)
 
@@ -69,8 +69,8 @@ class MyWindowClass(QMainWindow):
                     data_table2.append([data_table[i][j] for j in self.colRedundant])
                 data_table2 = np.array(data_table2)
 
-            self.items, self.true_label = util.ProcessorData.preprocessData(data_table, self.colLabel,
-                                                                            self.colRedundant)
+            self.items, self.true_label = src.utils.ProcessorData.preprocessData(data_table, self.colLabel,
+                                                                                 self.colRedundant)
             self.screen2 = Screen2()
             self.screen2.loadData(data_table1, data_table2, self.items)
             self.screen2.show()
@@ -86,9 +86,9 @@ class MyWindowClass(QMainWindow):
         """
         self.checkColumn()
         try:
-            data_table = util.ProcessorData.readData(self.dataPath.text())
-            self.items, self.true_label = util.ProcessorData.preprocessData(data_table, self.colLabel,
-                                                                            self.colRedundant)
+            data_table = src.utils.ProcessorData.readData(self.dataPath.text())
+            self.items, self.true_label = src.utils.ProcessorData.preprocessData(data_table, self.colLabel,
+                                                                                 self.colRedundant)
             # Minimax Scaler
             self.scaler = MinMaxScaler()
             self.scaler.fit(self.items)

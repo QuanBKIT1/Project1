@@ -1,25 +1,33 @@
-# Project1
-Cài đặt thuật toán FCM, MC-FCM, sSMC-FCM
+Giới thiệu
+----
+Về sự ảnh hưởng của tham số mờ hóa trong thuật toán phân cụm mờ
 
-Cài đặt các độ đo hiệu năng thuật toán
+Cài đặt các thuật toán phân cụm mờ, phân cụm mờ bán giám sát được trình bày trong bài báo
 
-Team member:
-1. Lê Đức Quân
-2. Đỗ Ngọc Huy
-3. Lê Thế Huy
-4. Nguyễn Quốc Khánh
+Chạy chương trình
+---
+
+Command
+---
+
+```
+pip install -r requirement.txt
+
+SET PYTHONPATH=path-to-project
+
+python src/app.py
+```
+Giao diện 
+--- 
+![Alt text](results/giao_dien.png)
+
+Kết quả
+---
+![Alt text](results/res.png)
 
 
-*******************************           Các bước chạy chương trình            ********************************
-
-
-Bước 1: Clone code từ github về máy.
-
-Bước 2: Vào terminal cài đặt các thư viện cần thiết: 
-      - Gõ lệnh: pip install -r requirement.txt
-
-Bước 3: Vào folder 'Apps' sau đó vào file 'Application.py' để chạy chương trình chính.
-
-Bước 4: Chọn các thông số chi tiết trên giao diện để chạy thuật toán mong muốn 
-
-Bước 5: Xem kết quả trên màn hình
+Reference
+---
+- Tran Dinh Khang, Nguyen Duc Vuong, Manh-Kien Tran, Michael Fowler, Fuzzy C‐Means Clustering Algorithm with Multiple Fuzzification Coefficients, Algorithms 2020, 13, 158
+- Tran Dinh Khang, Manh-Kien Tran, Michael Fowler, A Novel Semi-Supervised Fuzzy C-Means Clustering Algorithm Using Multiple Fuzzification Coefficients, Algorithms 2021, 14, 258.
+- Trần Đình Khang, Đỗ Lê Quang, Võ Đức Quang, Về sự ảnh hưởng của các tham số mờ hóa trong thuật toán phân cụm mờ, Kỷ yếu Hội nghị Quốc gia lần thứ XV về Nghiên cứu cơ bản và ứng dụng Công Nghệ thông tin (FAIR); Hà Nội, ngày 3-4/11/2022
